@@ -76,7 +76,7 @@ let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
 } else {
-  backendURL = `https://shoptrak-backend.herokuapp.com`
+  backendURL = `https://labs12-fairshare.herokuapp.com`
 }
 
 /*

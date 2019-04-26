@@ -15,7 +15,7 @@ let frontendURL;
 if(process.env.NODE_ENV === 'development'){
     frontendURL = 'http://localhost:3000';
 } else {
-    frontendURL = `https://labs10-shopping-list.netlify.com`
+    frontendURL = `goofy-sinoussi-c017bd.netlify.com`
 }
 
 var lockOptions = {
