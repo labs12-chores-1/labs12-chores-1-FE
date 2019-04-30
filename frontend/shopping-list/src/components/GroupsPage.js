@@ -28,7 +28,10 @@ import GroupCard from "./GroupCard";
 import "./Styles/GroupsPage.css";
 
 class GroupsPage extends Component {
-  state = {
+  constructor (props){
+    super(props);
+  
+  this.state = {
     modal14: false,
     modal15: false,
     modal16: false,
@@ -37,6 +40,9 @@ class GroupsPage extends Component {
     groupId: null,
     modal17: true
   };
+  this.toggle = this.toggle.bind(this);
+
+}
 
   componentWillMount() {
     if (localStorage.getItem("email") && !this.props.currentUser) {

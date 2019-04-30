@@ -76,7 +76,7 @@ let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
 } else {
-  backendURL = `https://shoptrak-backend.herokuapp.com`
+  backendURL = `https://labs12-fairshare.herokuapp.com`
 }
 
 /*
@@ -117,7 +117,8 @@ export const checkEmail = () => {
       localStorage.removeItem('userId');
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem('lsid');
-      localStorage.removeItem('userId');
+      // localStorage.removeItem('userId');
+      console.log('Error check email:', err)
       dispatch({type: ERROR, payload: "Internal error parsing user. Try refreshing the page."})
     })
   }
