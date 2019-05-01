@@ -37,7 +37,7 @@ node_modules/
 jspm_packages/
 package-lock.json
 /node_modules
-yarn.lock
+
 
 # IntelliJ IDEA directories
 .idea
@@ -74,7 +74,7 @@ typings/
 # misc
 .DS_Store
 package-lock.json
-yarn.lock
+
 yarn.error.log
 yarn
 Podfile.lock
@@ -99,5 +99,5 @@ project.pbxproj
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-yarn.lock
+
 yarn
