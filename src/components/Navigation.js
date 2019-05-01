@@ -75,10 +75,11 @@ class Navigation extends React.Component{
     render(){
         // Gather user id to determine if user is logged in or not
         let isLoggedIn = localStorage.getItem("isLoggedIn");
-
+        
         // Gather the url pathname to set active class to proper link
         const pathname = this.props.location.pathname;
         return(
+        
             <div className = 'navigation-container'>
 
                 <MDBNavbar style={{backgroundColor: "#2A922D"}} dark expand="md">

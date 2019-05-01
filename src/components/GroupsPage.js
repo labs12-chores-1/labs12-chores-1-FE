@@ -28,7 +28,10 @@ import GroupCard from "./GroupCard";
 import "./Styles/GroupsPage.css";
 
 class GroupsPage extends Component {
-  state = {
+  constructor (props){
+    super(props);
+  
+  this.state = {
     modal14: false,
     modal15: false,
     modal16: false,
@@ -37,6 +40,9 @@ class GroupsPage extends Component {
     groupId: null,
     modal17: true
   };
+  this.toggle = this.toggle.bind(this);
+
+}
 
   componentWillMount() {
     if (localStorage.getItem("email") && !this.props.currentUser) {
@@ -99,7 +105,7 @@ class GroupsPage extends Component {
     this.toggle(14);
     this.props.getUserGroups(this.props.currentUser.id);
     //         this.props.addGroup(this.state.groupName);
-    this.setState({ modal14: false });
+    // this.setState({ modal14: false });
     if (!this.props.userGroups) {
       this.props.getUserGroups(this.props.currentUser.id);
     }
@@ -189,7 +195,16 @@ class GroupsPage extends Component {
 
 
               }
-
+              <form>
+              <input
+                 label="Group Name"
+                 name={this.state.groupName}
+                 onChange={this.handleInput}
+                 defaultValue={this.state.groupName}
+                //  onKeyDown={this.keyPress}
+              />
+              <button onClick={this.handleAddGroup}>add group</button>
+              </form>
               <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
                 <MDBModalHeader toggle={this.toggle(14)}>
                   Create A New Group
@@ -201,6 +216,7 @@ class GroupsPage extends Component {
                       onChange={this.handleInput}
                       defaultValue={this.state.groupName}
                       onKeyDown={this.keyPress}
+                      onClick={this.handleAddGroup}
                   />
                 </MDBModalBody>
                 <MDBModalFooter>
