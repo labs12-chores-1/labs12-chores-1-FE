@@ -5,7 +5,7 @@ import "./index.css";
 
 // Bootstrap, MDB, fonts, other style libraries
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'bootstrap-css-only';
 import 'mdbreact/dist/css/mdb.css';
 
 // Router
@@ -19,7 +19,7 @@ import logger from "redux-logger";
 
 import * as serviceWorker from "./serviceWorker";
 
-import rootReducer from "./store/reducers/";
+import rootReducer from "./store/reducers";
 
 // Redux dev tools
 const composeEnhancers =

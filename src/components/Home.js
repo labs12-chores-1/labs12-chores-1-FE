@@ -1,5 +1,5 @@
 import React from 'react';
-import '../components/Styles/Home.css';
+import './Styles/Home.css';
 import Auth0Lock from 'auth0-lock';
 
 import groceryBag from '../images/grocery-bag.jpg';

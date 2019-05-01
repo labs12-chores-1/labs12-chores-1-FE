@@ -13,7 +13,7 @@ import Invite from './components/Invite';
 import {getCurrentUser, checkEmail} from './store/actions/rootActions';
 import GroupDataBar from './components/GroupDataBar';
 import GroupDataDoughnut from './components/GroupDataDoughnut';
-
+import GroupTasks from './components/GroupTasks';
 class App extends Component {
 
   componentWillMount(){
@@ -34,6 +34,7 @@ class App extends Component {
         <Route path = '/callback' component = {Callback} />
         <Route exact path='/groups' component={GroupsPage} />
         <Route path='/groups/:id' render={props => <GroupsProfile {...props} />} />
+        <Route path= '/groups/:id/tasktrak' component ={GroupTasks}/>
         <Route path = '/billing' component = {BillingPage} />
         <Route path = '/invite' component = {Invite} />
         <Route path = '/data/:id' component = {GroupDataBar} />
