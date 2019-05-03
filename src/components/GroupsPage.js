@@ -173,9 +173,17 @@ class GroupsPage extends Component {
                               Create a new group and start inviting to help with the
                               shopping!
                             </MDBCardText>
-                            <MDBBtn color="primary" onClick={this.toggle(14)}>
-                              Create
-                            </MDBBtn>
+                            <form>
+                              <input
+                                className="create-input"
+                                label="Group Name"
+                                name={"groupName"}
+                                onChange={this.handleInput}
+                                defaultValue={this.state.groupName}
+                                onKeyDown={this.keyPress}
+                              />
+                              <button className="create-button" onClick={this.handleAddGroup}>Create Group</button>
+                            </form>
                           </MDBCardBody>
                         </MDBCard>
                       </div>
@@ -195,16 +203,6 @@ class GroupsPage extends Component {
 
 
               }
-              <form>
-              <input
-                 label="Group Name"
-                 name={this.state.groupName}
-                 onChange={this.handleInput}
-                 defaultValue={this.state.groupName}
-                //  onKeyDown={this.keyPress}
-              />
-              <button onClick={this.handleAddGroup}>add group</button>
-              </form>
               <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
                 <MDBModalHeader toggle={this.toggle(14)}>
                   Create A New Group

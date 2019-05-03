@@ -33,8 +33,8 @@ class App extends Component {
           component={UserProfile} />
         <Route path = '/callback' component = {Callback} />
         <Route exact path='/groups' component={GroupsPage} />
-        <Route path='/groups/:id' render={props => <GroupsProfile {...props} />} />
-        <Route path= '/groups/:id/tasktrak' component ={GroupTasks}/>
+        <Route path='/groups/:id' render={props => <GroupsProfile {...props} component={GroupTasks} />} />
+        {/* <Route path= '/groups/:id/tasktrak' component ={GroupTasks}/> */}
         <Route path = '/billing' component = {BillingPage} />
         <Route path = '/invite' component = {Invite} />
         <Route path = '/data/:id' component = {GroupDataBar} />
