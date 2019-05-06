@@ -14,6 +14,7 @@ import {getCurrentUser, checkEmail} from './store/actions/rootActions';
 import GroupDataBar from './components/GroupDataBar';
 import GroupDataDoughnut from './components/GroupDataDoughnut';
 import GroupTasks from './components/GroupTasks';
+import GroupTaskView from './components/GroupTaskView';
 class App extends Component {
 
   componentWillMount(){
@@ -33,10 +34,13 @@ class App extends Component {
         <Route exact path='/groups' component={GroupsPage} />
         <Route exact path='/groups/:id' render={props => <GroupsProfile {...props}/>} />
         <Route exact path= '/groups/:id/tasktrak' render={props => <GroupTasks {...props}/>} />
+        <Route exact path= '/groups/tasktrak/taskview' render={props => <GroupTaskView {...props}/>} />
+
         <Route path = '/billing' component = {BillingPage} />
         <Route path = '/invite' component = {Invite} />
         <Route path = '/data/:id' component = {GroupDataBar} />
         <Route path = '/doughnut/:id' component = {GroupDataDoughnut} />
+        
       </Switch>
       </div>
     );

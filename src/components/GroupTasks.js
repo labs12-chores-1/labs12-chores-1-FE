@@ -15,6 +15,7 @@ render() {
         <div className="task-container">
             <h1>Task Trak!!!</h1>
             <Link to={`/groups/${this.props.match.params.id}`}><button> Shop Trak!!!</button></Link>
+            <Link to={`/groups/tasktrak/taskview`}><button> Group Task View</button></Link>
         </div>
     )
     }
