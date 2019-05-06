@@ -28,13 +28,11 @@ class App extends Component {
       <Navigation />
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route 
-          path = '/profile' 
-          component={UserProfile} />
+        <Route path = '/profile' component={UserProfile} />
         <Route path = '/callback' component = {Callback} />
         <Route exact path='/groups' component={GroupsPage} />
-        <Route path='/groups/:id' render={props => <GroupsProfile {...props} component={GroupTasks} />} />
-        {/* <Route path= '/groups/:id/tasktrak' component ={GroupTasks}/> */}
+        <Route exact path='/groups/:id' render={props => <GroupsProfile {...props}/>} />
+        <Route exact path= '/groups/:id/tasktrak' render={props => <GroupTasks {...props}/>} />
         <Route path = '/billing' component = {BillingPage} />
         <Route path = '/invite' component = {Invite} />
         <Route path = '/data/:id' component = {GroupDataBar} />
