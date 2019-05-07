@@ -16,20 +16,24 @@ import "./Styles/TaskCard.css";
 
 const TaskCard = props => {
   return (
-      <div className="task-card">
-        <div className="task-card-left">
-             <h7>{props.task}</h7>
-             <h7>Requested by: {props.requestedBy}</h7>
-        </div>
-        <div className="task-card-middle">
-            <h5>{props.assignee}</h5>
-        </div>
-        <div className="task-card-right">
-            <img src={commentImg} height="30" width="30"></img>
-            <input type="checkbox" name="vehicle" value="Bike"></input>
-            <h7>Done</h7>
-        </div>
-      </div>
+      <MDBCard className="task-card" 
+        onClick={()=>props.history.push(`/task/${props.taskID}`)}
+      >
+        <MDBCardBody className="task-card-body">
+            <div className="task-card-left">
+                <h7>{props.taskID}</h7>
+                <h7>Requested by: {props.requestedBy}</h7>
+            </div>
+            <div className="task-card-middle">
+                <h5>{props.assignee}</h5>
+            </div>
+            <div className="task-card-right">
+                <img src={commentImg} height="30" width="30"></img>
+                <input type="checkbox" name="vehicle" value="Bike"></input>
+                <h7>Done</h7>
+            </div>
+        </MDBCardBody>
+      </MDBCard>
     // <MDBCard className="task-card">
     //     <MDBCardTitle>{props.task}</MDBCardTitle>
     //     <

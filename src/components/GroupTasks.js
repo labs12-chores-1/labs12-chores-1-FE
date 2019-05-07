@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
+import { withRouter } from "react-router";
 import {
     MDBCard,
     MDBCardBody,
@@ -12,7 +13,11 @@ import {
     MDBModalBody,
     MDBModalHeader,
     MDBModalFooter,
-    MDBInput
+    MDBInput,
+    MDBRow,
+    MDBCol,
+    MDBIcon,
+    MDBContainer
   } from "mdbreact";
 
 class GroupTasks extends Component {
@@ -28,12 +33,23 @@ class GroupTasks extends Component {
 
 render() {
     return (
-        <div className="task-container">
-            <div className="tasks-cards">
+        <MDBContainer className="group-task-container">
+            <MDBRow>
+                <MDBCol md="12" className="mb-4">
+                    <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
+                    <div className="nav-btns">
+                        <MDBBtn outline color="success">New Task</MDBBtn>
+                        <MDBBtn outline color="success">Delete Task</MDBBtn> 
+                    </div>
+
+
+                </MDBCol>
+            </MDBRow>
+            <MDBContainer className="task-cards">
                 {/* {this.props.groupTasks !== null
                     ? this.props.userGroups.map(group => ( */}
                         <TaskCard
-                            task={1}
+                            taskID={1}
                             taskname={"Walk Dog"}
                             requestedBy={"Alex"}
                             done={0}
@@ -49,11 +65,11 @@ render() {
                     : null
                 } */}
 
-            </div>
-            <Link to={`/groups/${this.props.match.params.id}`}><button> Shop Trak!!!</button></Link>
-        </div>
+            </MDBContainer>
+   
+        </MDBContainer>
     )
     }
 }
 
-export default GroupTasks;
+export default withRouter(GroupTasks);
