@@ -8,10 +8,11 @@ import {
     MDBCard,
     MDBCardBody,
     MDBCardTitle,
-    MDBCardText
+    MDBCardText,
+    MDBInput 
  } from "mdbreact";
 
-class GroupTaskView extends Component {
+class TaskDetailView extends Component {
     constructor() {
         super();
         this.state= {
@@ -37,19 +38,22 @@ render() {
             <MDBCardTitle>Walk dog</MDBCardTitle>
             <MDBCardTitle tag="h6" sub className="mb-2 text-muted">Completed by Marie</MDBCardTitle>
         <MDBCardText>I'll do it tomorrow</MDBCardText>
+            
             <a href="#!" className="card-link"><MDBIcon icon="redo" /> 
         repeats every 3 days </a>
-            <a href="#!" className="card-link">
-        Another link
-            </a>
-        </MDBCardBody>
-        </MDBCard>
+
+        <div><MDBInput label="Done" filled checked type="checkbox" id="checkbox2" /></div>
+            </MDBCardBody>
+            </MDBCard>
+        </div>
+        </div>
+
+        <div className="taskComment-container">
 
             
-         </div>
         </div>
     )
     }
 }
 
-export default GroupTaskView;
+export default TaskDetailView;

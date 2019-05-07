@@ -104,8 +104,8 @@ class GroupsPage extends Component {
     this.props.createGroup(this.state.groupName, this.props.currentUser.id);
     this.toggle(14);
     this.props.getUserGroups(this.props.currentUser.id);
-    //         this.props.addGroup(this.state.groupName);
-    // this.setState({ modal14: false });
+            this.props.addGroup(this.state.groupName);
+    this.setState({ modal14: false });
     if (!this.props.userGroups) {
       this.props.getUserGroups(this.props.currentUser.id);
     }
