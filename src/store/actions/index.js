@@ -72,5 +72,8 @@ export {
   CLEAR_GROUP_HISTORY,
   UPDATE_NOTIFICATION,
   UPDATE_NOTIFICATION_SUCCESS,
-  updateGroupNotification
+  updateGroupNotification,
+  GET_COMMENTS_START, 
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_FAILURE
 } from "./rootActions";

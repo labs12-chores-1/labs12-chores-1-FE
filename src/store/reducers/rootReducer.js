@@ -39,6 +39,10 @@ import {
   ERROR,
   CLEAR_ERROR,
   CLEAR_GROUP_HISTORY,
+  GET_COMMENTS_START, 
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_FAILURE
+
 } from "../actions";
 
 const initialState = {
