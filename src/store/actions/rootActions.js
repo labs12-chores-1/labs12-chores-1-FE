@@ -64,10 +64,15 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const BEGIN_CHECK_OUT = 'BEGIN_CHECK_OUT';
 export const CHECK_OUT_COMPLETE = 'CHECK_OUT_COMPLETE';
 
-//COMMENTS
+// TASK
+export const DELETE_TASK_START = "DELETE_TASK_START";
+export const TASK_DELETED= "TASK_DELETED";
+
+//TASK - COMMENTS
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
 export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
+export const DELETE_COMMENTS = "DELETE_COMMENTS";
 
 // MISC
 export const ERROR = 'ERROR';
@@ -785,7 +790,7 @@ export const clearItems = () => {
  }
 
  /*
- *  TASK-COMMENTS ACTIONS
+ *  TASK - COMMENTS ACTIONS
  * --------------------------------------------------------------------------------
  */
 
@@ -810,6 +815,38 @@ export const clearItems = () => {
   }
 
  }
+ /*
+ *  TASK - DELETE ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+ /**
+ * Remove an existing comment from a group
+ * @param task - comment to be removed
+ * @returns {Function}
+ */
+export const deleteTask = (task) => {
+  let token = localStorage.deleteTask('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  let taskId = task.id;
+
+  const endpoint = axios.delete(`${backendURL}/api/task/remove/${taskId}`, options);
+
+  return dispatch => {
+    dispatch({type: DELETE_TASK_START})
+    endpoint.then(res => {
+      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
+    }).catch(err => {
+      //console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
+}
 
 /*
  * PURCHASE ITEM ACTIONS
