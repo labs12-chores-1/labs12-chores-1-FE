@@ -47,7 +47,6 @@ render() {
                             comments={0}
                             repeated={0}
                             assignee={"Jane"}
-                            done={false}
                             // group={1}
                             // updateGroup={this.saveGroupName}
                             // removeGroup={this.deleteGroup}

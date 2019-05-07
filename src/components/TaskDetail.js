@@ -42,12 +42,11 @@ render() {
                         <TaskCard
                             taskID={1}
                             taskname={"Walk Dog"}
-                            requestedBy={"Alex"}
+                            requestedBy={"John"}
                             done={0}
                             comments={0}
                             repeated={0}
-                            assignee={"Tsai"}
-                            done={false}
+                            assignee={"Jane"}
                             // group={1}
                             // updateGroup={this.saveGroupName}
                             // removeGroup={this.deleteGroup}

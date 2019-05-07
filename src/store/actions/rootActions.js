@@ -833,9 +833,9 @@ export const deleteTask = (task) => {
     }
   }
 
-  let taskId = task.id;
+  let deleteTaskId = task.id;
 
-  const endpoint = axios.delete(`${backendURL}/api/task/remove/${taskId}`, options);
+  const endpoint = axios.delete(`${backendURL}/api/task/remove/${deleteTaskId}`, options);
 
   return dispatch => {
     dispatch({type: DELETE_TASK_START})
