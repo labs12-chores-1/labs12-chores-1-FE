@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
 import { withRouter } from "react-router";
 import {
-    MDBCard,
-    MDBCardBody,
-    MDBCardTitle,
-    MDBCardText,
     MDBBtn,
-    MDBModal,
-    MDBModalBody,
-    MDBModalHeader,
-    MDBModalFooter,
-    MDBInput,
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -51,11 +42,11 @@ render() {
                         <TaskCard
                             taskID={1}
                             taskname={"Walk Dog"}
-                            requestedBy={"Alex"}
+                            requestedBy={"John"}
                             done={0}
                             comments={0}
                             repeated={0}
-                            assignee={"Tsai"}
+                            assignee={"Jane"}
                             done={false}
                             // group={1}
                             // updateGroup={this.saveGroupName}
