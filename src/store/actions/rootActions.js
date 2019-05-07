@@ -796,7 +796,7 @@ export const clearItems = () => {
       Authorization: `Bearer ${token}`
     }
   }
-  const endpoint = axios.get(`${backendURL}/api/task/${id}`, options);
+  const endpoint = axios.get(`${backendURL}/api/comment/${id}`, options);
 
   return dispatch => {
     dispatch({type: GET_COMMENTS_START})
