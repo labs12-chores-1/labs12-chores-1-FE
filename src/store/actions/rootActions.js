@@ -802,7 +802,7 @@ export const clearItems = () => {
     dispatch({type: GET_COMMENTS_START})
     endpoint
     .then(res => {
-      console.log(res);
+      console.log(res.data);
       dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
     }).catch(err =>{
       dispatch({type: GET_COMMENTS_FAILURE, payload:err});

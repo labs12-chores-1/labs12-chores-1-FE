@@ -9,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import "./Styles/TaskCard.css";
 
 import { getTaskComments } from '../store/actions/rootActions';
+import { rootReducer } from "../store/reducers/rootReducer";
 
 const TaskCard = props => {
   
@@ -18,6 +19,8 @@ const TaskCard = props => {
   };
 
   return (
+      <>
+      
       <MDBCard className="task-card" 
         onClick={()=>props.history.push(`/task/${props.taskID}`)}
       >
@@ -36,15 +39,29 @@ const TaskCard = props => {
             </div>
         </MDBCardBody>
       </MDBCard>
+      <div>
+       {/* {console.log(props.taskComments)}
+      {props.taskComments.map(comment => (
+          <h4 key={comment.id}>{comment.commentString}</h4>
+        ))}  */}
+      </div>  
+
+      
+      
+      
+
+      </>
     
   );
 };
 const mapStateToProps = state => {
-  state = state.rootReducer; // pull values from state root reducer
+   // pull values from state root reducer
+   state = state.rootReducer;
   return {
     //state items
     taskComments: state.taskComments,
     errorMessage: state.errorMessage
+
   };
 };
 
