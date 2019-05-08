@@ -72,8 +72,12 @@ export const UPDATE_NOTIFICATION = 'UPDATE_NOTIFICATION';
 export const UPDATE_NOTIFICATION_SUCCESS = 'UPDATE_NOTIFICATION_SUCCESS';
 
 //TASK
-export const GET_GROUP_TASKS = 'GET_GROUP_TASKS';
-export const SAVE_GROUP_TASKS = 'SAVE_GROUP_TASKS';
+export const GET_GROUP_TASKS_START = 'GET_GROUP_TASKS_START';
+// export const SAVE_GROUP_TASKS_START = 'SAVE_GROUP_TASKS_START';
+export const GET_GROUP_TASKS_SUCCESS = 'GET_GROUP_TASKS_SUCCESS';
+export const GET_GROUP_TASKS_FAILURE = 'GET_GROUP_TASKS_FAILURE';
+
+
 export const CREATE_TASK = 'CREATE_TASK';
 export const TASK_CREATED = 'TASK_CREATED';
 export const UPDATE_TASK = 'UPDATE_TASK';
@@ -976,12 +980,16 @@ export const getGroupTasks = (groupId) => {
     }
   }
 
-  const endpoint = axios.get(`${backendURL}/api/item/group/${groupId}`, options);
+  const endpoint = axios.get(`${backendURL}/api/task/group/${groupId}`, options);
 
   return dispatch => {
-    dispatch({type: GET_GROUP_ITEMS})
-    endpoint.then(res => {
-      dispatch({type: SAVE_GROUP_ITEMS, payload: res.data});
+    dispatch({type: GET_GROUP_TASKS_START})
+    endpoint
+    .then(res => {
+      dispatch({type: GET_GROUP_TASKS_SUCCESS, payload: res.data});
+    }).catch(err => {
+      //console.log(err);
+      dispatch({type: GET_GROUP_TASKS_FAILURE, payload: err})
     })
   }
 }

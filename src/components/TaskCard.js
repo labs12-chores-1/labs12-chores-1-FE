@@ -31,7 +31,7 @@ const TaskCard = props => {
       >
         <MDBCardBody className="task-card-body">
             <div className="task-card-left">
-                <h7>{props.taskID}</h7>
+                <h7>{props.taskName}</h7>
                 <h7>Requested by: {props.requestedBy}</h7>
             </div>
             <div className="task-card-middle">
