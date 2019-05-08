@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import DropdownPage from './DropdownPage';
+import {getUserProfile, checkEmail} from '../store/actions/rootActions';
 import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
+import {connect} from 'react-redux';
 import { withRouter } from "react-router";
+import axios from 'axios';
 import {
     MDBCard,
     MDBCardBody,
@@ -25,30 +28,42 @@ import {
 class GroupTasks extends Component {
     // constructor(props) {
     //     super();
-        state= {
-            tasks:[],
-            searchField: "",
-
-<<<<<<< HEAD
-        };
+    componentWillMount(){
+        if(this.props.user){
+            // console.log('USER', this.props.user);
+            this.getLocalUser(this.props.user.userID)        }
     }
-    
 
-render() {
-    return (
-        <div className="task-container">
-            <h1>Task Trak!!!</h1>
-            <Link to={`/groups/${this.props.match.params.id}`}><button> Shop Trak!!!</button></Link>
-            <div className = 'dropdown'>
-            <DropdownPage title={"complete"} option1={"Allison"}></DropdownPage>
-                <DropdownPage title={"assigned"}></DropdownPage>
-            </div>
-        </div>
-        
-=======
-
-        // };
+    constructor(props){
+        super(props);
+        this.state = {
+            targetUser: null
         }
+    }
+
+    getLocalUser = id => {
+        let backendURL;
+        if(process.env.NODE_ENV === 'development'){
+        backendURL = `http://localhost:9000`
+        } else {
+        backendURL = `https://labs12-fairshare.herokuapp.com/`
+        }
+        
+        let token = localStorage.getItem('jwt');
+        let options = {
+            headers: {
+            Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios.get(`${backendURL}/api/user/${id}`, options).then(response => {
+            // console.log('localuser', response);
+            this.setState({
+                targetUser: response.data
+            })
+        })
+    }
+
 
 render() {
     return (
@@ -79,6 +94,9 @@ render() {
                             // group={1}
                             // updateGroup={this.saveGroupName}
                             // removeGroup={this.deleteGroup}
+                            // group & groupID# axios get to that
+                            // look at state/variables after that
+
                         />
                     {/* ))
                     : null
@@ -87,7 +105,6 @@ render() {
             </MDBContainer>
    
         </MDBContainer>
->>>>>>> 896f423f89e10128101d99d3256a70526f2498ef
     )
     }
 }

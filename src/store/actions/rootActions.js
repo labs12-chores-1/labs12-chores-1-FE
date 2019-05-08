@@ -286,7 +286,7 @@ export const removeAccount = () => {
  */
 export const getSingleGroup = (groupId) => {
   let token = localStorage.getItem('jwt');
-
+  
   let options = {
     headers: {
       Authorization: `Bearer ${token}`,
