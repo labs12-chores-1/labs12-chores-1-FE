@@ -48,6 +48,7 @@ render() {
                             repeated={0}
                             assignee={"Tsai"}
                             done={false}
+                            taskcomments={[]}
                             // group={1}
                             // updateGroup={this.saveGroupName}
                             // removeGroup={this.deleteGroup}

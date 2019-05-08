@@ -78,7 +78,7 @@ const initialState = {
   errorMessage: null,
   groupMembers: null,
 
-  taskComments: []
+  taskComments:[]
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -86,9 +86,9 @@ export const rootReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case GET_COMMENTS_START:
-      return {...state,
-      errorMessage: null
-    };
+      return {
+        state
+      }
 
     case GET_COMMENTS_SUCCESS:
     return {
@@ -100,7 +100,6 @@ export const rootReducer = (state = initialState, action) => {
     case GET_COMMENTS_FAILURE:
     return {
       ...state,
-      taskComments: null,
       errorMessage: action.payload
     };
 
