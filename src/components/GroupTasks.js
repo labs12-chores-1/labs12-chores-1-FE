@@ -19,7 +19,8 @@ import {
     getUserGroups,
     clearCurrentGroup,
     updateGroupName,
-    removeGroup
+    removeGroup,
+    getGroupTasks
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 
@@ -35,6 +36,10 @@ class GroupTasks extends Component {
 
         };
     }
+    componentWillMount(){
+        document.title = `FairShare - Task`;
+        this.props.getGroupTasks(this.props.match.params.id);
+    }
 
 render() {
     return (
@@ -44,29 +49,29 @@ render() {
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
                     <div className="nav-btns">
                         <MDBBtn outline color="success">New Task</MDBBtn>
-                        <MDBBtn outline color="success" onClick={this.props.deleteTask}>Delete Task</MDBBtn> 
+                    
                     </div>
                 </MDBCol>
             </MDBRow>
             <MDBContainer className="task-cards">
-                {/* {this.props.groupTasks !== null
-                    ? this.props.groupTasks.map(task => ( */}
+                {/* {console.log(this.props.currentGroupTasks)} */}
+                {this.props.currentGroupTasks !== null
+                    ? this.props.currentGroupTasks.data.map(task => (
                         <TaskCard
-                            taskID={1}
-                            taskname={"Walk Dog"}
-                            requestedBy={"John"}
-                            done={0}
-                            comments={0}
+                            taskID={task.id}
+                            taskName={task.taskName}
+                            requestedBy={"Alex"}
+                            done={task.completed}
+                            comments={task.comments}
                             repeated={0}
-                            assignee={"Jane"}
-                            done={false}
+                            assignee={task.completedBy}
                             // group={1}
                             // updateGroup={this.saveGroupName}
                             // removeGroup={this.deleteGroup}
                         />
-                     {/* ))
+                      ))
                     : null
-                }  */}
+                }  
 
             </MDBContainer>
    
@@ -80,7 +85,8 @@ const mapStateToProps = state => {
     return {
         //state items
         currentUser: state.currentUser,
-        currentGroup: state.currentGruop
+        currentGroup: state.currentGruop,
+        currentGroupTasks: state.currentGroupTasks
         // userGroups: state.userGroups,
         // userId: state.userId,
         // name: state.name,
@@ -102,7 +108,8 @@ export default connect(
         getCurrentUser,
         updateGroupName,
         removeGroup,
-        acceptInvite
+        acceptInvite,
+        getGroupTasks
     }
 )(GroupTasks);
   

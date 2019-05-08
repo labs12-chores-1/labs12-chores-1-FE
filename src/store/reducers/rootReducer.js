@@ -43,8 +43,11 @@ import {
   GET_COMMENTS_SUCCESS,
   GET_COMMENTS_FAILURE,
   DELETE_TASK_START,
-  TASK_DELETED
-} from "../actions";
+  TASK_DELETED,
+  GET_GROUP_TASKS_START, 
+  GET_GROUP_TASKS_SUCCESS,
+  GET_GROUP_TASKS_FAILURE
+} from "../actions/";
 
 const initialState = {
   currentUser: null,
@@ -80,7 +83,7 @@ const initialState = {
   groupMembers: null,
 
 //***** FairShare***********
-  groupTasks: null,
+  currentGroupTasks: null,
   taskComments: null
 
 };
@@ -89,6 +92,23 @@ export const rootReducer = (state = initialState, action) => {
 
 
   switch (action.type) {
+    case GET_GROUP_TASKS_START:
+      return {...state,
+      errorMessage: null
+    };
+    case GET_GROUP_TASKS_SUCCESS:
+    return {
+      ...state,
+      currentGroupTasks: action.payload
+      };
+    case GET_GROUP_TASKS_FAILURE:
+    return {
+      ...state,
+      currentGroupTasks: null,
+      errorMessage: action.payload
+    };
+
+
     case DELETE_TASK_START:
       return state;
 

@@ -25,15 +25,15 @@ class TaskDetail extends Component {
         };
     }
 
-    componentDidMount(){
+    componentWillMount(){
         document.title = `FairShare - Task`;
         this.props.getTaskComments(this.props.match.params.id);
     }
 
-    getComments = e => {
-        e.preventDefault();
-        this.props.getTaskComments(this.props.match.params.id);
-      };
+    // getComments = e => {
+    //     e.preventDefault();
+    //     this.props.getTaskComments(this.props.match.params.id);
+    //   };
 
 render() {
     return (
@@ -89,7 +89,7 @@ const mapStateToProps = state => {
       taskComments: state.taskComments,
       errorMessage: state.errorMessage
     };
-  };
+};
   
 
 export default withRouter(connect(mapStateToProps,{getTaskComments})(TaskDetail));
