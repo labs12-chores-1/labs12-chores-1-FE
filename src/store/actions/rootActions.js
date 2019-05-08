@@ -965,7 +965,7 @@ export const clearError = () => {
  */
 /**
  * Return the current group's tasks
- * @param groupId - ID of the group to return tasks from
+ * @param groupId - ID of the current group
  * @returns {Function}
  */
 export const getGroupTasks = (groupId) => {
@@ -1021,4 +1021,31 @@ export const deleteTask = (task) => {
  * COMMENT ACTIONS
  * --------------------------------------------------------------------------------
  */
+
+/**
+ * Get all comments of an existing task
+ * @param id -id of the targeting task
+ * @returns {Function}
+ */
+export const getTaskComments = (id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.get(`${backendURL}/api/comment/${id}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_COMMENTS_START})
+    endpoint
+    .then(res => {
+      console.log(res);
+      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
+    })
+  }
+
+ }
  

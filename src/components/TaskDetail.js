@@ -19,17 +19,24 @@ import {
     MDBIcon,
     MDBContainer
   } from "mdbreact";
+import { connect } from 'react-redux';
+import { getTaskComments } from '../store/actions/rootActions';
+// import { rootReducer } from "../store/reducers/rootReducer";
 
 class TaskDetail extends Component {
-    // constructor(props) {
-    //     super();
-        state= {
+    constructor(props) {
+        super(props);
+        this.state= {
             tasks:[],
             // searchField: "",
 
 
-        // };
-        }
+        };
+    }
+    getComments = e => {
+        e.preventDefault();
+        this.props.getTaskComments(this.props.match.params.id);
+      };
 
 render() {
     return (
@@ -48,19 +55,25 @@ render() {
 
             <MDBContainer className="task-card">
                 
-                        <TaskCard
-                            taskID={1}
-                            taskname={"Walk Dog"}
-                            requestedBy={"Tsai"}
-                            done={0}
-                            comments={0}
-                            repeated={0}
-                            assignee={"Alex"}
-                        
-                            // group={1}
-                            // updateGroup={this.saveGroupName}
-                            // removeGroup={this.deleteGroup}
-                        />          
+                <TaskCard
+                    taskID={1}
+                    taskname={"Walk Dog"}
+                    requestedBy={"Tsai"}
+                    done={0}
+                    comments={0}
+                    repeated={0}
+                    assignee={"Alex"}
+                
+                    // group={1}
+                    // updateGroup={this.saveGroupName}
+                    // removeGroup={this.deleteGroup}
+                />   
+                <div>
+                    {console.log(this.props.taskComments)}
+                    {this.props.taskComments.map(comment => (
+                        <h4 key={comment.id}>{comment.commentString}</h4>
+                        ))} 
+                </div>         
 
             </MDBContainer>
         </MDBContainer>
@@ -68,4 +81,14 @@ render() {
     }
 }
 
-export default withRouter(TaskDetail);
+const mapStateToProps = state => {
+    state = state.rootReducer; // pull values from state root reducer
+    return {
+      //state items
+      taskComments: state.taskComments,
+      errorMessage: state.errorMessage
+    };
+  };
+  
+
+export default withRouter(connect(mapStateToProps,{getTaskComments})(TaskDetail));

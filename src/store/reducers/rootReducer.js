@@ -86,6 +86,33 @@ const initialState = {
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case DELETE_TASK_START:
+      return state;
+
+    case TASK_DELETED:
+      return {
+        ...state,
+        needsNewTask: action.payload,
+        errorMessage: null
+      };
+
+    case GET_COMMENTS_START:
+      return {...state,
+      errorMessage: null
+    };
+    case GET_COMMENTS_SUCCESS:
+    return {
+      ...state,
+      taskComments: action.payload,
+        errorMessage: null,
+      };
+    case GET_COMMENTS_FAILURE:
+    return {
+      ...state,
+      taskComments: null,
+      errorMessage: action.payload
+    };
+
     case CHECKING_EMAIL:
       return state;
 
@@ -349,32 +376,7 @@ export const rootReducer = (state = initialState, action) => {
         errorMessage: null
       };
 
-    case DELETE_TASK_START:
-      return state;
-
-    case TASK_DELETED:
-      return {
-        ...state,
-        needsNewTask: action.payload,
-        errorMessage: null
-      };
     
-    case GET_COMMENTS_START:
-      return {...state,
-      errorMessage: null
-    };
-    case GET_COMMENTS_SUCCESS:
-    return {
-      ...state,
-      taskComments: action.payload,
-        errorMessage: null,
-      };
-    case GET_COMMENTS_FAILURE:
-    return {
-      ...state,
-      taskComments: null,
-      errorMessage: action.payload
-    };
 
     default:
       return state;

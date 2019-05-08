@@ -53,7 +53,7 @@ render() {
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
                     <div className="nav-btns">
                         <MDBBtn outline color="success">New Task</MDBBtn>
-                        <MDBBtn outline color="success">Delete Task</MDBBtn> 
+                        <MDBBtn outline color="success" onClick={this.props.deleteTask}>Delete Task</MDBBtn> 
                     </div>
                 </MDBCol>
             </MDBRow>
@@ -89,9 +89,7 @@ const mapStateToProps = state => {
     return {
         //state items
         currentUser: state.currentUser,
-        currentGroup: state.currentGruop,
-
-
+        currentGroup: state.currentGruop
         // userGroups: state.userGroups,
         // userId: state.userId,
         // name: state.name,
