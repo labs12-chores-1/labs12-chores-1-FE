@@ -30,7 +30,7 @@ render() {
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
                     <div className="nav-btns">
                         <MDBBtn outline color="success">New Task</MDBBtn>
-                        <MDBBtn outline color="success">Delete Task</MDBBtn> 
+                        {/* <MDBBtn outline color="success" onClick={this.props.removeTask}>Delete Task</MDBBtn>  */}
                     </div>
 
 
@@ -47,6 +47,7 @@ render() {
                             comments={0}
                             repeated={0}
                             assignee={"Jane"}
+                            done={false}
                             // group={1}
                             // updateGroup={this.saveGroupName}
                             // removeGroup={this.deleteGroup}

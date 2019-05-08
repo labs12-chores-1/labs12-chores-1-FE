@@ -43,7 +43,8 @@ import {
   GET_COMMENTS_SUCCESS,
   GET_COMMENTS_FAILURE,
   DELETE_TASK_START,
-  TASK_DELETED
+  TASK_DELETED,
+  DELETE_TASK_FAIL
   
 
 } from "../actions";
@@ -81,7 +82,8 @@ const initialState = {
   errorMessage: null,
   groupMembers: null,
 
-  taskComments: []
+  taskComments: [], 
+  deleteMessage: ''
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -90,12 +92,20 @@ export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case DELETE_TASK_START:
       return state;
+    
     case TASK_DELETED:
       return {
         ...state,
-        needsNewTask: action.payload,
+        deleteMessage: action.payload,
         errorMessage: null
       };
+
+    case DELETE_TASK_FAIL:
+      return {
+        ...state,
+        deleteMessage: action.payload,
+        errorMessage: null
+      }
 
     case GET_COMMENTS_START:
       return {...state,

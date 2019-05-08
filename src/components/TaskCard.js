@@ -21,7 +21,7 @@ const TaskCard = props => {
                 <h5>{props.assignee}</h5>
             </div>
             <div className="task-card-right">
-                <img src={commentImg} height="30" width="30"></img>
+                <img src={commentImg} alt="" height="30" width="30"></img>
                 <input type="checkbox" name="vehicle" value="Bike"></input>
                 <h7>Done</h7>
             </div>

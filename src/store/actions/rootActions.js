@@ -67,6 +67,7 @@ export const CHECK_OUT_COMPLETE = 'CHECK_OUT_COMPLETE';
 // TASK
 export const DELETE_TASK_START = "DELETE_TASK_START";
 export const TASK_DELETED= "TASK_DELETED";
+export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
 
 //TASK - COMMENTS
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
@@ -826,24 +827,24 @@ export const clearItems = () => {
  * @returns {Function}
  */
 export const deleteTask = (task) => {
-  let token = localStorage.deleteTask('jwt');
+  let token = localStorage.getItem('jwt');
   let options = {
     headers: {
       Authorization: `Bearer ${token}`
     }
   }
 
-  let deleteTaskId = task.id;
-
-  const endpoint = axios.delete(`${backendURL}/api/task/remove/${deleteTaskId}`, options);
+  let deleteTaskId = task;
+  const endpoint = axios.delete(`${backendURL}/api/task/${deleteTaskId}`, options);
 
   return dispatch => {
     dispatch({type: DELETE_TASK_START})
     endpoint.then(res => {
+      console.log('delete working');
       dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
     }).catch(err => {
       //console.log(err);
-      dispatch({type: ERROR})
+      dispatch({type: DELETE_TASK_FAIL, payload: err})
     })
   }
 }
