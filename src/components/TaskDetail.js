@@ -27,12 +27,18 @@ class TaskDetail extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            tasks:[],
+            comments:[],
             // searchField: "",
 
 
         };
     }
+
+    componentDidMount(){
+        document.title = `FairShare - Task`;
+        this.props.getTaskComments(this.props.match.params.id);
+    }
+
     getComments = e => {
         e.preventDefault();
         this.props.getTaskComments(this.props.match.params.id);
@@ -45,7 +51,8 @@ render() {
                 <MDBCol md="12" className="mb-4">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
                     <div className="nav-btns">
-                        <MDBBtn outline color="success">New Task</MDBBtn>
+                        <MDBBtn outline color="success">Edit Task</MDBBtn>
+                        <MDBBtn outline color="success">Add Comment</MDBBtn>
                         <MDBBtn outline color="success">Delete Task</MDBBtn> 
                     </div>
 
@@ -69,10 +76,13 @@ render() {
                     // removeGroup={this.deleteGroup}
                 />   
                 <div>
-                    {console.log(this.props.taskComments)}
-                    {this.props.taskComments.map(comment => (
-                        <h4 key={comment.id}>{comment.commentString}</h4>
-                        ))} 
+                    {/* {console.log(this.props.taskComments)} */}
+                    {this.props.taskComments !== null
+                        ? this.props.taskComments.data.map(comment => (
+                            <h4 key={comment.id}>{comment.commentString}</h4>
+                        ))
+                        : null
+                    } 
                 </div>         
 
             </MDBContainer>

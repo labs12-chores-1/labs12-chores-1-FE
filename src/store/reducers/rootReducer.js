@@ -81,6 +81,7 @@ const initialState = {
 
 //***** FairShare***********
   groupTasks: null,
+  taskComments: null
 
 };
 
