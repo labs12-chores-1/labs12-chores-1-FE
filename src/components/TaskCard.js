@@ -6,6 +6,9 @@ import {
   MDBCardBody,
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import { getTaskComments } from '../store/actions/rootActions';
+// import { rootReducer } from "../store/reducers/rootReducer";
 
 import "./Styles/TaskCard.css";
 import "./Styles/Comments.css";
@@ -14,11 +17,10 @@ import { getTaskComments } from '../store/actions/rootActions';
 import { rootReducer } from "../store/reducers/rootReducer";
 
 const TaskCard = props => {
-  
+
   const getComments = e => {
     e.preventDefault();
-    props.getTaskComments(props.match.params.id);
-    console.log(props.match.params.id);
+    props.getTaskComments(props.match.params.id);//<----------------??
   };
 
   return (
@@ -41,39 +43,19 @@ const TaskCard = props => {
                 <h7>Done</h7>
             </div>
         </MDBCardBody>
-        
       </MDBCard>
-      {console.log(props.taskComments)}
-
-      {/* <div >{props.taskComments.map(comment => (
-        (console.log('inside commennt:',{comment})),
-          <h2 className="comments" key={comment.id}>{comment.commentString}</h2>
-        ))}</div> */}
-
-      
-      
-       
-      
-      
-      
-
-      
-      
-      
-
       </>
-    
   );
 };
-const mapStateToProps = state => ({
-   // pull values from state root reducer
-   
-  
+
+
+const mapStateToProps = state => {
+  state = state.rootReducer; // pull values from state root reducer
+  return {
     //state items
     taskComments: state.taskComments,
     errorMessage: state.errorMessage
-
-  
-});
+  };
+};
 
 export default withRouter(connect(mapStateToProps,{getTaskComments})(TaskCard));

@@ -75,5 +75,7 @@ export {
   updateGroupNotification,
   GET_COMMENTS_START, 
   GET_COMMENTS_SUCCESS,
-  GET_COMMENTS_FAILURE
+  GET_COMMENTS_FAILURE,
+  DELETE_TASK_START,
+  TASK_DELETED
 } from "./rootActions";

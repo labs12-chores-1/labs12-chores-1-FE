@@ -76,6 +76,24 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const UPDATE_NOTIFICATION = 'UPDATE_NOTIFICATION';
 export const UPDATE_NOTIFICATION_SUCCESS = 'UPDATE_NOTIFICATION_SUCCESS';
 
+//TASK
+export const GET_GROUP_TASKS = 'GET_GROUP_TASKS';
+export const SAVE_GROUP_TASKS = 'SAVE_GROUP_TASKS';
+export const CREATE_TASK = 'CREATE_TASK';
+export const TASK_CREATED = 'TASK_CREATED';
+export const UPDATE_TASK = 'UPDATE_TASK';
+export const TASK_UPDATED = 'TASK_UPDATED';
+export const DELETE_TASK_START = 'DELETE_TASK';
+export const TASK_DELETED = 'TASK_DELETED';
+export const CLEAR_TASKS = 'CLEAR_TASKS';
+
+// COMMENT
+export const GET_COMMENTS_START = "GET_COMMENTS_START";
+export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
+export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
+export const DELETE_COMMENTS = "DELETE_COMMENTS";
+
+
 // Defines URL for development and production/staging environments
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -972,3 +990,94 @@ export const clearError = () => {
     dispatch({ type: CLEAR_ERROR })
   }
 }
+
+/*
+ * TASK ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+/**
+ * Return the current group's tasks
+ * @param groupId - ID of the current group
+ * @returns {Function}
+ */
+export const getGroupTasks = (groupId) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/item/group/${groupId}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_GROUP_ITEMS})
+    endpoint.then(res => {
+      dispatch({type: SAVE_GROUP_ITEMS, payload: res.data});
+    })
+  }
+}
+
+/**
+ * Remove an existing task from a group
+ * @param task -task to be removed
+ * @returns {Function}
+ */
+export const deleteTask = (task) => {
+  let token = localStorage.deleteTask('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  // let taskId = task.id;
+  let deleteTaskId = task.id;
+
+  // const endpoint = axios.delete(`${backendURL}/api/task/remove/${taskId}`, options);
+  const endpoint = axios.delete(`${backendURL}/api/task/remove/${deleteTaskId}`, options);
+
+  return dispatch => {
+    dispatch({type: DELETE_TASK_START})
+    endpoint.then(res => {
+      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
+    }).catch(err => {
+      //console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
+}
+
+
+/*
+ * COMMENT ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+/**
+ * Get all comments of an existing task
+ * @param id -id of the targeting task
+ * @returns {Function}
+ */
+export const getTaskComments = (id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.get(`${backendURL}/api/comment/${id}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_COMMENTS_START})
+    endpoint
+    .then(res => {
+      console.log(res);
+      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
+    })
+  }
+
+ }
+ 
