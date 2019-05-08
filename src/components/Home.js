@@ -25,7 +25,7 @@ var lockOptions = {
         primaryColor: '#FF7043'
     },
     languageDictionary: {
-        title: 'ShopTrak'
+        title: 'FairShare'
     }
 }
 
@@ -38,7 +38,7 @@ var lock = new Auth0Lock(
 
 class Home extends React.Component{
         componentDidMount() {
-                document.title = `ShopTrak`;
+                document.title = `FairShare`;
         }
 
         
@@ -60,7 +60,7 @@ class Home extends React.Component{
                 <img src = {groceryBag} alt = 'bag of groceries'></img>
 
                 <div className = 'home-banner-overlay'>
-                <h1>SHOPTRAK</h1>
+                <h1>FAIRSHARE</h1>
 
                 <h2>Shared living, made simple.</h2>
                 </div>
@@ -77,7 +77,7 @@ class Home extends React.Component{
                         </div>
                         <div className = 'about-text'>
                         <h3>Roommates? <br></br>Handled.</h3>
-                            <p>Shared living means shared expenses, but keeping a tally can be a hassle. Keep track of everyone's contributions with ShopTrak.</p>
+                            <p>Shared living means shared expenses, but keeping a tally can be a hassle. Keep track of everyone's contributions with FairShare.</p>
                         </div>
                     </div>
 
@@ -189,7 +189,7 @@ class Home extends React.Component{
                 </main>
 
                 <footer>
-                    Created at Lambda Labs - © ShopTrak 2019
+                    Created at Lambda Labs - © FairShare 2019
                 </footer>
             </div>
         )

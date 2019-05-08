@@ -39,7 +39,15 @@ import {
   ERROR,
   CLEAR_ERROR,
   CLEAR_GROUP_HISTORY,
-} from "../actions";
+  GET_COMMENTS_START, 
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_FAILURE,
+  DELETE_TASK_START,
+  TASK_DELETED,
+  GET_GROUP_TASKS_START, 
+  GET_GROUP_TASKS_SUCCESS,
+  GET_GROUP_TASKS_FAILURE
+} from "../actions/";
 
 const initialState = {
   currentUser: null,
@@ -73,10 +81,59 @@ const initialState = {
 
   errorMessage: null,
   groupMembers: null,
+
+//***** FairShare***********
+  currentGroupTasks: null,
+  taskComments: null
+
 };
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_GROUP_TASKS_START:
+      return {...state,
+      errorMessage: null
+    };
+    case GET_GROUP_TASKS_SUCCESS:
+    return {
+      ...state,
+      currentGroupTasks: action.payload
+      };
+    case GET_GROUP_TASKS_FAILURE:
+    return {
+      ...state,
+      currentGroupTasks: null,
+      errorMessage: action.payload
+    };
+
+
+    case DELETE_TASK_START:
+      return state;
+
+    case TASK_DELETED:
+      return {
+        ...state,
+        needsNewTask: action.payload,
+        errorMessage: null
+      };
+
+    case GET_COMMENTS_START:
+      return {...state,
+      errorMessage: null
+    };
+    case GET_COMMENTS_SUCCESS:
+    return {
+      ...state,
+      taskComments: action.payload,
+        errorMessage: null,
+      };
+    case GET_COMMENTS_FAILURE:
+    return {
+      ...state,
+      taskComments: null,
+      errorMessage: action.payload
+    };
+
     case CHECKING_EMAIL:
       return state;
 
@@ -339,6 +396,8 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         errorMessage: null
       };
+
+    
 
     default:
       return state;
