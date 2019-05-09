@@ -15,17 +15,10 @@ import "./Styles/TaskCard.css";
 import { getTaskComments } from '../store/actions/rootActions';
 
 const TaskCard = props => {
-<<<<<<< HEAD
-
-  const getComments = e => {
-    e.preventDefault();
-    props.getTaskComments(props.match.params.id);//<----------------??
-=======
   
   const getComments = e => {
     e.preventDefault();
     props.getTaskComments(props.match.params.id);
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
   };
 
   return (
@@ -47,10 +40,6 @@ const TaskCard = props => {
             </div>
         </MDBCardBody>
       </MDBCard>
-<<<<<<< HEAD
-=======
-    
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
   );
 };
 const mapStateToProps = state => {
@@ -62,7 +51,6 @@ const mapStateToProps = state => {
   };
 };
 
-<<<<<<< HEAD
 const mapStateToProps = state => {
   state = state.rootReducer; // pull values from state root reducer
   return {
@@ -72,6 +60,4 @@ const mapStateToProps = state => {
   };
 };
 
-=======
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
 export default withRouter(connect(mapStateToProps,{getTaskComments})(TaskCard));
