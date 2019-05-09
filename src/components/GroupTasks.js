@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 // import { Link } from 'react-router-dom';
-=======
-//import { Link } from 'react-router-dom';
->>>>>>> master
 import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
 // import { withRouter } from "react-router";
 import {
-<<<<<<< HEAD
     // MDBCard,
     // MDBCardBody,
     // MDBCardTitle,
@@ -19,9 +14,6 @@ import {
     // MDBModalHeader,
     // MDBModalFooter,
     // MDBInput,
-=======
-    MDBBtn,
->>>>>>> master
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -75,7 +67,6 @@ render() {
                 {this.props.currentGroupTasks !== null
                     ? this.props.currentGroupTasks.data.map(task => (
                         <TaskCard
-<<<<<<< HEAD
                             taskID={task.id}
                             taskName={task.taskName}
                             requestedBy={"Alex"}
@@ -83,16 +74,6 @@ render() {
                             comments={task.comments}
                             repeated={0}
                             assignee={task.completedBy}
-=======
-                            taskID={1}
-                            taskname={"Walk Dog"}
-                            requestedBy={"John"}
-                            done={0}
-                            comments={0}
-                            repeated={0}
-                            assignee={"Jane"}
-                            done={false}
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
                             // group={1}
                             // updateGroup={this.saveGroupName}
                             // removeGroup={this.deleteGroup}

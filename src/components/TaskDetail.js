@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 // import { Link } from 'react-router-dom';
-=======
-//import { Link } from 'react-router-dom';
->>>>>>> master
 import "./Styles/TaskDetail.css";
 import TaskCard from "./TaskCard";
 import { withRouter } from "react-router";
 import {
-<<<<<<< HEAD
     // MDBCard,
     // MDBCardBody,
     // MDBCardTitle,
@@ -19,9 +14,6 @@ import {
     // MDBModalHeader,
     // MDBModalFooter,
     // MDBInput,
-=======
-    MDBBtn,
->>>>>>> master
     MDBRow,
     MDBCol,
     MDBIcon,

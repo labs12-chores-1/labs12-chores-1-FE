@@ -41,7 +41,6 @@ import {
   CLEAR_GROUP_HISTORY,
   GET_COMMENTS_START, 
   GET_COMMENTS_SUCCESS,
-<<<<<<< HEAD
   GET_COMMENTS_FAILURE,
   DELETE_TASK_START,
   TASK_DELETED,
@@ -51,11 +50,6 @@ import {
   GET_USER_NAME_START,
   GET_USER_NAME_SUCCESS
 } from "../actions/";
-=======
-  GET_COMMENTS_FAILURE
-
-} from "../actions";
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
 
 const initialState = {
   currentUser: null,
@@ -90,22 +84,17 @@ const initialState = {
   errorMessage: null,
   groupMembers: null,
 
-<<<<<<< HEAD
 //***** FairShare***********
   currentGroupTasks: null,
   taskComments: null,
   tempUserName: null
 
-=======
-  taskComments: []
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
 };
 
 export const rootReducer = (state = initialState, action) => {
 
 
   switch (action.type) {
-<<<<<<< HEAD
     case GET_USER_NAME_START:
       return {...state,
         errorMessage: null
@@ -116,9 +105,6 @@ export const rootReducer = (state = initialState, action) => {
         tempUserName: action.payload
       };
 
-=======
-<<<<<<< HEAD
->>>>>>> master
     case GET_GROUP_TASKS_START:
       return {...state,
       errorMessage: null
@@ -146,26 +132,16 @@ export const rootReducer = (state = initialState, action) => {
         errorMessage: null
       };
 
-=======
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
     case GET_COMMENTS_START:
       return {...state,
       errorMessage: null
     };
-<<<<<<< HEAD
-=======
-
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
     case GET_COMMENTS_SUCCESS:
     return {
       ...state,
       taskComments: action.payload,
         errorMessage: null,
       };
-<<<<<<< HEAD
-=======
-
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
     case GET_COMMENTS_FAILURE:
     return {
       ...state,
