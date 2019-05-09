@@ -27,7 +27,7 @@ class TaskDetail extends Component{
     removeTask = e => {
         e.preventDefault();
         this.props.deleteTask(this.props.match.params.id);
-        window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task pask
+        window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
 
     }
 
