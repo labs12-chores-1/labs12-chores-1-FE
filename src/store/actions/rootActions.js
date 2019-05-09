@@ -1060,7 +1060,7 @@ export const getTaskComments = (id) => {
 
  }
  
-//adds item to group list
+//adds item to group list updated
  export const createGroupTask = (task) => {
   const token = localStorage.getItem('jwt');
   
