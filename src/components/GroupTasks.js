@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
-import { withRouter } from "react-router";
+//import { withRouter } from "react-router";
 import {
     MDBBtn,
     MDBRow,
@@ -20,15 +20,21 @@ import {
     clearCurrentGroup,
     updateGroupName,
     removeGroup,
-    getGroupTasks
+    getGroupTasks,
+    createGroupTask
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
+//import { bool } from 'prop-types';
 
 class GroupTasks extends Component {
     constructor(props) {
         super(props);
         this.state= {
             tasks:[],
+            taskName: "",
+            taskDescription:"",
+            taskCompleted: false,
+            taskcompletedBy: 1,
             searchField: "",
             groupId: null,
             userId: null
@@ -40,7 +46,21 @@ class GroupTasks extends Component {
         document.title = `FairShare - Task`;
         this.props.getGroupTasks(this.props.match.params.id);
     }
+    handleChanges=(e)=>{
+        this.setState({[e.target.name]:e.target.value})
+    }
+    createTask = (e) => {
+        e.preventDefault();
+        let task = {
+            taskName:this.state.taskName,
+            
+            groupID:this.props.match.params.id
+            
+        }
 
+        this.props.createGroupTask(task);
+        window.location.reload()      
+    };
 render() {
     return (
         <MDBContainer className="group-task-container">
@@ -67,14 +87,28 @@ render() {
                             // group={1}
                             // updateGroup={this.saveGroupName}
                             // removeGroup={this.deleteGroup}
+                            // group & groupID# axios get to that
+                            // look at state/variables after that
+
                         />
                       ))
                     : null
                 }  
 
             </MDBContainer>
-   
+            <form onSubmit={this.createTask}>
+        <input 
+            type="text"
+            placeholder="enter task"
+            name="taskName"
+            value={this.state.taskName}
+            onChange={this.handleChanges}
+          />
+          <button type='submit'>Submit</button>
+      </form>
         </MDBContainer>
+
+        
     )
     }
 }
@@ -108,7 +142,8 @@ export default connect(
         updateGroupName,
         removeGroup,
         acceptInvite,
-        getGroupTasks
+        getGroupTasks,
+        createGroupTask
     }
 )(GroupTasks);
   

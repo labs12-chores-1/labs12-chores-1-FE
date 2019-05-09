@@ -53,7 +53,7 @@ class TaskCard extends Component {
                 <h5>{this.props.assignee}</h5>
             </div>
             <div className="task-card-right">
-                <img onClick ={this.getComments} src={commentImg} height="30" width="30"></img>
+                <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
                 <input type="checkbox" name="vehicle" value="Bike"></input>
                 <h7>Done</h7>
             </div>
