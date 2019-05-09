@@ -12,6 +12,9 @@ export const SAVE_USERNAME = 'SAVE_USERNAME';
 export const SAVE_PROFILEPIC = 'SAVE_PROFILEPIC';
 export const REMOVE_ACCOUNT = 'REMOVE_ACCOUNT';
 
+export const GET_USER_NAME_START = 'GET_USER_NAME_START';
+export const GET_USER_NAME_SUCCESS = 'GET_USER_NAME_SUCCESS';
+
 // GROUP
 export const FETCHING_SINGLE_GROUP = 'FETCHING_SINGLE_GROUP';
 export const SINGLE_GROUP_FETCHED = 'SINGLE_GROUP_FETCHED';
@@ -121,8 +124,8 @@ export const checkEmail = () => {
       Authorization: `Bearer ${token}`, // we can extract the email from the token instead of explicitly sending it in req.body
     }
   }
-
   const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
+  // console.log(fetchUserId);
 
   return (dispatch) => {
     dispatch({type: CHECKING_EMAIL});
@@ -186,16 +189,41 @@ export const getUserProfile = userId => {
     }
   }
 
-  const fetchGroupProfile = axios.get(`${backendURL}/api/user/${userId}`, options);
+  const fetchUserProfile = axios.get(`${backendURL}/api/user/${userId}`, options);
 
   return dispatch => {
     dispatch({type: GET_USER_PROFILE});
 
-    fetchGroupProfile.then(res => {
+    fetchUserProfile.then(res => {
       dispatch({type: SAVE_USER_PROFILE, payload: res.data});
     })
   }
 }
+
+/**
+ * Returns the name of a user
+ * @param userId - ID of the targeted user
+ * @returns {Function}
+ */
+export const getUserName = userId => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const fetchUserName = axios.get(`${backendURL}/api/user/${userId}/name`, options);
+
+  return dispatch => {
+    dispatch({type: GET_USER_NAME_START});
+
+    fetchUserName.then(res => {
+      dispatch({type: GET_USER_NAME_SUCCESS, payload: res.data});
+    })
+  }
+}
+
 
 /**
  * Updates the current user's username/name

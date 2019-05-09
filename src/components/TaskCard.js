@@ -1,50 +1,71 @@
-import React from "react";
+import React, {Component} from "react";
 import commentImg from '../images/comment-img.jpg';
 import {
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
-  MDBNavLink,
-  MDBCardFooter,
-  MDBIcon,
-  MDBCardTitle,
-  MDBBtn,
-  MDBInput
+  // MDBCardHeader,
+  // MDBNavLink,
+  // MDBCardFooter,
+  // MDBIcon,
+  // MDBCardTitle,
+  // MDBBtn,
+  // MDBInput
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { getTaskComments } from '../store/actions/rootActions';
+import { getTaskComments, getUserName} from '../store/actions/rootActions';
 // import { rootReducer } from "../store/reducers/rootReducer";
 
 import "./Styles/TaskCard.css";
 
-const TaskCard = props => {
+class TaskCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state= {
+        tasks:[],
+        searchField: "",
+        groupId: null,
+        userId: null
+        
 
-  const getComments = e => {
+    };
+  }
+  componentWillMount(){
+      document.title = `FairShare - Task`;
+      this.props.getGroupTasks(this.props.match.params.id);
+  }
+  getComments = e => {
     e.preventDefault();
-    props.getTaskComments(props.match.params.id);//<----------------??
+    this.props.getTaskComments(this.props.match.params.id);//<----------------??
   };
 
-  return (
+  getUserName = id =>{
+    console.log(this.props.tempUserName)
+    this.props.getUserName(id);
+    return this.props.tempUserName;
+  }
+
+  render(){
+    return (
       <MDBCard className="task-card" 
-        onClick={()=>props.history.push(`/task/${props.taskID}`)}
+        onClick={()=>this.props.history.push(`/task/${this.props.taskID}`)}
       >
         <MDBCardBody className="task-card-body">
             <div className="task-card-left">
-                <h7>{props.taskName}</h7>
-                <h7>Requested by: {props.requestedBy}</h7>
+                <h7>{this.props.taskName}</h7>
+                <h7>Requested by: {this.props.requestedBy}</h7>
             </div>
             <div className="task-card-middle">
-                <h5>{props.assignee}</h5>
+                <h5>{this.getUserName}</h5>
             </div>
             <div className="task-card-right">
-                <img onClick ={getComments} src={commentImg} height="30" width="30"></img>
+                <img onClick ={this.getComments} src={commentImg} alt="" height="30" width="30"></img>
                 <input type="checkbox" name="vehicle" value="Bike"></input>
                 <h7>Done</h7>
             </div>
         </MDBCardBody>
       </MDBCard>
-  );
+  )}
 };
 
 const mapStateToProps = state => {
@@ -56,4 +77,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps,{getTaskComments})(TaskCard));
+export default withRouter(connect(mapStateToProps,{getTaskComments, getUserName})(TaskCard));
