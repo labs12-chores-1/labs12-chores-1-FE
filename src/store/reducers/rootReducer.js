@@ -49,7 +49,10 @@ import {
   GET_GROUP_TASKS_FAILURE,
   GROUP_TASK_CREATED,
   GROUP_TASK_ERROR,
-  CREATE_GROUP_TASK
+  CREATE_GROUP_TASK,
+  CREATE_COMMENT_START,
+  CREATE_COMMENT_SUCCESS,
+  CREATE_COMMENT_FAILURE
 } from "../actions/";
 
 const initialState = {
@@ -92,6 +95,8 @@ const initialState = {
 };
 
 export const rootReducer = (state = initialState, action) => {
+
+
   switch (action.type) {
     case GET_GROUP_TASKS_START:
       return {...state,
@@ -136,6 +141,23 @@ export const rootReducer = (state = initialState, action) => {
       taskComments: null,
       errorMessage: action.payload
     };
+
+    case CREATE_COMMENT_START:
+    return {
+      ...state,
+      errorMessage: null
+    };
+    case CREATE_COMMENT_SUCCESS:
+    return {
+      ...state,
+      taskComments: action.payload,
+      errorMessage: null
+    };
+    case CREATE_COMMENT_FAILURE:
+    return {
+      ...state,
+      errorMessage: action.payload
+    }
 
     case CHECKING_EMAIL:
       return state;

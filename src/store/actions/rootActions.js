@@ -93,7 +93,12 @@ export const CLEAR_TASKS = 'CLEAR_TASKS';
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
 export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
+
 export const DELETE_COMMENTS = "DELETE_COMMENTS";
+
+export const CREATE_COMMENT_START = "CREATE_COMMENT_START";
+export const CREATE_COMMENT_SUCCESS = "CREATE_COMMENT_SUCCESS";
+export const CREATE_COMMENT_FAILURE = "CREATE_COMMENT_FAILURE";
 
 
 // Defines URL for development and production/staging environments
@@ -804,6 +809,57 @@ export const clearItems = () => {
    }
  }
 
+ /*
+ *  TASK-COMMENTS ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+ export const getTaskComments = (id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.get(`${backendURL}/api/comment/task/${id}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_COMMENTS_START})
+    endpoint
+    .then(res => {
+      console.log(res.data);
+      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
+    })
+  }
+
+ };
+
+ export const createTaskComments = (comment) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.post(`${backendURL}/api/comment`,comment, options);
+
+  return dispatch => {
+    dispatch({type: CREATE_COMMENT_START})
+    endpoint
+    .then(res => {
+      console.log(res);
+      dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
+    })
+  }
+
+ };
+
+
+
 /*
  * PURCHASE ITEM ACTIONS
  * --------------------------------------------------------------------------------
@@ -1027,40 +1083,7 @@ export const deleteTask = (task) => {
   }
 }
 
-
-/*
- * COMMENT ACTIONS
- * --------------------------------------------------------------------------------
- */
-
-/**
- * Get all comments of an existing task
- * @param id -id of the targeting task
- * @returns {Function}
- */
-export const getTaskComments = (id) => {
-  let token = localStorage.getItem('jwt');
-  let options = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  const endpoint = axios.get(`${backendURL}/api/comment/${id}`, options);
-
-  return dispatch => {
-    dispatch({type: GET_COMMENTS_START})
-    endpoint
-    .then(res => {
-      console.log(res);
-      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
-    }).catch(err =>{
-      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
-    })
-  }
-
- }
- 
-//adds item to group list updated
+//adds task to group list updated
  export const createGroupTask = (task) => {
   const token = localStorage.getItem('jwt');
   
@@ -1089,3 +1112,4 @@ export const getTaskComments = (id) => {
         })
   }
 }
+ 
