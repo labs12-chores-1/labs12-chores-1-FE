@@ -13,7 +13,7 @@ import {
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { getTaskComments, getUserName} from '../store/actions/rootActions';
+import { getTaskComments, getUserName, getGroupTasks} from '../store/actions/rootActions';
 // import { rootReducer } from "../store/reducers/rootReducer";
 
 import "./Styles/TaskCard.css";
@@ -25,23 +25,27 @@ class TaskCard extends Component {
         tasks:[],
         searchField: "",
         groupId: null,
-        userId: null
+        userId: null,
+        comments: props.comments,
+        tempUserName: props.tempUserName
 
     };
   }
   componentWillMount(){
       document.title = `FairShare - Task`;
-      this.props.getGroupTasks(this.props.match.params.id);
+      this.props.getGroupTasks(this.props.match.params.id);    
+      this.props.getUserName(this.props.assignee);
+      // console.log(this.props.assignee);
   }
   getComments = e => {
     e.preventDefault();
-    this.props.getTaskComments(this.props.match.params.id);//<----------------??
+    this.props.getTaskComments(this.props.match.params.id);
   };
 
-  getUserName = id =>{
-    console.log(this.props.tempUserName)
-    this.props.getUserName(id);
-    return this.props.tempUserName;
+  getUserName = () =>{
+    // e.preventDefault();
+    console.log(this.state.tempUserName); 
+    return this.state.tempUserName;//this.props.tempUserName;
   }
 
   render(){
@@ -55,10 +59,10 @@ class TaskCard extends Component {
                 <h7>Requested by: {this.props.requestedBy}</h7>
             </div>
             <div className="task-card-middle">
-                <h5>{this.getUserName}</h5>
+                <h5>{this.props.tempUserName}</h5>
             </div>
             <div className="task-card-right">
-                <img onClick ={this.getComments} src={commentImg} alt="" height="30" width="30"></img>
+                <img onClick ={this.getComments} src={commentImg} alt="" height="30" width="30" key={this.props.taskID}></img>
                 <input type="checkbox" name="vehicle" value="Bike"></input>
                 <h7>Done</h7>
             </div>
@@ -72,17 +76,13 @@ const mapStateToProps = state => {
   return {
     //state items
     taskComments: state.taskComments,
-    errorMessage: state.errorMessage
+    errorMessage: state.errorMessage,
+    tempUserName: state.tempUserName
   };
 };
 
-const mapStateToProps = state => {
-  state = state.rootReducer; // pull values from state root reducer
-  return {
-    //state items
-    taskComments: state.taskComments,
-    errorMessage: state.errorMessage
-  };
-};
-
-export default withRouter(connect(mapStateToProps,{getTaskComments, getUserName})(TaskCard));
+export default withRouter(connect(mapStateToProps,{
+  getTaskComments,
+  getUserName,
+  getGroupTasks
+})(TaskCard));

@@ -67,11 +67,6 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const BEGIN_CHECK_OUT = 'BEGIN_CHECK_OUT';
 export const CHECK_OUT_COMPLETE = 'CHECK_OUT_COMPLETE';
 
-//COMMENTS
-export const GET_COMMENTS_START = "GET_COMMENTS_START";
-export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
-export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
-
 // MISC
 export const ERROR = 'ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
@@ -224,7 +219,7 @@ export const getUserName = userId => {
     dispatch({type: GET_USER_NAME_START});
 
     fetchUserName.then(res => {
-      dispatch({type: GET_USER_NAME_SUCCESS, payload: res.data});
+      dispatch({type: GET_USER_NAME_SUCCESS, payload: res.data.name});
     })
   }
 }
@@ -834,32 +829,6 @@ export const clearItems = () => {
    }
  }
 
- /*
- *  TASK-COMMENTS ACTIONS
- * --------------------------------------------------------------------------------
- */
-
- export const getTaskComments = (id) => {
-  let token = localStorage.getItem('jwt');
-  let options = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  const endpoint = axios.get(`${backendURL}/api/comment/${id}`, options);
-
-  return dispatch => {
-    dispatch({type: GET_COMMENTS_START})
-    endpoint
-    .then(res => {
-      console.log(res);
-      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
-    }).catch(err =>{
-      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
-    })
-  }
-
- }
 
 /*
  * PURCHASE ITEM ACTIONS
@@ -1048,7 +1017,6 @@ export const getGroupTasks = (groupId) => {
     .then(res => {
       dispatch({type: GET_GROUP_TASKS_SUCCESS, payload: res.data});
     }).catch(err => {
-      //console.log(err);
       dispatch({type: GET_GROUP_TASKS_FAILURE, payload: err})
     })
   }
