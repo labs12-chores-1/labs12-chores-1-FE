@@ -18,6 +18,7 @@ import { getTaskComments, getUserName, getGroupTasks} from '../store/actions/roo
 
 import "./Styles/TaskCard.css";
 
+<<<<<<< HEAD
 class TaskCard extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +41,15 @@ class TaskCard extends Component {
   getComments = e => {
     e.preventDefault();
     this.props.getTaskComments(this.props.match.params.id);
+=======
+import { getTaskComments } from '../store/actions/rootActions';
+
+const TaskCard = props => {
+  
+  const getComments = e => {
+    e.preventDefault();
+    props.getTaskComments(props.match.params.id);
+>>>>>>> master
   };
 
   getUserName = () =>{
@@ -68,9 +78,23 @@ class TaskCard extends Component {
             </div>
         </MDBCardBody>
       </MDBCard>
+<<<<<<< HEAD
   )}
 
 };
+=======
+  );
+};
+const mapStateToProps = state => {
+  state = state.rootReducer; // pull values from state root reducer
+  return {
+    //state items
+    taskComments: state.taskComments,
+    errorMessage: state.errorMessage
+  };
+};
+
+>>>>>>> master
 const mapStateToProps = state => {
   state = state.rootReducer; // pull values from state root reducer
   return {
@@ -81,8 +105,12 @@ const mapStateToProps = state => {
   };
 };
 
+<<<<<<< HEAD
 export default withRouter(connect(mapStateToProps,{
   getTaskComments,
   getUserName,
   getGroupTasks
 })(TaskCard));
+=======
+export default withRouter(connect(mapStateToProps,{getTaskComments})(TaskCard));
+>>>>>>> master
