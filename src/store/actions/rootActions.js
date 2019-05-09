@@ -64,23 +64,42 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const BEGIN_CHECK_OUT = 'BEGIN_CHECK_OUT';
 export const CHECK_OUT_COMPLETE = 'CHECK_OUT_COMPLETE';
 
-// TASK
-export const DELETE_TASK_START = "DELETE_TASK_START";
-export const TASK_DELETED= "TASK_DELETED";
-export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
-
-//TASK - COMMENTS
-export const GET_COMMENTS_START = "GET_COMMENTS_START";
-export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
-export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
-export const DELETE_COMMENTS = "DELETE_COMMENTS";
-
 // MISC
 export const ERROR = 'ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 export const UPDATE_NOTIFICATION = 'UPDATE_NOTIFICATION';
 export const UPDATE_NOTIFICATION_SUCCESS = 'UPDATE_NOTIFICATION_SUCCESS';
+
+//TASK - GET GROUP
+export const GET_GROUP_TASKS_START = 'GET_GROUP_TASKS_START';
+// export const SAVE_GROUP_TASKS_START = 'SAVE_GROUP_TASKS_START';
+export const GET_GROUP_TASKS_SUCCESS = 'GET_GROUP_TASKS_SUCCESS';
+export const GET_GROUP_TASKS_FAILURE = 'GET_GROUP_TASKS_FAILURE';
+
+// TASK - CREATE
+export const CREATE_TASK = 'CREATE_TASK';
+export const TASK_CREATED = 'TASK_CREATED';
+export const UPDATE_TASK = 'UPDATE_TASK';
+export const TASK_UPDATED = 'TASK_UPDATED';
+
+
+// TASK - DELETE
+export const DELETE_TASK_START = "DELETE_TASK_START";
+export const TASK_DELETED= "TASK_DELETED";
+export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
+
+// TASK - COMMENT
+export const GET_COMMENTS_START = "GET_COMMENTS_START";
+export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
+export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
+
+export const DELETE_COMMENTS = "DELETE_COMMENTS";
+
+export const CREATE_COMMENT_START = "CREATE_COMMENT_START";
+export const CREATE_COMMENT_SUCCESS = "CREATE_COMMENT_SUCCESS";
+export const CREATE_COMMENT_FAILURE = "CREATE_COMMENT_FAILURE";
+
 
 // Defines URL for development and production/staging environments
 let backendURL;
@@ -790,64 +809,6 @@ export const clearItems = () => {
    }
  }
 
- /*
- *  TASK - COMMENTS ACTIONS
- * --------------------------------------------------------------------------------
- */
-
- export const getTaskComments = (id) => {
-  let token = localStorage.getItem('jwt');
-  let options = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  const endpoint = axios.get(`${backendURL}/api/task/${id}`, options);
-
-  return dispatch => {
-    dispatch({type: GET_COMMENTS_START})
-    endpoint
-    .then(res => {
-      console.log(res);
-      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
-    }).catch(err =>{
-      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
-    })
-  }
-
- }
- /*
- *  TASK - DELETE ACTIONS
- * --------------------------------------------------------------------------------
- */
-
- /**
- * Remove an existing comment from a group
- * @param task - comment to be removed
- * @returns {Function}
- */
-export const deleteTask = (task) => {
-  let token = localStorage.getItem('jwt');
-  let options = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-
-  let deleteTaskId = task;
-  const endpoint = axios.delete(`${backendURL}/api/task/${deleteTaskId}`, options);
-
-  return dispatch => {
-    dispatch({type: DELETE_TASK_START})
-    endpoint.then(res => {
-      console.log('delete working');
-      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
-    }).catch(err => {
-      //console.log(err);
-      dispatch({type: DELETE_TASK_FAIL, payload: err})
-    })
-  }
-}
 
 /*
  * PURCHASE ITEM ACTIONS
@@ -1010,3 +971,126 @@ export const clearError = () => {
     dispatch({ type: CLEAR_ERROR })
   }
 }
+
+/*
+ * TASK ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+/**
+ * Return the current group's tasks
+ * @param groupId - ID of the current group
+ * @returns {Function}
+ */
+export const getGroupTasks = (groupId) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/task/group/${groupId}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_GROUP_TASKS_START})
+    endpoint
+    .then(res => {
+      dispatch({type: GET_GROUP_TASKS_SUCCESS, payload: res.data});
+    }).catch(err => {
+      //console.log(err);
+      dispatch({type: GET_GROUP_TASKS_FAILURE, payload: err})
+    })
+  }
+}
+
+/*
+ *  TASK - DELETE ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+ /**
+ * Remove an existing task from a group
+ * @param task to be removed
+ * @returns {Function}
+ */
+export const deleteTask = (task) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  let deleteTaskId = task;
+  const endpoint = axios.delete(`${backendURL}/api/task/${deleteTaskId}`, options);
+
+  return dispatch => {
+    dispatch({type: DELETE_TASK_START})
+    endpoint.then(res => {
+      console.log('delete working');
+      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
+    }).catch(err => {
+      //console.log(err);
+      dispatch({type: DELETE_TASK_FAIL, payload: err})
+    })
+  }
+}
+
+ /*
+ *  TASK - CREATE COMMENTS ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+export const createTaskComments = (comment) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.post(`${backendURL}/api/comment`,comment, options);
+
+  return dispatch => {
+    dispatch({type: CREATE_COMMENT_START})
+    endpoint
+    .then(res => {
+      console.log(res);
+      dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
+    })
+  }
+ }
+
+ /*
+ *  TASK - COMMENTS ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+ export const getTaskComments = (id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.get(`${backendURL}/api/comment/task/${id}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_COMMENTS_START})
+    endpoint
+    .then(res => {
+      console.log(res.data);
+      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
+    })
+  }
+
+ }
+
+
+
+
+
+
+ 

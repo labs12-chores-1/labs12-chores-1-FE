@@ -51,7 +51,7 @@ class GroupsPage extends Component {
   }
 
   componentDidMount() {
-    document.title = `ShopTrak - Groups`;
+    document.title = `FairShare - Groups`;
     if (!this.props.userGroups && this.props.currentUser) {
       this.props.getUserGroups(this.props.currentUser.id);
     }
@@ -123,7 +123,7 @@ class GroupsPage extends Component {
   };
 
   handleDeleteGroup = event => {
-    event.preventDefault();
+
     if (this.state.groupId !== null) {
       this.props.removeGroup(
         this.state.groupId,
@@ -198,7 +198,7 @@ class GroupsPage extends Component {
                               />
                           ))
                           : null
-                      }
+                      } 
                     </div>
 
 
