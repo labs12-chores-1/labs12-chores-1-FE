@@ -1,15 +1,9 @@
 import React from "react";
+import { connect } from 'react-redux';
 import commentImg from '../images/comment-img.jpg';
 import {
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
-  MDBNavLink,
-  MDBCardFooter,
-  MDBIcon,
-  MDBCardTitle,
-  MDBBtn,
-  MDBInput
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
@@ -18,11 +12,20 @@ import { getTaskComments } from '../store/actions/rootActions';
 
 import "./Styles/TaskCard.css";
 
+import { getTaskComments } from '../store/actions/rootActions';
+
 const TaskCard = props => {
+<<<<<<< HEAD
 
   const getComments = e => {
     e.preventDefault();
     props.getTaskComments(props.match.params.id);//<----------------??
+=======
+  
+  const getComments = e => {
+    e.preventDefault();
+    props.getTaskComments(props.match.params.id);
+>>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
   };
 
   return (
@@ -44,9 +47,12 @@ const TaskCard = props => {
             </div>
         </MDBCardBody>
       </MDBCard>
+<<<<<<< HEAD
+=======
+    
+>>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
   );
 };
-
 const mapStateToProps = state => {
   state = state.rootReducer; // pull values from state root reducer
   return {
@@ -56,4 +62,16 @@ const mapStateToProps = state => {
   };
 };
 
+<<<<<<< HEAD
+const mapStateToProps = state => {
+  state = state.rootReducer; // pull values from state root reducer
+  return {
+    //state items
+    taskComments: state.taskComments,
+    errorMessage: state.errorMessage
+  };
+};
+
+=======
+>>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
 export default withRouter(connect(mapStateToProps,{getTaskComments})(TaskCard));
