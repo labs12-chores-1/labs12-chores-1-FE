@@ -30,7 +30,7 @@ var lockOptions = {
         primaryColor: '#FF7043'
     },
     languageDictionary: {
-        title: 'ShopTrak'
+        title: 'FairShare'
     }
 }
 
@@ -85,7 +85,7 @@ class Navigation extends React.Component{
                 <MDBNavbar style={{backgroundColor: "#2A922D"}} dark expand="md">
 
                     <MDBNavbarBrand>
-                        <strong className="white-text">ShopTrak</strong>
+                        <strong className="white-text">FairShare</strong>
                     </MDBNavbarBrand>
 
                     <MDBNavbarToggler onClick={this.toggleCollapse} />
