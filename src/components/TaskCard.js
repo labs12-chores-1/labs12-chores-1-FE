@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import React, {Component} from "react";
+=======
+import React from "react";
+import { connect } from 'react-redux';
+>>>>>>> master
 import commentImg from '../images/comment-img.jpg';
 import {
   MDBCard,
   MDBCardBody,
+<<<<<<< HEAD
   // MDBCardHeader,
   // MDBNavLink,
   // MDBCardFooter,
@@ -10,6 +16,8 @@ import {
   // MDBCardTitle,
   // MDBBtn,
   // MDBInput
+=======
+>>>>>>> master
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
@@ -18,6 +26,7 @@ import { getTaskComments, getUserName} from '../store/actions/rootActions';
 
 import "./Styles/TaskCard.css";
 
+<<<<<<< HEAD
 class TaskCard extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +36,12 @@ class TaskCard extends Component {
         groupId: null,
         userId: null
         
+=======
+import { getTaskComments } from '../store/actions/rootActions';
+
+const TaskCard = props => {
+<<<<<<< HEAD
+>>>>>>> master
 
     };
   }
@@ -36,7 +51,17 @@ class TaskCard extends Component {
   }
   getComments = e => {
     e.preventDefault();
+<<<<<<< HEAD
     this.props.getTaskComments(this.props.match.params.id);//<----------------??
+=======
+    props.getTaskComments(props.match.params.id);//<----------------??
+=======
+  
+  const getComments = e => {
+    e.preventDefault();
+    props.getTaskComments(props.match.params.id);
+>>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
+>>>>>>> master
   };
 
   getUserName = id =>{
@@ -65,9 +90,16 @@ class TaskCard extends Component {
             </div>
         </MDBCardBody>
       </MDBCard>
+<<<<<<< HEAD
   )}
+=======
+<<<<<<< HEAD
+=======
+    
+>>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
+  );
+>>>>>>> master
 };
-
 const mapStateToProps = state => {
   state = state.rootReducer; // pull values from state root reducer
   return {
@@ -77,4 +109,20 @@ const mapStateToProps = state => {
   };
 };
 
+<<<<<<< HEAD
+const mapStateToProps = state => {
+  state = state.rootReducer; // pull values from state root reducer
+  return {
+    //state items
+    taskComments: state.taskComments,
+    errorMessage: state.errorMessage
+  };
+};
+
+<<<<<<< HEAD
 export default withRouter(connect(mapStateToProps,{getTaskComments, getUserName})(TaskCard));
+=======
+=======
+>>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
+export default withRouter(connect(mapStateToProps,{getTaskComments})(TaskCard));
+>>>>>>> master
