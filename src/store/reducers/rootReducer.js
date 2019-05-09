@@ -46,7 +46,10 @@ import {
   TASK_DELETED,
   GET_GROUP_TASKS_START, 
   GET_GROUP_TASKS_SUCCESS,
-  GET_GROUP_TASKS_FAILURE
+  GET_GROUP_TASKS_FAILURE,
+  CREATE_COMMENT_START,
+  CREATE_COMMENT_SUCCESS,
+  CREATE_COMMENT_FAILURE
 } from "../actions/";
 
 const initialState = {
@@ -135,6 +138,23 @@ export const rootReducer = (state = initialState, action) => {
       taskComments: null,
       errorMessage: action.payload
     };
+
+    case CREATE_COMMENT_START:
+    return {
+      ...state,
+      errorMessage: null
+    };
+    case CREATE_COMMENT_SUCCESS:
+    return {
+      ...state,
+      taskComments: action.payload,
+      errorMessage: null
+    };
+    case CREATE_COMMENT_FAILURE:
+    return {
+      ...state,
+      errorMessage: action.payload
+    }
 
     case CHECKING_EMAIL:
       return state;
