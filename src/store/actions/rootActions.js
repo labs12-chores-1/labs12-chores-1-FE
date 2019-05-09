@@ -24,6 +24,9 @@ export const CHANGE_GROUP_NAME_SUCCESS = 'CHANGE_GROUP_NAME_SUCCESS';
 export const REMOVE_GROUP_START = 'REMOVE_GROUP_START';
 export const REMOVE_GROUP_SUCCESS = 'REMOVE_GROUP_SUCCESS';
 export const CLEARING_CURRENT_GROUP = 'CLEARING_CURRENT_GROUP';
+export const CREATE_GROUP_TASK = 'CREATE_TASK';
+export const GROUP_TASK_CREATED = 'TASK_CREATED';
+export const GROUP_TASK_ERROR = 'GROUP_TASK_ERROR';
 
 // GROUP PROFILE
 export const GET_GROUP_USERS = 'GET_GROUP_USERS';
@@ -1057,3 +1060,32 @@ export const getTaskComments = (id) => {
 
  }
  
+//adds item to group list
+ export const createGroupTask = (task) => {
+  const token = localStorage.getItem('jwt');
+  
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  console.log("ITEM => ", task);
+
+  const endpoint = axios.post(`${backendURL}/api/task`, task, options);
+
+  return dispatch => {
+    dispatch({type: CREATE_GROUP_TASK})
+
+    endpoint.then(res => {
+      console.log(res.data, 'new item');
+
+      dispatch({type: GROUP_TASK_CREATED, payload:res.data})
+
+    })
+        .catch(err => {
+          console.log(err);
+          dispatch({type: GROUP_TASK_ERROR, payload:err})
+        })
+  }
+}
