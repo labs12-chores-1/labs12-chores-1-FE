@@ -17,6 +17,7 @@ import { getTaskComments, getUserName, getGroupTasks} from '../store/actions/roo
 // import { rootReducer } from "../store/reducers/rootReducer";
 
 import "./Styles/TaskCard.css";
+import "./Styles/Comments.css";
 
 class TaskCard extends Component {
   constructor(props) {
