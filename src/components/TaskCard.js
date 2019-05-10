@@ -27,21 +27,20 @@ class TaskCard extends Component {
         groupId: null,
         userId: null,
         comments: props.comments,
-        tempUserName: props.tempUserName
+        assigneeName: props.tempUserName
 
     };
   }
   componentWillMount(){
       document.title = `FairShare - Task`;
-      this.props.getGroupTasks(this.props.match.params.id);    
+      this.props.getGroupTasks(this.props.match.params.id);  
+      
 
+      this.props.getUserName(this.props.assignee);
       // console.log(this.props.assignee);
   }
 
-  componentDidMount(){
 
-    this.props.getUserName(this.props.assignee);
-  }
   getComments = e => {
     e.preventDefault();
     this.props.getTaskComments(this.props.match.params.id);
@@ -49,8 +48,14 @@ class TaskCard extends Component {
 
   getUserName = () =>{
     // e.preventDefault();
-    console.log(this.state.tempUserName); 
-    return this.state.tempUserName;//this.props.tempUserName;
+    
+    this.props.getUserName(this.props.assignee);
+    this.setState({
+      assigneeName: this.props.tempUserName
+    });
+    console.log("here");
+    console.log(this.state.assigneeName); 
+    return this.state.assigneeName;//this.props.tempUserName;
   }
 
   render(){
@@ -64,7 +69,7 @@ class TaskCard extends Component {
                 <h7>Requested by: {this.props.requestedBy}</h7>
             </div>
             <div className="task-card-middle">
-                <h5>{this.props.tempUserName}</h5>
+                <h5>{this.getUserName}</h5>
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt="" height="30" width="30" key={this.props.taskID}></img>
@@ -82,7 +87,7 @@ const mapStateToProps = state => {
     //state items
     taskComments: state.taskComments,
     errorMessage: state.errorMessage,
-    tempUserName: state.tempUserName
+    assigneeName: state.tempUserName
   };
 };
 
