@@ -43,7 +43,8 @@ class TaskDetail extends Component {
     removeTask = e => {
         e.preventDefault();
         this.props.deleteTask(this.props.match.params.id);
-        window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
+        this.props.history.goBack();
+        //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
 
     }
      createComments = (e) => {
@@ -62,19 +63,25 @@ class TaskDetail extends Component {
       handleChanges=(e)=>{
         this.setState({[e.target.name]:e.target.value})
     }
-       
+    backToTask = (e) => {
+        e.preventDefault();
+        this.props.history.goBack();
+    }
+
 render() {
     return (
         <>
           <MDBContainer className="task-detail-container">
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
-                    <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
+                    <div onClick={this.backToTask}>
+                    <MDBIcon className="card-link" icon="chevron-left" />Back to Task
+                    </div>
+
                     <div className="nav-btns">
                         <MDBBtn outline color="success">Edit Task</MDBBtn>
                         <MDBBtn onClick={this.toggle} outline color="success">Add Comment</MDBBtn>
-                        <MDBBtn outline color="success">Delete Task</MDBBtn> 
-                        {/* <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn>  */}
+                        <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn> 
                     </div>
 
 

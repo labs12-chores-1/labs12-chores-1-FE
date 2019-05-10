@@ -92,11 +92,13 @@ const initialState = {
 //***** FairShare***********
   currentGroupTasks: null,
   taskComments: null,
-  deleteMessage: ''
+  deleteMessage: null
 
 };
 
 export const rootReducer = (state = initialState, action) => {
+
+
   switch (action.type) {
     case GET_GROUP_TASKS_START:
       return {...state,

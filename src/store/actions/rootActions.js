@@ -1029,7 +1029,7 @@ export const createGroupTask = (task) => {
     dispatch({type: CREATE_GROUP_TASK})
 
     endpoint.then(res => {
-      console.log(res.data, 'new item');
+      console.log(res.data, 'new task');
 
       dispatch({type: GROUP_TASK_CREATED, payload:res.data})
 
