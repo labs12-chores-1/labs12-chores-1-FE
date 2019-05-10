@@ -1007,7 +1007,7 @@ export const getGroupTasks = (groupId) => {
 }
 
 /*
- *  TASK - CREATE ACTIONS
+ *  TASK - CREATE GROUP TASK ACTIONS
  * --------------------------------------------------------------------------------
  */
 
