@@ -42,18 +42,30 @@ import {
   GET_COMMENTS_START, 
   GET_COMMENTS_SUCCESS,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
   GET_COMMENTS_FAILURE,
   DELETE_TASK_START,
   TASK_DELETED,
   GET_GROUP_TASKS_START, 
   GET_GROUP_TASKS_SUCCESS,
-  GET_GROUP_TASKS_FAILURE
+  GET_GROUP_TASKS_FAILURE,
+  GROUP_TASK_CREATED,
+  GROUP_TASK_ERROR,
+  CREATE_GROUP_TASK,
+  CREATE_COMMENT_START,
+  CREATE_COMMENT_SUCCESS,
+  CREATE_COMMENT_FAILURE
 } from "../actions/";
+<<<<<<< HEAD
 =======
   GET_COMMENTS_FAILURE
 
 } from "../actions";
 >>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
+=======
+>>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
 
 const initialState = {
   currentUser: null,
@@ -89,13 +101,19 @@ const initialState = {
   groupMembers: null,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
 //***** FairShare***********
   currentGroupTasks: null,
   taskComments: null
 
+<<<<<<< HEAD
 =======
   taskComments: []
 >>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
+=======
+>>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -103,6 +121,9 @@ export const rootReducer = (state = initialState, action) => {
 
   switch (action.type) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
     case GET_GROUP_TASKS_START:
       return {...state,
       errorMessage: null
@@ -137,9 +158,12 @@ export const rootReducer = (state = initialState, action) => {
       errorMessage: null
     };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
+=======
+>>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
     case GET_COMMENTS_SUCCESS:
     return {
       ...state,
@@ -147,15 +171,35 @@ export const rootReducer = (state = initialState, action) => {
         errorMessage: null,
       };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
+=======
+>>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
     case GET_COMMENTS_FAILURE:
     return {
       ...state,
       taskComments: null,
       errorMessage: action.payload
     };
+
+    case CREATE_COMMENT_START:
+    return {
+      ...state,
+      errorMessage: null
+    };
+    case CREATE_COMMENT_SUCCESS:
+    return {
+      ...state,
+      taskComments: action.payload,
+      errorMessage: null
+    };
+    case CREATE_COMMENT_FAILURE:
+    return {
+      ...state,
+      errorMessage: action.payload
+    }
 
     case CHECKING_EMAIL:
       return state;
@@ -420,9 +464,31 @@ export const rootReducer = (state = initialState, action) => {
         errorMessage: null
       };
 
+      case CREATE_GROUP_TASK:
+        return {
+          ...state,
+          errorMessage: null
+        };
+        case GROUP_TASK_CREATED:
+        return {
+          ...state,
+          errorMessage: null
+        };
+        case GROUP_TASK_CREATED:
+        return {
+          ...state,
+          currentGroupTasks: action.payload
+        };
+        case GROUP_TASK_ERROR:
+        return {
+          ...state,
+          errorMessage:action.payload
+        };
+
     
 
     default:
       return state;
+      
   }
 };

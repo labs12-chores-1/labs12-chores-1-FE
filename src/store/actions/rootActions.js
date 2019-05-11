@@ -24,6 +24,9 @@ export const CHANGE_GROUP_NAME_SUCCESS = 'CHANGE_GROUP_NAME_SUCCESS';
 export const REMOVE_GROUP_START = 'REMOVE_GROUP_START';
 export const REMOVE_GROUP_SUCCESS = 'REMOVE_GROUP_SUCCESS';
 export const CLEARING_CURRENT_GROUP = 'CLEARING_CURRENT_GROUP';
+export const CREATE_GROUP_TASK = 'CREATE_TASK';
+export const GROUP_TASK_CREATED = 'TASK_CREATED';
+export const GROUP_TASK_ERROR = 'GROUP_TASK_ERROR';
 
 // GROUP PROFILE
 export const GET_GROUP_USERS = 'GET_GROUP_USERS';
@@ -64,11 +67,6 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const BEGIN_CHECK_OUT = 'BEGIN_CHECK_OUT';
 export const CHECK_OUT_COMPLETE = 'CHECK_OUT_COMPLETE';
 
-//COMMENTS
-export const GET_COMMENTS_START = "GET_COMMENTS_START";
-export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
-export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
-
 // MISC
 export const ERROR = 'ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
@@ -95,7 +93,12 @@ export const CLEAR_TASKS = 'CLEAR_TASKS';
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
 export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
+
 export const DELETE_COMMENTS = "DELETE_COMMENTS";
+
+export const CREATE_COMMENT_START = "CREATE_COMMENT_START";
+export const CREATE_COMMENT_SUCCESS = "CREATE_COMMENT_SUCCESS";
+export const CREATE_COMMENT_FAILURE = "CREATE_COMMENT_FAILURE";
 
 
 // Defines URL for development and production/staging environments
@@ -313,7 +316,7 @@ export const removeAccount = () => {
  */
 export const getSingleGroup = (groupId) => {
   let token = localStorage.getItem('jwt');
-
+  
   let options = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -818,20 +821,44 @@ export const clearItems = () => {
       Authorization: `Bearer ${token}`
     }
   }
-  const endpoint = axios.get(`${backendURL}/api/comment/${id}`, options);
+  const endpoint = axios.get(`${backendURL}/api/comment/task/${id}`, options);
 
   return dispatch => {
     dispatch({type: GET_COMMENTS_START})
     endpoint
     .then(res => {
-      console.log(res);
+      console.log(res.data);
       dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
     }).catch(err =>{
       dispatch({type: GET_COMMENTS_FAILURE, payload:err});
     })
   }
 
- }
+ };
+
+ export const createTaskComments = (comment) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.post(`${backendURL}/api/comment`,comment, options);
+
+  return dispatch => {
+    dispatch({type: CREATE_COMMENT_START})
+    endpoint
+    .then(res => {
+      console.log(res);
+      dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
+    })
+  }
+
+ };
+
+
 
 /*
  * PURCHASE ITEM ACTIONS
@@ -1056,36 +1083,33 @@ export const deleteTask = (task) => {
   }
 }
 
-
-/*
- * COMMENT ACTIONS
- * --------------------------------------------------------------------------------
- */
-
-/**
- * Get all comments of an existing task
- * @param id -id of the targeting task
- * @returns {Function}
- */
-export const getTaskComments = (id) => {
-  let token = localStorage.getItem('jwt');
-  let options = {
+//adds task to group list updated
+ export const createGroupTask = (task) => {
+  const token = localStorage.getItem('jwt');
+  
+  const options = {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     }
-  }
-  const endpoint = axios.get(`${backendURL}/api/comment/${id}`, options);
+  };
+
+  console.log("ITEM => ", task);
+
+  const endpoint = axios.post(`${backendURL}/api/task`, task, options);
 
   return dispatch => {
-    dispatch({type: GET_COMMENTS_START})
-    endpoint
-    .then(res => {
-      console.log(res);
-      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
-    }).catch(err =>{
-      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
-    })
-  }
+    dispatch({type: CREATE_GROUP_TASK})
 
- }
+    endpoint.then(res => {
+      console.log(res.data, 'new item');
+
+      dispatch({type: GROUP_TASK_CREATED, payload:res.data})
+
+    })
+        .catch(err => {
+          console.log(err);
+          dispatch({type: GROUP_TASK_ERROR, payload:err})
+        })
+  }
+}
  
