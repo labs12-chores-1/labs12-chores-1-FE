@@ -436,9 +436,10 @@ export const rootReducer = (state = initialState, action) => {
           errorMessage: null
         };
         case GROUP_TASK_CREATED:
+        console.log(action.payload);
         return {
           ...state,
-          currentGroupTasks: action.payload,
+          //currentGroupTasks: action.payload,
           errorMessage: null
         };
         case GROUP_TASK_ERROR:
