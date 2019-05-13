@@ -14,7 +14,7 @@ import "./Styles/TaskCard.css";
 import "./Styles/Comments.css";
 
 import { getTaskComments } from '../store/actions/rootActions';
-
+//import { rootReducer } from "../store/reducers/rootReducer";
 
 class TaskCard extends Component {
   

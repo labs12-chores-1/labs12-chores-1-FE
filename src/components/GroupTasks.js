@@ -69,6 +69,7 @@ render() {
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
                     <div className="nav-btns">
                         <MDBBtn outline color="success">New Task</MDBBtn>
+                    
                     </div>
                 </MDBCol>
             </MDBRow>

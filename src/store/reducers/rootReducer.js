@@ -91,8 +91,7 @@ const initialState = {
 
 //***** FairShare***********
   currentGroupTasks: null,
-  taskComments: null,
-  deleteMessage: null
+  taskComments: null
 
 };
 
@@ -116,25 +115,25 @@ export const rootReducer = (state = initialState, action) => {
       errorMessage: action.payload
     };
 
-     case DELETE_TASK_START:
-      return state;
-    
-    case TASK_DELETED:
-      return {
-        ...state,
-        deleteMessage: action.payload,
-        errorMessage: null
-      };
 
-    case DELETE_TASK_FAIL:
-      return {
-        ...state,
-        deleteMessage: action.payload,
-        errorMessage: null
-      }
+    case DELETE_TASK_START:
+    return state;
+  
+  case TASK_DELETED:
+    return {
+      ...state,
+      deleteMessage: action.payload,
+      errorMessage: null
+    };
+
+  case DELETE_TASK_FAIL:
+    return {
+      ...state,
+      deleteMessage: action.payload,
+      errorMessage: null
+    };
 
     case GET_COMMENTS_START:
-
       return {...state,
       errorMessage: null
     };

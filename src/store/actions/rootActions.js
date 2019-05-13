@@ -86,13 +86,12 @@ export const TASK_CREATED = 'TASK_CREATED';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const TASK_UPDATED = 'TASK_UPDATED';
 
-
 // TASK - DELETE
 export const DELETE_TASK_START = "DELETE_TASK_START";
 export const TASK_DELETED= "TASK_DELETED";
 export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
 
-// TASK - COMMENT
+// COMMENT
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
 export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
@@ -812,7 +811,6 @@ export const clearItems = () => {
    }
  }
 
-
 /*
  * PURCHASE ITEM ACTIONS
  * --------------------------------------------------------------------------------
@@ -979,7 +977,7 @@ export const clearError = () => {
  * TASK ACTIONS
  * --------------------------------------------------------------------------------
  */
-/**
+/** GET GROUPTASK
  * Return the current group's tasks
  * @param groupId - ID of the current group
  * @returns {Function}
@@ -1010,9 +1008,8 @@ export const getGroupTasks = (groupId) => {
  *  TASK - CREATE GROUP TASK ACTIONS
  * --------------------------------------------------------------------------------
  */
-
 //adds task to group list updated
-export const createGroupTask = (task) => {
+ export const createGroupTask = (task) => {
   const token = localStorage.getItem('jwt');
   
   const options = {
@@ -1030,7 +1027,6 @@ export const createGroupTask = (task) => {
 
     endpoint.then(res => {
       console.log(res.data, 'new task');
-
       dispatch({type: GROUP_TASK_CREATED, payload:res.data})
 
     })
@@ -1040,6 +1036,7 @@ export const createGroupTask = (task) => {
         })
   }
 }
+ 
 /*
  *  TASK - DELETE ACTIONS
  * --------------------------------------------------------------------------------
@@ -1073,37 +1070,14 @@ export const deleteTask = (task) => {
   }
 }
 
- /*
- *  TASK - CREATE COMMENTS ACTIONS
- * --------------------------------------------------------------------------------
- */
-export const createTaskComments = (comment) => {
-  let token = localStorage.getItem('jwt');
-  let options = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  const endpoint = axios.post(`${backendURL}/api/comment`,comment, options);
 
-  return dispatch => {
-    dispatch({type: CREATE_COMMENT_START})
-    endpoint
-    .then(res => {
-      console.log(res);
-      dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
-    }).catch(err =>{
-      dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
-    })
-  }
- }
 
- /*
- *  TASK - COMMENTS ACTIONS
+/*
+ *  TASK-GET TASK COMMENTS ACTIONS
  * --------------------------------------------------------------------------------
  */
 
- export const getTaskComments = (id) => {
+export const getTaskComments = (id) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1123,8 +1097,32 @@ export const createTaskComments = (comment) => {
     })
   }
 
- }
- 
+ };
+
+ /*
+ *  TASK-CREATE TASK COMMENTS ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+ export const createTaskComments = (comment) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.post(`${backendURL}/api/comment`,comment, options);
+
+  return dispatch => {
+    dispatch({type: CREATE_COMMENT_START})
+    endpoint
+    .then(res => {
+      console.log(res);
+      dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
+    })
+  }
+
+ };
 
 
- 

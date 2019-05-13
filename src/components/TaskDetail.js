@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 //import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
 import TaskCard from "./TaskCard";
@@ -13,9 +12,11 @@ import {
     MDBIcon,
     MDBContainer
   } from "mdbreact";
+import { connect } from 'react-redux';
+
 import { getTaskComments } from '../store/actions/rootActions';
+import { deleteTask } from '../store/actions/rootActions';
  import { createTaskComments } from '../store/actions/rootActions';
- import { deleteTask } from '../store/actions/rootActions';
 // import { rootReducer } from "../store/reducers/rootReducer";
 
 class TaskDetail extends Component {
@@ -38,8 +39,6 @@ class TaskDetail extends Component {
         this.props.getTaskComments(this.props.match.params.id);
     }
 
-    // };
-
     removeTask = e => {
         e.preventDefault();
         this.props.deleteTask(this.props.match.params.id);
@@ -47,6 +46,7 @@ class TaskDetail extends Component {
         //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
 
     }
+
      createComments = (e) => {
         e.preventDefault();
         let comment = {
@@ -63,21 +63,22 @@ class TaskDetail extends Component {
       handleChanges=(e)=>{
         this.setState({[e.target.name]:e.target.value})
     }
+
     backToTask = (e) => {
         e.preventDefault();
         this.props.history.goBack();
     }
 
+       
 render() {
     return (
         <>
           <MDBContainer className="task-detail-container">
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
-                    <div onClick={this.backToTask}>
+                <div onClick={this.backToTask}>
                     <MDBIcon className="card-link" icon="chevron-left" />Back to Task
-                    </div>
-
+                </div>
                     <div className="nav-btns">
                         <MDBBtn outline color="success">Edit Task</MDBBtn>
                         <MDBBtn onClick={this.toggle} outline color="success">Add Comment</MDBBtn>
@@ -104,11 +105,11 @@ render() {
                 <TaskCard
                     taskID={1}
                     taskname={"Walk Dog"}
-                    requestedBy={"John"}
+                    requestedBy={"Tsai"}
                     done={0}
                     comments={0}
                     repeated={0}
-                    assignee={"Jane"}
+                    assignee={"Alex"}
                 
                     // group={1}
                     // updateGroup={this.saveGroupName}
@@ -136,11 +137,10 @@ const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
       //state items
-      deleteMessage: state.deleteMessage,
       taskComments: state.taskComments,
       errorMessage: state.errorMessage
     };
 };
   
 
-export default withRouter(connect(mapStateToProps,{deleteTask, getTaskComments,createTaskComments})(TaskDetail));
+export default withRouter(connect(mapStateToProps,{deleteTask,getTaskComments,createTaskComments})(TaskDetail));
