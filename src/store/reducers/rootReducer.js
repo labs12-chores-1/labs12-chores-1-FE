@@ -48,6 +48,7 @@ import {
   GET_COMMENTS_FAILURE,
   DELETE_TASK_START,
   TASK_DELETED,
+  DELETE_TASK_FAIL,
   GET_GROUP_TASKS_START, 
   GET_GROUP_TASKS_SUCCESS,
   GET_GROUP_TASKS_FAILURE,
@@ -142,14 +143,21 @@ export const rootReducer = (state = initialState, action) => {
 
 
     case DELETE_TASK_START:
-      return state;
+    return state;
+  
+  case TASK_DELETED:
+    return {
+      ...state,
+      deleteMessage: action.payload,
+      errorMessage: null
+    };
 
-    case TASK_DELETED:
-      return {
-        ...state,
-        needsNewTask: action.payload,
-        errorMessage: null
-      };
+  case DELETE_TASK_FAIL:
+    return {
+      ...state,
+      deleteMessage: action.payload,
+      errorMessage: null
+    };
 
 =======
 >>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
@@ -472,12 +480,8 @@ export const rootReducer = (state = initialState, action) => {
         case GROUP_TASK_CREATED:
         return {
           ...state,
+          currentGroupTasks: action.payload,
           errorMessage: null
-        };
-        case GROUP_TASK_CREATED:
-        return {
-          ...state,
-          currentGroupTasks: action.payload
         };
         case GROUP_TASK_ERROR:
         return {
