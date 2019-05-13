@@ -1009,10 +1009,10 @@ export const clearError = () => {
 }
 
 /*
- * TASK ACTIONS
+ * TASK - GET GROUPTASK ACTIONS
  * --------------------------------------------------------------------------------
  */
-/** GET GROUPTASK
+/** 
  * Return the current group's tasks
  * @param groupId - ID of the current group
  * @returns {Function}
@@ -1049,7 +1049,7 @@ export const getGroupTasks = (groupId) => {
  * --------------------------------------------------------------------------------
  */
 //adds task to group list updated
- export const createGroupTask = (task) => {
+ export const createGroupTask = (task, groupID) => {
   const token = localStorage.getItem('jwt');
   
   const options = {
@@ -1068,8 +1068,9 @@ export const getGroupTasks = (groupId) => {
     endpoint.then(res => {
       console.log(res.data, 'new task');
       dispatch({type: GROUP_TASK_CREATED, payload:res.data})
-
     })
+
+    .then(() => {dispatch(getGroupTasks(groupID))})
         .catch(err => {
           console.log(err);
           dispatch({type: GROUP_TASK_ERROR, payload:err})

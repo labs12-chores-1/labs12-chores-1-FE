@@ -18,7 +18,7 @@ import {
     MDBRow,
     MDBCol,
     MDBIcon,
-    MDBContainer
+    MDBContainer,
   } from "mdbreact";
 import { connect } from 'react-redux';
 
@@ -96,7 +96,7 @@ render() {
 
                 </MDBCol>
             </MDBRow>
-            
+
           <form onSubmit={this.createComments}>
             <input 
                 type="text"
@@ -108,8 +108,8 @@ render() {
               <button type='submit'>Submit</button>
           </form>
 
+
             <MDBContainer className="task-card">
-                
                 <TaskCard
                     taskID={1}
                     taskname={"Walk Dog"}
@@ -122,16 +122,18 @@ render() {
                     // group={1}
                     // updateGroup={this.saveGroupName}
                     // removeGroup={this.deleteGroup}
-                />   
+                />
+       
                 <div>
                     {/* {console.log(this.props.taskComments)} */}
+                    
                     {this.props.taskComments !== null
                         ? this.props.taskComments.data.map(comment => (
                             <h4 key={comment.id}>{comment.commentString}</h4>
                         ))
                         : null
                     } 
-                </div>    
+                </div>  
                 
 
             </MDBContainer>

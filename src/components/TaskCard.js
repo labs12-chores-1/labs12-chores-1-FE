@@ -65,7 +65,6 @@ class TaskCard extends Component {
   render(){
 
   return (
-      <>
       
       <MDBCard className="task-card" 
         onClick={()=>this.props.history.push(`/task/${this.props.taskID}`)}
@@ -85,7 +84,6 @@ class TaskCard extends Component {
             </div>
         </MDBCardBody>
       </MDBCard>
-      </>
   );
   }
 };

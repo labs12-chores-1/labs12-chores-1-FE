@@ -50,7 +50,25 @@ class GroupTasks extends Component {
         document.title = `FairShare - Task`;
         this.props.getGroupTasks(this.props.match.params.id);
     }
+<<<<<<< HEAD
 
+=======
+    handleChanges=(e)=>{
+        this.setState({[e.target.name]:e.target.value})
+    }
+    createTask = (e) => {
+        e.preventDefault();
+        this.setState({taskName: ''});
+        let task = {
+            taskName:this.state.taskName,
+            groupID:this.props.match.params.id
+        }
+
+        this.props.createGroupTask(task, this.props.match.params.id);
+
+       
+    };
+>>>>>>> a34468d8269a5196b4ea5dda7d87823f93992739
 render() {
     return (
         <MDBContainer className="group-task-container">
