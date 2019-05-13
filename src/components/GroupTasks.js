@@ -51,15 +51,15 @@ class GroupTasks extends Component {
     }
     createTask = (e) => {
         e.preventDefault();
+        this.setState({taskName: ''});
         let task = {
             taskName:this.state.taskName,
-            
             groupID:this.props.match.params.id
-            
         }
 
-        this.props.createGroupTask(task);
-        window.location.reload()      
+        this.props.createGroupTask(task, this.props.match.params.id);
+
+       
     };
 render() {
     return (
