@@ -74,21 +74,29 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const UPDATE_NOTIFICATION = 'UPDATE_NOTIFICATION';
 export const UPDATE_NOTIFICATION_SUCCESS = 'UPDATE_NOTIFICATION_SUCCESS';
 
-//TASK
+//TASK - GET GROUP
 export const GET_GROUP_TASKS_START = 'GET_GROUP_TASKS_START';
 // export const SAVE_GROUP_TASKS_START = 'SAVE_GROUP_TASKS_START';
 export const GET_GROUP_TASKS_SUCCESS = 'GET_GROUP_TASKS_SUCCESS';
 export const GET_GROUP_TASKS_FAILURE = 'GET_GROUP_TASKS_FAILURE';
 
+<<<<<<< HEAD
 
 export const CREATE_GROUP_TASK = 'CREATE_GROUP_TASK';
 export const GROUP_TASK_CREATED = 'GROUP_TASK_CREATED';
 export const GROUP_TASK_ERROR = 'GROUP_TASK_ERROR';
+=======
+// TASK - CREATE
+export const CREATE_TASK = 'CREATE_TASK';
+export const TASK_CREATED = 'TASK_CREATED';
+>>>>>>> master
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const TASK_UPDATED = 'TASK_UPDATED';
-export const DELETE_TASK_START = 'DELETE_TASK';
-export const TASK_DELETED = 'TASK_DELETED';
-export const CLEAR_TASKS = 'CLEAR_TASKS';
+
+// TASK - DELETE
+export const DELETE_TASK_START = "DELETE_TASK_START";
+export const TASK_DELETED= "TASK_DELETED";
+export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
 
 // COMMENT
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
@@ -834,7 +842,10 @@ export const clearItems = () => {
    }
  }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 /*
  * PURCHASE ITEM ACTIONS
  * --------------------------------------------------------------------------------
@@ -1001,7 +1012,7 @@ export const clearError = () => {
  * TASK ACTIONS
  * --------------------------------------------------------------------------------
  */
-/**
+/** GET GROUPTASK
  * Return the current group's tasks
  * @param groupId - ID of the current group
  * @returns {Function}
@@ -1027,47 +1038,18 @@ export const getGroupTasks = (groupId) => {
   }
 }
 
+<<<<<<< HEAD
 
 
 
 /**
- * Remove an existing task from a group
- * @param task -task to be removed
- * @returns {Function}
- */
-export const deleteTask = (task) => {
-  let token = localStorage.deleteTask('jwt');
-  let options = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-
-  // let taskId = task.id;
-  let deleteTaskId = task.id;
-
-  // const endpoint = axios.delete(`${backendURL}/api/task/remove/${taskId}`, options);
-  const endpoint = axios.delete(`${backendURL}/api/task/remove/${deleteTaskId}`, options);
-
-  return dispatch => {
-    dispatch({type: DELETE_TASK_START})
-    endpoint.then(res => {
-      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
-    }).catch(err => {
-      //console.log(err);
-      dispatch({type: ERROR})
-    })
-  }
-}
-
-
-/**
- * Create new task to a group
- * @param task -task to be added
- * @returns {Function}
+=======
+/*
+ *  TASK - CREATE GROUP TASK ACTIONS
+ * --------------------------------------------------------------------------------
  */
 //adds task to group list updated
-export const createGroupTask = (task) => {
+ export const createGroupTask = (task) => {
   const token = localStorage.getItem('jwt');
   
   const options = {
@@ -1084,10 +1066,112 @@ export const createGroupTask = (task) => {
     dispatch({type: CREATE_GROUP_TASK})
 
     endpoint.then(res => {
-      console.log(res.data, 'new item');
-
+      console.log(res.data, 'new task');
       dispatch({type: GROUP_TASK_CREATED, payload:res.data})
 
+    })
+        .catch(err => {
+          console.log(err);
+          dispatch({type: GROUP_TASK_ERROR, payload:err})
+        })
+  }
+}
+ 
+/*
+ *  TASK - DELETE ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+ /**
+>>>>>>> master
+ * Remove an existing task from a group
+ * @param task to be removed
+ * @returns {Function}
+ */
+export const deleteTask = (task) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  let deleteTaskId = task;
+  const endpoint = axios.delete(`${backendURL}/api/task/${deleteTaskId}`, options);
+
+  return dispatch => {
+    dispatch({type: DELETE_TASK_START})
+    endpoint.then(res => {
+      console.log('delete working');
+      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
+    }).catch(err => {
+      //console.log(err);
+      dispatch({type: DELETE_TASK_FAIL, payload: err})
+    })
+  }
+}
+
+<<<<<<< HEAD
+
+/**
+ * Create new task to a group
+ * @param task -task to be added
+ * @returns {Function}
+ */
+//adds task to group list updated
+export const createGroupTask = (task) => {
+  const token = localStorage.getItem('jwt');
+  
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+=======
+>>>>>>> master
+
+
+/*
+ *  TASK-GET TASK COMMENTS ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+export const getTaskComments = (id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.get(`${backendURL}/api/comment/task/${id}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_COMMENTS_START})
+    endpoint
+    .then(res => {
+      console.log(res.data);
+      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
+    })
+  }
+
+ };
+
+ /*
+ *  TASK-CREATE TASK COMMENTS ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+ export const createTaskComments = (comment) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.post(`${backendURL}/api/comment`,comment, options);
+
+<<<<<<< HEAD
     }).then(()=>{getGroupTasks()})
         .catch(err => {
           console.log(err);
@@ -1157,3 +1241,19 @@ export const createTaskComments = (comment) => {
 
  };
  
+=======
+  return dispatch => {
+    dispatch({type: CREATE_COMMENT_START})
+    endpoint
+    .then(res => {
+      console.log(res);
+      dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
+    })
+  }
+
+ };
+
+
+>>>>>>> master
