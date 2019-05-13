@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
-import { withRouter } from "react-router";
+//import { withRouter } from "react-router";
 import {
     MDBBtn,
     MDBRow,
@@ -24,7 +24,7 @@ import {
     createGroupTask
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
-import { bool } from 'prop-types';
+//import { bool } from 'prop-types';
 
 class GroupTasks extends Component {
     constructor(props) {
