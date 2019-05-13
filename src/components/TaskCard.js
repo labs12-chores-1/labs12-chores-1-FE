@@ -18,9 +18,7 @@ import { getTaskComments, getUserName, getGroupTasks} from '../store/actions/roo
 
 import "./Styles/TaskCard.css";
 import "./Styles/Comments.css";
-
-import { getTaskComments } from '../store/actions/rootActions';
-import { rootReducer } from "../store/reducers/rootReducer";
+// import { rootReducer } from "../store/reducers/rootReducer";
 
 class TaskCard extends Component {
   constructor(props) {
@@ -76,7 +74,7 @@ class TaskCard extends Component {
                   <h5>{this.props.assignee}</h5>
               </div>
               <div className="task-card-right">
-                  <img onClick ={this.getComments} src={commentImg} height="30" width="30"></img>
+                  <img onClick ={this.getComments} src={commentImg} height="30" width="30" alt=""></img>
                   <input type="checkbox" name="vehicle" value="Bike"></input>
                   <h7>Done</h7>
               </div>

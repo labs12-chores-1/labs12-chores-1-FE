@@ -41,13 +41,6 @@ import {
   CLEAR_GROUP_HISTORY,
   GET_COMMENTS_START, 
   GET_COMMENTS_SUCCESS,
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
->>>>>>> master
   GET_COMMENTS_FAILURE,
   DELETE_TASK_START,
   TASK_DELETED,
@@ -57,17 +50,6 @@ import {
   GET_USER_NAME_START,
   GET_USER_NAME_SUCCESS
 } from "../actions/";
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-  GET_COMMENTS_FAILURE
-
-} from "../actions";
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
-=======
->>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
->>>>>>> master
 
 const initialState = {
   currentUser: null,
@@ -102,35 +84,18 @@ const initialState = {
   errorMessage: null,
   groupMembers: null,
 
-<<<<<<< HEAD
 //***** FairShare***********
   currentGroupTasks: null,
   taskComments: null,
   tempUserName: null
 
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
-//***** FairShare***********
-  currentGroupTasks: null,
-  taskComments: null
+}
 
-<<<<<<< HEAD
-=======
-  taskComments: []
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
-=======
->>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
->>>>>>> master
-};
 
 export const rootReducer = (state = initialState, action) => {
 
 
   switch (action.type) {
-<<<<<<< HEAD
     case GET_USER_NAME_START:
       return {...state,
         errorMessage: null
@@ -141,12 +106,6 @@ export const rootReducer = (state = initialState, action) => {
         tempUserName: action.payload
       };
 
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
->>>>>>> master
     case GET_GROUP_TASKS_START:
       return {...state,
       errorMessage: null
@@ -178,32 +137,14 @@ export const rootReducer = (state = initialState, action) => {
       return {...state,
       errorMessage: null
     };
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
-=======
->>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
->>>>>>> master
     case GET_COMMENTS_SUCCESS:
     return {
       ...state,
       taskComments: action.payload,
         errorMessage: null,
       };
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> ba819d567a1bc677cd1a2ead6c8e306eb3420930
-=======
->>>>>>> aa8a8f654b33ab563b0efb6102262db94942c2b5
->>>>>>> master
     case GET_COMMENTS_FAILURE:
     return {
       ...state,

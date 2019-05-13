@@ -81,8 +81,9 @@ export const GET_GROUP_TASKS_SUCCESS = 'GET_GROUP_TASKS_SUCCESS';
 export const GET_GROUP_TASKS_FAILURE = 'GET_GROUP_TASKS_FAILURE';
 
 
-export const CREATE_TASK = 'CREATE_TASK';
-export const TASK_CREATED = 'TASK_CREATED';
+export const CREATE_GROUP_TASK = 'CREATE_GROUP_TASK';
+export const GROUP_TASK_CREATED = 'GROUP_TASK_CREATED';
+export const GROUP_TASK_ERROR = 'GROUP_TASK_ERROR';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const TASK_UPDATED = 'TASK_UPDATED';
 export const DELETE_TASK_START = 'DELETE_TASK';
@@ -94,6 +95,10 @@ export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
 export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
 export const DELETE_COMMENTS = "DELETE_COMMENTS";
+
+export const CREATE_COMMENT_START = "CREATE_COMMENT_START";
+export const CREATE_COMMENT_SUCCESS = "CREATE_COMMENT_SUCCESS";
+export const CREATE_COMMENT_FAILURE = "CREATE_COMMENT_FAILURE";
 
 
 // Defines URL for development and production/staging environments
@@ -125,7 +130,7 @@ export const checkEmail = () => {
     }
   }
   const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
-  // console.log(fetchUserId);
+  console.log(fetchUserId);
 
   return (dispatch) => {
     dispatch({type: CHECKING_EMAIL});
@@ -1022,6 +1027,9 @@ export const getGroupTasks = (groupId) => {
   }
 }
 
+
+
+
 /**
  * Remove an existing task from a group
  * @param task -task to be removed
@@ -1051,6 +1059,43 @@ export const deleteTask = (task) => {
     })
   }
 }
+
+
+/**
+ * Create new task to a group
+ * @param task -task to be added
+ * @returns {Function}
+ */
+//adds task to group list updated
+export const createGroupTask = (task) => {
+  const token = localStorage.getItem('jwt');
+  
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  console.log("ITEM => ", task);
+
+  const endpoint = axios.post(`${backendURL}/api/task`, task, options);
+
+  return dispatch => {
+    dispatch({type: CREATE_GROUP_TASK})
+
+    endpoint.then(res => {
+      console.log(res.data, 'new item');
+
+      dispatch({type: GROUP_TASK_CREATED, payload:res.data})
+
+    }).then(()=>{getGroupTasks()})
+        .catch(err => {
+          console.log(err);
+          dispatch({type: GROUP_TASK_ERROR, payload:err})
+        })
+  }
+}
+ 
 
 
 /*
@@ -1084,4 +1129,31 @@ export const getTaskComments = (id) => {
   }
 
  }
+
+ /**
+ * Return the current group's tasks
+ * @param comment - comment text to write to db
+ * @returns {Function}
+ */
+export const createTaskComments = (comment) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.post(`${backendURL}/api/comment`,comment, options);
+
+  return dispatch => {
+    dispatch({type: CREATE_COMMENT_START})
+    endpoint
+    .then(res => {
+      console.log(res);
+      dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
+    })
+  }
+
+ };
  
