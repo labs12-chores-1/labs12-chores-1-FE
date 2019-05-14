@@ -69,6 +69,18 @@ class TaskDetail extends Component {
         this.props.history.goBack();
     }
 
+    updateTask = (e) => {
+        e.preventDefault();
+        this.setState({taskName: ''});
+        let task = {
+            taskName:this.state.taskName,
+            groupID:this.props.match.params.id
+        }
+
+        this.props.editTask(task, this.props.match.params.id);
+    
+    };//<-needed?
+
        
 render() {
     return (
@@ -146,3 +158,11 @@ const mapStateToProps = state => {
   
 
 export default withRouter(connect(mapStateToProps,{deleteTask,getTaskComments,createTaskComments})(TaskDetail));
+
+//GetTaskDetails(){
+  //  let taskId = this.props.match.params.id;
+ //   axios.get(`http://localhost:9000/api/task/${taskId}`)
+  //  .then(response => {
+  //    this.setState({
+  //      id: response.data.id,
+    //    name: response.data.name,

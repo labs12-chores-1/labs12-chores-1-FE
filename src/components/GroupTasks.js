@@ -21,7 +21,8 @@ import {
     updateGroupName,
     removeGroup,
     getGroupTasks,
-    createGroupTask
+    createGroupTask,
+    editTask
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 //import { bool } from 'prop-types';
@@ -58,9 +59,9 @@ class GroupTasks extends Component {
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
-
-       
+    
     };
+
 render() {
     return (
         <MDBContainer className="group-task-container">
@@ -81,13 +82,14 @@ render() {
                             taskID={task.id}
                             taskName={task.taskName}
                             requestedBy={"Alex"}
+                            assigner={"Joseph"}
                             done={task.completed}
                             comments={task.comments}
                             repeated={0}
                             assignee={task.completedBy}
-                            // group={1}
-                            // updateGroup={this.saveGroupName}
-                            // removeGroup={this.deleteGroup}
+                            group={1}
+                            updateGroup={this.saveGroupName}
+                            removeGroup={this.deleteGroup}
                             // group & groupID# axios get to that
                             // look at state/variables after that
 
@@ -144,7 +146,14 @@ export default connect(
         removeGroup,
         acceptInvite,
         getGroupTasks,
-        createGroupTask
+        createGroupTask,
+        editTask
     }
 )(GroupTasks);
   
+
+
+
+
+
+

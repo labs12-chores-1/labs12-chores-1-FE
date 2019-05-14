@@ -53,7 +53,10 @@ import {
   CREATE_GROUP_TASK,
   CREATE_COMMENT_START,
   CREATE_COMMENT_SUCCESS,
-  CREATE_COMMENT_FAILURE
+  CREATE_COMMENT_FAILURE,
+  EDIT_TASK_START,
+  TASK_EDITED,
+  EDIT_TASK_FAIL
 } from "../actions/";
 
 const initialState = {
@@ -443,6 +446,24 @@ export const rootReducer = (state = initialState, action) => {
           errorMessage: null
         };
         case GROUP_TASK_ERROR:
+        return {
+          ...state,
+          errorMessage:action.payload
+        };
+        
+        case EDIT_TASK_START:
+        return {
+          ...state,
+          errorMessage: null
+        };
+        case TASK_EDITED:
+        console.log(action.payload);
+        return {
+          ...state,
+          //currentGroupTasks: action.payload,
+          errorMessage: null
+        };
+        case EDIT_TASK_FAIL:
         return {
           ...state,
           errorMessage:action.payload
