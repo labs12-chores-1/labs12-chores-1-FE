@@ -66,7 +66,7 @@ render() {
         <MDBContainer className="group-task-container">
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
-                    <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
+                    <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a> 
                     <div className="nav-btns">
                         <MDBBtn outline color="success">New Task</MDBBtn>
                     
@@ -80,7 +80,7 @@ render() {
                         <TaskCard
                             taskID={task.id}
                             taskName={task.taskName}
-                            requestedBy={"Alex"}
+                            requestedBy={"John"}
                             done={task.completed}
                             comments={task.comments}
                             repeated={0}
