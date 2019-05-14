@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import "./Styles/GroupTask.css";
@@ -50,9 +50,6 @@ class GroupTasks extends Component {
         document.title = `FairShare - Task`;
         this.props.getGroupTasks(this.props.match.params.id);
     }
-<<<<<<< HEAD
-
-=======
     handleChanges=(e)=>{
         this.setState({[e.target.name]:e.target.value})
     }
@@ -68,7 +65,6 @@ class GroupTasks extends Component {
 
        
     };
->>>>>>> a34468d8269a5196b4ea5dda7d87823f93992739
 render() {
     return (
         <MDBContainer className="group-task-container">
@@ -140,7 +136,7 @@ export default connect(
         getGroupTasks
     }
 )(GroupTasks);
-=======
+
 import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import "./Styles/GroupTask.css";
@@ -291,5 +287,4 @@ export default connect(
         createGroupTask
     }
 )(GroupTasks);
->>>>>>> master
   

@@ -80,16 +80,9 @@ export const GET_GROUP_TASKS_START = 'GET_GROUP_TASKS_START';
 export const GET_GROUP_TASKS_SUCCESS = 'GET_GROUP_TASKS_SUCCESS';
 export const GET_GROUP_TASKS_FAILURE = 'GET_GROUP_TASKS_FAILURE';
 
-<<<<<<< HEAD
-
-export const CREATE_GROUP_TASK = 'CREATE_GROUP_TASK';
-export const GROUP_TASK_CREATED = 'GROUP_TASK_CREATED';
-export const GROUP_TASK_ERROR = 'GROUP_TASK_ERROR';
-=======
 // TASK - CREATE
 export const CREATE_TASK = 'CREATE_TASK';
 export const TASK_CREATED = 'TASK_CREATED';
->>>>>>> master
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const TASK_UPDATED = 'TASK_UPDATED';
 
@@ -142,7 +135,6 @@ export const checkEmail = () => {
 
   return (dispatch) => {
     dispatch({type: CHECKING_EMAIL});
-
     fetchUserId.then(res => {
       dispatch({type: EMAIL_CHECKED, payload: res.data.profile});
       localStorage.setItem('userId', res.data.id);
@@ -842,10 +834,6 @@ export const clearItems = () => {
    }
  }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 /*
  * PURCHASE ITEM ACTIONS
  * --------------------------------------------------------------------------------
@@ -1009,10 +997,10 @@ export const clearError = () => {
 }
 
 /*
- * TASK - GET GROUPTASK ACTIONS
+ * TASK ACTIONS
  * --------------------------------------------------------------------------------
  */
-/** 
+/** GET GROUPTASK
  * Return the current group's tasks
  * @param groupId - ID of the current group
  * @returns {Function}
@@ -1038,18 +1026,12 @@ export const getGroupTasks = (groupId) => {
   }
 }
 
-<<<<<<< HEAD
-
-
-
-/**
-=======
 /*
  *  TASK - CREATE GROUP TASK ACTIONS
  * --------------------------------------------------------------------------------
  */
 //adds task to group list updated
- export const createGroupTask = (task, groupID) => {
+ export const createGroupTask = (task) => {
   const token = localStorage.getItem('jwt');
   
   const options = {
@@ -1068,9 +1050,8 @@ export const getGroupTasks = (groupId) => {
     endpoint.then(res => {
       console.log(res.data, 'new task');
       dispatch({type: GROUP_TASK_CREATED, payload:res.data})
-    })
 
-    .then(() => {dispatch(getGroupTasks(groupID))})
+    })
         .catch(err => {
           console.log(err);
           dispatch({type: GROUP_TASK_ERROR, payload:err})
@@ -1084,7 +1065,6 @@ export const getGroupTasks = (groupId) => {
  */
 
  /**
->>>>>>> master
  * Remove an existing task from a group
  * @param task to be removed
  * @returns {Function}
@@ -1112,24 +1092,6 @@ export const deleteTask = (task) => {
   }
 }
 
-<<<<<<< HEAD
-
-/**
- * Create new task to a group
- * @param task -task to be added
- * @returns {Function}
- */
-//adds task to group list updated
-export const createGroupTask = (task) => {
-  const token = localStorage.getItem('jwt');
-  
-  const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    }
-  };
-=======
->>>>>>> master
 
 
 /*
@@ -1172,77 +1134,6 @@ export const getTaskComments = (id) => {
   }
   const endpoint = axios.post(`${backendURL}/api/comment`,comment, options);
 
-<<<<<<< HEAD
-    }).then(()=>{getGroupTasks()})
-        .catch(err => {
-          console.log(err);
-          dispatch({type: GROUP_TASK_ERROR, payload:err})
-        })
-  }
-}
- 
-
-
-/*
- * COMMENT ACTIONS
- * --------------------------------------------------------------------------------
- */
-
-/**
- * Get all comments of an existing task
- * @param id -id of the targeting task
- * @returns {Function}
- */
-export const getTaskComments = (id) => {
-  let token = localStorage.getItem('jwt');
-  let options = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  const endpoint = axios.get(`${backendURL}/api/comment/${id}`, options);
-
-  return dispatch => {
-    dispatch({type: GET_COMMENTS_START})
-    endpoint
-    .then(res => {
-      console.log(res);
-      dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
-    }).catch(err =>{
-      dispatch({type: GET_COMMENTS_FAILURE, payload:err});
-    })
-  }
-
- }
-
- /**
- * Return the current group's tasks
- * @param comment - comment text to write to db
- * @returns {Function}
- */
-export const createTaskComments = (comment) => {
-  let token = localStorage.getItem('jwt');
-  let options = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  const endpoint = axios.post(`${backendURL}/api/comment`,comment, options);
-
-  return dispatch => {
-    dispatch({type: CREATE_COMMENT_START})
-    endpoint
-    .then(res => {
-      console.log(res);
-      dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
-    }).catch(err =>{
-      dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
-    })
-  }
-
- };
- 
-=======
   return dispatch => {
     dispatch({type: CREATE_COMMENT_START})
     endpoint
@@ -1257,4 +1148,3 @@ export const createTaskComments = (comment) => {
  };
 
 
->>>>>>> master
