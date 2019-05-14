@@ -90,7 +90,7 @@ const initialState = {
   taskComments: null,
   tempUserName: null
 
-}
+};
 
 
 export const rootReducer = (state = initialState, action) => {
@@ -145,14 +145,12 @@ export const rootReducer = (state = initialState, action) => {
       return {...state,
       errorMessage: null
     };
-
     case GET_COMMENTS_SUCCESS:
     return {
       ...state,
       taskComments: action.payload,
         errorMessage: null,
       };
-
     case GET_COMMENTS_FAILURE:
     return {
       ...state,
@@ -423,8 +421,6 @@ export const rootReducer = (state = initialState, action) => {
         errorMessage: null
       };
 
-<<<<<<< HEAD
-=======
       case CREATE_GROUP_TASK:
         return {
           ...state,
@@ -443,7 +439,6 @@ export const rootReducer = (state = initialState, action) => {
           errorMessage:action.payload
         };
 
->>>>>>> master
     
 
     default:
