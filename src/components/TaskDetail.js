@@ -111,12 +111,12 @@ render() {
             <MDBContainer className="task-card">
                 <TaskCard
                     taskID={1}
-                    taskname={"Walk Dog"}
-                    requestedBy={"John"}
+                    taskname={""}
+                    requestedBy={""}
                     done={0}
                     comments={0}
                     repeated={0}
-                    assignee={"Jane"}
+                    assignee={""}
                 
                     // group={1}
                     // updateGroup={this.saveGroupName}

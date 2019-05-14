@@ -80,7 +80,7 @@ render() {
                         <TaskCard
                             taskID={task.id}
                             taskName={task.taskName}
-                            requestedBy={"John"}
+                            requestedBy={""}
                             done={task.completed}
                             comments={task.comments}
                             repeated={0}
