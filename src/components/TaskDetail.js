@@ -19,6 +19,8 @@ import { deleteTask } from '../store/actions/rootActions';
  import { createTaskComments } from '../store/actions/rootActions';
 // import { rootReducer } from "../store/reducers/rootReducer";
 
+import {deleteComment} from '../store/actions/rootActions';
+
 class TaskDetail extends Component {
     constructor(props) {
         super(props);
@@ -49,6 +51,7 @@ class TaskDetail extends Component {
 
      createComments = (e) => {
         e.preventDefault();
+        this.setState({commentString: ''});
         let comment = {
             commentString:this.state.commentString,
             commentedBy:this.state.commentedBy,
@@ -56,8 +59,8 @@ class TaskDetail extends Component {
             taskID: this.props.match.params.id
         }
 
-        this.props.createTaskComments(comment);
-        window.location.reload()      
+        this.props.createTaskComments(comment, this.props.match.params.id);
+        // window.location.reload()      
     };
       
       handleChanges=(e)=>{
@@ -69,7 +72,11 @@ class TaskDetail extends Component {
         this.props.history.goBack();
     }
 
-       
+    removeComment = (e, id) => {
+        e.preventDefault();
+        this.props.deleteComment(id, this.props.match.params.id);
+      }
+
 render() {
     return (
         <>
@@ -82,7 +89,7 @@ render() {
                     <div className="nav-btns">
                         <MDBBtn outline color="success">Edit Task</MDBBtn>
                         <MDBBtn onClick={this.toggle} outline color="success">Add Comment</MDBBtn>
-                        <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn> 
+                        <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn>           
                     </div>
 
 
@@ -120,9 +127,12 @@ render() {
                     {/* {console.log(this.props.taskComments)} */}
                     
                     {this.props.taskComments !== null
-                        ? this.props.taskComments.data.map(comment => (
+                        ? this.props.taskComments.data.map(comment => {
+                            console.log(comment);
+                            return(<>
                             <h4 key={comment.id}>{comment.commentString}</h4>
-                        ))
+                             <MDBBtn outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>Delete Comment</MDBBtn> </>
+                        )})
                         : null
                     } 
                 </div>  
@@ -145,4 +155,4 @@ const mapStateToProps = state => {
 };
   
 
-export default withRouter(connect(mapStateToProps,{deleteTask,getTaskComments,createTaskComments})(TaskDetail));
+export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,getTaskComments,createTaskComments})(TaskDetail));
