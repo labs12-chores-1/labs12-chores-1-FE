@@ -53,6 +53,7 @@ class GroupsPage extends Component {
   componentDidMount() {
     document.title = `FairShare - Groups`;
     if (!this.props.userGroups && this.props.currentUser) {
+      console.log("in componentDidMount");
       this.props.getUserGroups(this.props.currentUser.id);
     }
 
@@ -100,7 +101,8 @@ class GroupsPage extends Component {
     });
   };
 
-  handleAddGroup = () => {
+  handleAddGroup = (event) => {
+    event.preventDefault();
     this.props.createGroup(this.state.groupName, this.props.currentUser.id);
     this.toggle(14);
     this.props.getUserGroups(this.props.currentUser.id);
@@ -109,6 +111,7 @@ class GroupsPage extends Component {
     if (!this.props.userGroups) {
       this.props.getUserGroups(this.props.currentUser.id);
     }
+    
   };
 
   handleUpdateGroupName = () => {

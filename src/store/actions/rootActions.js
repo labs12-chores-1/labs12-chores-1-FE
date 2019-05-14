@@ -132,7 +132,7 @@ export const checkEmail = () => {
     }
   }
   const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
-  console.log(fetchUserId);
+  console.log("here",fetchUserId);
 
   return (dispatch) => {
     dispatch({type: CHECKING_EMAIL});
