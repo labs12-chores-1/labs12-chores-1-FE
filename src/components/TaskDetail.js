@@ -129,9 +129,12 @@ render() {
                     {this.props.taskComments !== null
                         ? this.props.taskComments.data.map(comment => {
                             console.log(comment);
-                            return(<>
+                            return(
+                            <>
                             <h4 key={comment.id}>{comment.commentString}</h4>
-                             <MDBBtn outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>Delete Comment</MDBBtn> </>
+                             <button type="button" outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
+                            </>
+                       
                         )})
                         : null
                     } 

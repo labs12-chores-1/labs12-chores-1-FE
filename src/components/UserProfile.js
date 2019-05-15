@@ -233,7 +233,7 @@ class UserProfile extends React.Component {
                           />
 
                           <div className="user-profile-settings-header">
-                            <MDBBtn color="danger" onClick={this.toggle(16)}>
+                            <MDBBtn color="danger" onClick={this.handleDeleteAccount}>
                               Remove Account
                             </MDBBtn>
                             <MDBBtn
