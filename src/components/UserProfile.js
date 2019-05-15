@@ -139,6 +139,16 @@ class UserProfile extends React.Component {
           this.props.history.push("/");
         }
   }
+  handleLeaveHousehold = (event) => {
+    event.preventDefault();
+    let userID = localStorage.getItem("userId")
+    let groupID = localStorage.getItem("groupId")
+    console.log(userID,groupID)
+    if (localStorage.getItem("userId")) {
+        this.props.removeGroupMember(userID,groupID);
+      this.props.history.push("/");
+    }
+}
 
 
 
@@ -240,9 +250,9 @@ class UserProfile extends React.Component {
                             <MDBBtn color="danger" onClick={this.handleDeleteAccount}>
                               Remove Account
                             </MDBBtn>
-                            <MDBBtn color="danger" onClick={''}>
+                            {/* <MDBBtn color="danger" onClick={this.handleLeaveHousehold}>
                               Leave Household
-                            </MDBBtn>
+                            </MDBBtn> */}
                             <MDBBtn
                                 disabled={this.state.username === localStorage.getItem("name") ? true : false}
                                 className={

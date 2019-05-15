@@ -465,11 +465,11 @@ export const removeGroup = (groupID, userID) => dispatch => {
 
 //Leave Household endpoint - remove Group Member
 
-export const removeGroupMember = (userID) => dispatch => {
+export const removeGroupMember = (userID,groupID) => dispatch => {
   dispatch({type: REMOVE_GROUP_MEMBER_START});
 
   const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/groupMember/remove/${userID}`;
+  const endpoint = `${backendURL}/api/groupmember/remove/${userID}/group/${groupID}`;
 
   const options = {
     headers: {
@@ -481,7 +481,7 @@ export const removeGroupMember = (userID) => dispatch => {
     console.log("RES => ", res);
     dispatch({ type: REMOVE_GROUP_MEMBER_SUCCESS});
   }).then(() => {
-    getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
+    // getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
   }).catch(err => {
     console.log("ERR => ", err);
     dispatch({type:REMOVE_GROUP_MEMBER_FAIL, payload: err})
