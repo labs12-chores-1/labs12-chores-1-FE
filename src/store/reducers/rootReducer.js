@@ -54,6 +54,9 @@ import {
   CREATE_COMMENT_START,
   CREATE_COMMENT_SUCCESS,
   CREATE_COMMENT_FAILURE,
+  EDIT_TASK_START,
+  TASK_EDITED,
+  EDIT_TASK_FAIL,
   DELETE_COMMENT_START,
   COMMENT_DELETED,
   DELETE_COMMENT_FAIL
@@ -186,7 +189,7 @@ export const rootReducer = (state = initialState, action) => {
       deleteComment: action.payload,
       errorMessage: null
     };
-
+  
 
 
     case CHECKING_EMAIL:
@@ -469,11 +472,30 @@ export const rootReducer = (state = initialState, action) => {
           ...state,
           errorMessage:action.payload
         };
+        
+        case EDIT_TASK_START:
+        return state;
+        case TASK_EDITED:
+        console.log(action.payload);
+        return {
+          ...state,
+          needsNewTask: true,
+          errorMessage: null
+        };
+        case EDIT_TASK_FAIL:
+        return {
+          ...state,
+          errorMessage:action.payload
+        };
+
+    
+        default:
+        return state
+       
+      };
 
     
 
-    default:
-      return state;
+    
       
-  }
-};
+  };
