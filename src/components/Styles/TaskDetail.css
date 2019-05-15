@@ -16,7 +16,10 @@
     align-items: center;
     justify-content: center;
 }
+#MDBBtn{
+    cursor: pointer;
+}
 
-MDBBtn{
+#MDBIcon{
     cursor: pointer;
 }

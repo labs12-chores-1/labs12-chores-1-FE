@@ -52,7 +52,13 @@ import {
   GET_USER_NAME_SUCCESS,
   CREATE_GROUP_TASK,
   GROUP_TASK_CREATED,
-  GROUP_TASK_ERROR
+  GROUP_TASK_ERROR,
+  CREATE_COMMENT_START,
+  CREATE_COMMENT_SUCCESS,
+  CREATE_COMMENT_FAILURE,
+  DELETE_COMMENT_START,
+  COMMENT_DELETED,
+  DELETE_COMMENT_FAIL
 } from "../actions/";
 
 const initialState = {
@@ -160,6 +166,42 @@ export const rootReducer = (state = initialState, action) => {
       taskComments: null,
       errorMessage: action.payload
     };
+
+    case CREATE_COMMENT_START:
+    return {
+      ...state,
+      errorMessage: null
+    };
+    case CREATE_COMMENT_SUCCESS:
+    return {
+      ...state,
+      // taskComments: action.payload,
+      errorMessage: null
+    };
+    case CREATE_COMMENT_FAILURE:
+    return {
+      ...state,
+      errorMessage: action.payload
+    }
+
+    case DELETE_COMMENT_START:
+    return state;
+  
+  case COMMENT_DELETED:
+    return {
+      ...state,
+      deleteComment: action.payload,
+      errorMessage: null
+    };
+
+  case DELETE_COMMENT_FAIL:
+    return {
+      ...state,
+      deleteComment: action.payload,
+      errorMessage: null
+    };
+
+
 
     case CHECKING_EMAIL:
       return state;

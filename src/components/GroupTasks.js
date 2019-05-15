@@ -85,12 +85,7 @@ render() {
                         />
                         <button type='submit'>Submit</button>
                     </form>
-                    {/* <div className="nav-btns">
-                    <MDBBtn outline color="success">New Task</MDBBtn>
-                    </div> */}
                 </MDBCol>
-            
-
             </MDBRow>
             <MDBContainer className="task-cards">
                 <div className="search-dropdown-row">
@@ -114,8 +109,6 @@ render() {
                             <a class="dropdown-item" href="#">Alex</a>
                         </div>
                     </div>
-
-                    {/* {console.log(this.state.searchField)} */}
                     <div class="dropdown">
                         <span>Complete</span>
                         <div class="dropdown-content">
@@ -139,21 +132,12 @@ render() {
                             repeated={0}
                             assignee={task.completedBy}
                             // group={1}
-                            // updateGroup={this.saveGroupName}
-                            // removeGroup={this.deleteGroup}
-                            // group & groupID# axios get to that
-                            // look at state/variables after that
-
                         />
                       ))
                     : null
                 }  
-
             </MDBContainer>
-    
         </MDBContainer>
-
-        
     )
     }
 }
@@ -191,4 +175,5 @@ export default connect(
         createGroupTask
     }
 )(GroupTasks);
-  
+
+

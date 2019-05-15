@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .group-task-container {
     margin-top: 100px;
 }
@@ -46,3 +47,27 @@ MDBBtn{
   .dropdown:hover .dropdown-content {
     display: block;
   }
+=======
+.group-task-container {
+    margin-top: 100px;
+}
+
+.mb-4 {
+    width:100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-cards {
+    display:flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#MDBBtn{
+    cursor: pointer;
+}
+>>>>>>> master
