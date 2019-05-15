@@ -100,7 +100,9 @@ export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
 export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
 
-export const DELETE_COMMENTS = "DELETE_COMMENTS";
+export const DELETE_COMMENT_START = "DELETE_COMMENT_START";
+export const COMMENT_DELETED = "COMMENT_DELETED";
+export const DELETE_COMMENT_FAIL = "DELETE_COMMENT_FAIL";
 
 export const CREATE_COMMENT_START = "CREATE_COMMENT_START";
 export const CREATE_COMMENT_SUCCESS = "CREATE_COMMENT_SUCCESS";
@@ -1109,7 +1111,7 @@ export const editTask = task => {
 
 
 /*
- *  TASK-GET TASK COMMENTS ACTIONS
+ *  TASK-GET COMMENTS ACTIONS
  * --------------------------------------------------------------------------------
  */
 
@@ -1128,7 +1130,8 @@ export const getTaskComments = (id) => {
     .then(res => {
       console.log(res.data);
       dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
-    }).catch(err =>{
+    })
+      .catch(err =>{
       dispatch({type: GET_COMMENTS_FAILURE, payload:err});
     })
   }
@@ -1136,10 +1139,10 @@ export const getTaskComments = (id) => {
  };
 
  /*
- *  TASK-CREATE TASK COMMENTS ACTIONS
+ *  TASK-CREATE COMMENTS ACTIONS
  * --------------------------------------------------------------------------------
  */
- export const createTaskComments = (comment) => {
+ export const createTaskComments = (comment, id) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1154,11 +1157,45 @@ export const getTaskComments = (id) => {
     .then(res => {
       console.log(res);
       dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
-    }).catch(err =>{
+    }).then(() => {dispatch(getTaskComments(id))})
+    .catch(err =>{
       dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
     })
   }
 
  };
 
+ /*
+ *  TASK - DELETE COMMENTS ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+ /**
+ * Remove an existing comment from a task
+ * @param task to be removed
+ * @returns {Function}
+ */
+export const deleteComment = (comment, id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  let deleteCommentId = comment;
+  const endpoint = axios.delete(`${backendURL}/api/comment/${deleteCommentId}`, options);
+
+  return dispatch => {
+    dispatch({type: DELETE_COMMENT_START})
+    endpoint.then(res => {
+      console.log('delete working');
+      dispatch({type: COMMENT_DELETED, payload: 'Comment Deleted' })
+    }).then(() => {dispatch(getTaskComments(id))})
+      .catch(err => {
+      //console.log(err);
+      dispatch({type: DELETE_COMMENT_FAIL, payload: err})
+    })
+  }
+}
 

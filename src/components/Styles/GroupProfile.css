@@ -1,3 +1,7 @@
+
+
+/* SHOPTRAK */
+
 .group-profile-container {
     margin-top: 85px;
 }
@@ -11,6 +15,15 @@
     .group-profile-header {
         flex-flow: column wrap;
     }
+}
+
+.group-profile-header > .btn-outline-dark-green > .a {
+    text-decoration: none;
+    color:#2E2E2E;
+}
+
+.group-profile-header > .btn-dark-green {
+    color:#f2f1ef;
 }
 
 .group-profile-columns {
