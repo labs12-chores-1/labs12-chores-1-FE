@@ -488,17 +488,14 @@ export const rootReducer = (state = initialState, action) => {
           errorMessage:action.payload
         };
 
-        case UPDATE_ITEM:
-      return state;
     
-        //needsNewItems: true,
+        default:
+        return state
        
       };
 
     
 
-    default:
-      return state;
+    
       
-  }
-};
+  };
