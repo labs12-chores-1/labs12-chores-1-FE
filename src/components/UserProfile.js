@@ -4,7 +4,8 @@ import {
   checkEmail,
   saveUsername,
   saveProfilePic,
-  removeAccount
+  removeAccount,
+  removeGroupMember
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 import {
@@ -25,9 +26,10 @@ import {
   MDBModalHeader,
   MDBModalBody,
   MDBModalFooter,
-    MDBAlert
+  MDBAlert
 } from "mdbreact";
 import "./Styles/UserProfile.css";
+
 
 class UserProfile extends React.Component {
   state = {
@@ -238,6 +240,9 @@ class UserProfile extends React.Component {
                             <MDBBtn color="danger" onClick={this.handleDeleteAccount}>
                               Remove Account
                             </MDBBtn>
+                            <MDBBtn color="danger" onClick={''}>
+                              Leave Household
+                            </MDBBtn>
                             <MDBBtn
                                 disabled={this.state.username === localStorage.getItem("name") ? true : false}
                                 className={
@@ -371,7 +376,7 @@ class UserProfile extends React.Component {
             </MDBModal>
         </MDBContainer>
 
-  //     </div>
+   </div>
    )
 
 
@@ -395,6 +400,7 @@ export default connect(
     checkEmail,
     saveUsername,
     saveProfilePic,
-    removeAccount
+    removeAccount,
+    removeGroupMember
   }
 )(UserProfile);

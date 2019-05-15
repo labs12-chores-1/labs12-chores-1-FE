@@ -56,7 +56,10 @@ import {
   CREATE_COMMENT_FAILURE,
   DELETE_COMMENT_START,
   COMMENT_DELETED,
-  DELETE_COMMENT_FAIL
+  DELETE_COMMENT_FAIL,
+  REMOVE_GROUP_MEMBER_START, 
+  REMOVE_GROUP_MEMBER_SUCCESS,
+  REMOVE_GROUP_MEMBER_FAIL,
 } from "../actions/";
 
 const initialState = {
@@ -439,6 +442,23 @@ export const rootReducer = (state = initialState, action) => {
 
     case REMOVE_ACCOUNT:
       return (state = initialState);
+
+    case REMOVE_GROUP_MEMBER_START:
+      return {
+        ...state,
+        errorMessage: null,
+    };
+    case REMOVE_GROUP_MEMBER_SUCCESS:
+      return {
+        ...state,
+        errorMessage: null,
+    };
+    case REMOVE_GROUP_MEMBER_FAIL:
+      return {
+        ...state,
+        errorMessage: action.payload,
+    };
+
 
     case ERROR:
       return {
