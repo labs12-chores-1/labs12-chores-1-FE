@@ -27,6 +27,10 @@ export const CLEARING_CURRENT_GROUP = 'CLEARING_CURRENT_GROUP';
 export const CREATE_GROUP_TASK = 'CREATE_TASK';
 export const GROUP_TASK_CREATED = 'TASK_CREATED';
 export const GROUP_TASK_ERROR = 'GROUP_TASK_ERROR';
+export const REMOVE_GROUP_MEMBER_START = "REMOVE_GROUP_MEMBER_START";
+export const REMOVE_GROUP_MEMBER_SUCCESS = "REMOVE_GROUP_MEMBER_SUCCESS";
+export const REMOVE_GROUP_MEMBER_FAIL = "REMOVE_GROUP_MEMBER_FAIL";
+
 
 // GROUP PROFILE
 export const GET_GROUP_USERS = 'GET_GROUP_USERS';
@@ -456,6 +460,31 @@ export const removeGroup = (groupID, userID) => dispatch => {
     getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
   }).catch(err => {
     console.log("ERR => ", err);
+  })
+}
+
+//Leave Household endpoint - remove Group Member
+
+export const removeGroupMember = (userID) => dispatch => {
+  dispatch({type: REMOVE_GROUP_MEMBER_START});
+
+  const token = localStorage.getItem('jwt');
+  const endpoint = `${backendURL}/api/groupMember/remove/${userID}`;
+
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  axios.delete(endpoint, options).then(res => {
+    console.log("RES => ", res);
+    dispatch({ type: REMOVE_GROUP_MEMBER_SUCCESS});
+  }).then(() => {
+    getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
+  }).catch(err => {
+    console.log("ERR => ", err);
+    dispatch({type:REMOVE_GROUP_MEMBER_FAIL, payload: err})
   })
 }
 

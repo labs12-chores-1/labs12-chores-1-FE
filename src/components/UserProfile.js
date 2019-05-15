@@ -133,13 +133,15 @@ class UserProfile extends React.Component {
         event.preventDefault();
         if (localStorage.getItem("userId")) {
             this.props.removeAccount();
-            this.setState({modal16: false})
+            // this.setState({modal16: false})
           this.props.history.push("/");
         }
   }
 
 
 
+  
+  
   render() {
     let name,
       email,
@@ -154,7 +156,7 @@ class UserProfile extends React.Component {
     }
 
     const user = localStorage.getItem("userId");
-    return (
+   return (
 
       <div className="user-profile-container">
         {
@@ -356,7 +358,7 @@ class UserProfile extends React.Component {
             </MDBModalFooter>
           </MDBModal>
             <MDBModal isOpen={this.state.modal16} toggle={this.toggle(16)} centered>
-                <MDBModalHeader toggle={this.toggle(16)}>Remove Account</MDBModalHeader>
+                <button onClick={this.handleDeleteAccount}>Remove Account</button>
                 <MDBModalBody>
                     <h6>Type the full name of your username to completely remove it.</h6>
                     <MDBInput label="Account Name" name={"delete"} onChange={this.handleInput} defaultValue={this.state.delete}/>
@@ -369,9 +371,12 @@ class UserProfile extends React.Component {
             </MDBModal>
         </MDBContainer>
 
-      </div>
-    );
+  //     </div>
+   )
+
+
   }
+  
 }
 
 const mapStateToProps = state => {
