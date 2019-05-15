@@ -9,6 +9,7 @@ import {
     MDBCol,
     MDBIcon,
     MDBContainer
+    // MDBInput
   } from "mdbreact";
 import {
     checkEmail,
@@ -31,49 +32,101 @@ class GroupTasks extends Component {
         super(props);
         this.state= {
             tasks:[],
-            taskName: "",
-            taskDescription:"",
-            taskCompleted: false,
-            taskcompletedBy: 1,
+            tempTaskName: "",
+            tempTaskDescription:"",
+            tempTaskCompleted: false,
+            tempTaskcompletedBy: 1,
             searchField: "",
             groupId: null,
-            userId: null
-            
-
+            userId: null,
+            currentGroupTasks: props.currentGroupTasks
         };
     }
     componentWillMount(){
         document.title = `FairShare - Task`;
         this.props.getGroupTasks(this.props.match.params.id);
     }
-    handleChanges=(e)=>{
+    handleAddTask=(e)=>{
         this.setState({[e.target.name]:e.target.value})
     }
     createTask = (e) => {
         e.preventDefault();
-        this.setState({taskName: ''});
+        this.setState({...this.state,
+                            tempTaskName: ''});
         let task = {
-            taskName:this.state.taskName,
+            taskName:this.state.tempTaskName,
             groupID:this.props.match.params.id
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
-
-       
     };
+
+    handleSearch= event =>{
+        event.preventDefault();
+        this.setState({...this.state,
+                        [event.target.name]:event.target.value});
+        
+    }
+
 render() {
     return (
+       
         <MDBContainer className="group-task-container">
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
-                    <div className="nav-btns">
-                        <MDBBtn outline color="success">New Task</MDBBtn>
-                    
-                    </div>
+                    <form onSubmit={this.createTask}>
+                        <input 
+                            type="text"
+                            placeholder="enter task"
+                            name="taskName"
+                            value={this.state.taskName}
+                            onChange={this.handleAddTask}
+                        />
+                        <button type='submit'>Submit</button>
+                    </form>
+                    {/* <div className="nav-btns">
+                    <MDBBtn outline color="success">New Task</MDBBtn>
+                    </div> */}
                 </MDBCol>
+            
+
             </MDBRow>
             <MDBContainer className="task-cards">
+                <div className="search-dropdown-row">
+                    <form class="form-inline">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <input 
+                            class="form-control form-control-sm ml-3 w-75" 
+                            name="searchField" 
+                            type="text" 
+                            value={this.state.searchField} 
+                            placeholder="Search by name" aria-label="Search" 
+                            onChange={this.handleSearch}/>
+                    </form>
+
+                    <div class="dropdown">
+                        <span>Assigned</span>
+                        <div class="dropdown-content">
+                            <a class="dropdown-item" href="#">All</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Me</a>
+                            <a class="dropdown-item" href="#">Alex</a>
+                        </div>
+                    </div>
+
+                    {/* {console.log(this.state.searchField)} */}
+                    <div class="dropdown">
+                        <span>Complete</span>
+                        <div class="dropdown-content">
+                            <a class="dropdown-item" href="#">All</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Complete</a>
+                            <a class="dropdown-item" href="#">Incomplete</a>
+                        </div>
+                    </div>                    
+                </div>
+                <br></br>
                 {/* {console.log(this.props.currentGroupTasks)} */}
                 {this.props.currentGroupTasks !== null
                     ? this.props.currentGroupTasks.data.map(task => (
@@ -97,16 +150,7 @@ render() {
                 }  
 
             </MDBContainer>
-            <form onSubmit={this.createTask}>
-        <input 
-            type="text"
-            placeholder="enter task"
-            name="taskName"
-            value={this.state.taskName}
-            onChange={this.handleChanges}
-          />
-          <button type='submit'>Submit</button>
-      </form>
+    
         </MDBContainer>
 
         
