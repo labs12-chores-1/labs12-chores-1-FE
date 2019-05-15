@@ -4,7 +4,7 @@ import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
 //import { withRouter } from "react-router";
 import {
-    MDBBtn,
+    // MDBBtn,
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -31,7 +31,6 @@ class GroupTasks extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            tasks:[],
             tempTaskName: "",
             tempTaskDescription:"",
             tempTaskCompleted: false,
@@ -39,13 +38,26 @@ class GroupTasks extends Component {
             searchField: "",
             groupId: null,
             userId: null,
-            currentGroupTasks: props.currentGroupTasks
+            currentGroupTasks: null
         };
     }
     componentWillMount(){
         document.title = `FairShare - Task`;
         this.props.getGroupTasks(this.props.match.params.id);
+        // this.setState({...this.state,
+        //     currentGroupTasks: this.props.currentGroupTasks});
+        }
+        
+    componentDidMount(){
+            console.log(this.props.currentGroupTasks);
     }
+
+    componentDidUpdate(previousProps){
+        if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
+            this.setState({currentGroupTasks:this.props.currentGroupTasks})
+        }
+    }
+
     handleAddTask=(e)=>{
         this.setState({[e.target.name]:e.target.value})
     }
@@ -67,6 +79,29 @@ class GroupTasks extends Component {
                         [event.target.name]:event.target.value});
         
     }
+
+    handleFilter =(event, filterString) =>{
+        event.preventDefault();
+        if (filterString =="all-completeness"){
+            this.setState({...this.state,
+                currentGroupTasks: this.props.currentGroupTasks});
+        }
+        else if (filterString =="completed"){
+            this.setState({...this.state,
+                currentGroupTasks: {
+                    data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
+        }
+        else if (filterString =="incomplete"){
+            this.setState({...this.state,
+                currentGroupTasks: {
+                    data:this.props.currentGroupTasks.data.filter(task=>!task.completed)}});
+        }
+        else if (filterString =="incomplete"){
+            this.setState({...this.state,
+                currentGroupTasks: this.props.currentGroupTasks.filter(task=>!task.completed)});
+        }
+    }
+
 
 render() {
     return (
@@ -103,7 +138,7 @@ render() {
                     <div class="dropdown">
                         <span>Assigned</span>
                         <div class="dropdown-content">
-                            <a class="dropdown-item" href="#">All</a>
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"all")}>All</div>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Me</a>
                             <a class="dropdown-item" href="#">Alex</a>
@@ -112,17 +147,18 @@ render() {
                     <div class="dropdown">
                         <span>Complete</span>
                         <div class="dropdown-content">
-                            <a class="dropdown-item" href="#">All</a>
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Complete</a>
-                            <a class="dropdown-item" href="#">Incomplete</a>
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
                         </div>
                     </div>                    
                 </div>
                 <br></br>
                 {/* {console.log(this.props.currentGroupTasks)} */}
-                {this.props.currentGroupTasks !== null
-                    ? this.props.currentGroupTasks.data.map(task => (
+                {this.state.currentGroupTasks !== null
+                    ? this.state.currentGroupTasks.data.map(task => (
+                     
                         <TaskCard
                             taskID={task.id}
                             taskName={task.taskName}
@@ -130,7 +166,7 @@ render() {
                             done={task.completed}
                             comments={task.comments}
                             repeated={0}
-                            assignee={task.completedBy}
+                            assignee={1}
                             // group={1}
                         />
                       ))

@@ -27,7 +27,7 @@ import { deleteTask } from '../store/actions/rootActions';
  import { createTaskComments } from '../store/actions/rootActions';
 // import { rootReducer } from "../store/reducers/rootReducer";
 
-import {deleteComment} from '../store/actions/rootActions';
+// import {deleteComment} from '../store/actions/rootActions';
 
 class TaskDetail extends Component {
     constructor(props) {
@@ -163,4 +163,5 @@ const mapStateToProps = state => {
 };
   
 
-export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,getTaskComments,createTaskComments})(TaskDetail));
+export default withRouter(connect(mapStateToProps,{//deleteComment,
+    deleteTask,getTaskComments,createTaskComments})(TaskDetail));

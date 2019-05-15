@@ -57,8 +57,8 @@ import {
   CREATE_COMMENT_SUCCESS,
   CREATE_COMMENT_FAILURE,
   DELETE_COMMENT_START,
-  COMMENT_DELETED,
-  DELETE_COMMENT_FAIL
+  // COMMENT_DELETED,
+  // DELETE_COMMENT_FAIL
 } from "../actions/";
 
 const initialState = {
@@ -187,19 +187,19 @@ export const rootReducer = (state = initialState, action) => {
     case DELETE_COMMENT_START:
     return state;
   
-  case COMMENT_DELETED:
-    return {
-      ...state,
-      deleteComment: action.payload,
-      errorMessage: null
-    };
+  // case COMMENT_DELETED:
+  //   return {
+  //     ...state,
+  //     deleteComment: action.payload,
+  //     errorMessage: null
+  //   };
 
-  case DELETE_COMMENT_FAIL:
-    return {
-      ...state,
-      deleteComment: action.payload,
-      errorMessage: null
-    };
+  // case DELETE_COMMENT_FAIL:
+  //   return {
+  //     ...state,
+  //     deleteComment: action.payload,
+  //     errorMessage: null
+  //   };
 
 
 

@@ -44,11 +44,11 @@ class GroupsPage extends Component {
 
 }
 
-  componentWillMount() {
-    if (localStorage.getItem("email") && !this.props.currentUser) {
-      this.props.checkEmail();
-    }
-  }
+  // componentWillMount() {
+  //   if (localStorage.getItem("email") && !this.props.currentUser) {
+  //     this.props.checkEmail();
+  //   }
+  // }
 
   componentDidMount() {
     document.title = `FairShare - Groups`;
