@@ -189,7 +189,7 @@ export const rootReducer = (state = initialState, action) => {
       deleteComment: action.payload,
       errorMessage: null
     };
-
+  
 
 
     case CHECKING_EMAIL:
@@ -474,15 +474,12 @@ export const rootReducer = (state = initialState, action) => {
         };
         
         case EDIT_TASK_START:
-        return {
-          ...state,
-          errorMessage: null
-        };
+        return state;
         case TASK_EDITED:
         console.log(action.payload);
         return {
           ...state,
-          //currentGroupTasks: action.payload,
+          needsNewTask: true,
           errorMessage: null
         };
         case EDIT_TASK_FAIL:
@@ -490,6 +487,13 @@ export const rootReducer = (state = initialState, action) => {
           ...state,
           errorMessage:action.payload
         };
+
+        case UPDATE_ITEM:
+      return state;
+    
+        //needsNewItems: true,
+       
+      };
 
     
 
