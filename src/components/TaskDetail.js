@@ -162,7 +162,7 @@ render() {
             <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.handleInputChanges} />
             <label htmlFor="task">Task</label>
           </div>
-          <input type="submit" value="Save" className="btn" />
+          <input type="submit" value="EDIT" className="btn" />
           </form>
          
 
