@@ -195,8 +195,9 @@ render() {
 
 
             <MDBContainer className="task-card">
+                {console.log (this.props.match.params.id)}
                 <TaskCard
-                    taskID={1}
+                    taskID = {this.props.match.params.id}
                     taskname={""}
                     taskDescription={this.props.taskDescription}
                     requestedBy={""}
@@ -243,13 +244,7 @@ const mapStateToProps = state => {
   
 export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,getTaskComments,createTaskComments})(TaskDetail));
 
-//GetTaskDetails(){
-  //  let taskId = this.props.match.params.id;
- //   axios.get(`http://localhost:9000/api/task/${taskId}`)
-  //  .then(response => {
-  //    this.setState({
-  //      id: response.data.id,
-    //    name: response.data.name,
+
 
 
 
