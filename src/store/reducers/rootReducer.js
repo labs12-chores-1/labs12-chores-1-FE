@@ -61,7 +61,9 @@ import {
   EDIT_TASK_FAIL,
   DELETE_COMMENT_START,
   COMMENT_DELETED,
-  DELETE_COMMENT_FAIL
+  DELETE_COMMENT_FAIL,
+  GET_CURRENT_GROUP,
+  SAVE_CURRENT_GROUP,
 } from "../actions/";
 
 const initialState = {
@@ -476,42 +478,49 @@ export const rootReducer = (state = initialState, action) => {
         errorMessage: null
       };
 
-      case CREATE_GROUP_TASK:
-        return {
-          ...state,
-          errorMessage: null
-        };
-        case GROUP_TASK_CREATED:
-        console.log(action.payload);
-        return {
-          ...state,
-          //currentGroupTasks: action.payload,
-          errorMessage: null
-        };
-        case GROUP_TASK_ERROR:
-        return {
-          ...state,
-          errorMessage:action.payload
-        };
-        
-        case EDIT_TASK_START:
-        return state;
-        case TASK_EDITED:
-        console.log(action.payload);
-        return {
-          ...state,
-          needsNewTask: true,
-          errorMessage: null
-        };
-        case EDIT_TASK_FAIL:
-        return {
-          ...state,
-          errorMessage:action.payload
-        };
-
-    
-        default:
-        return state
+    case CREATE_GROUP_TASK:
+      return {
+        ...state,
+        errorMessage: null
+      };
+    case GROUP_TASK_CREATED:
+      console.log(action.payload);
+      return {
+        ...state,
+        //currentGroupTasks: action.payload,
+        errorMessage: null
+      };
+    case GROUP_TASK_ERROR:
+      return {
+        ...state,
+        errorMessage:action.payload
+      };
+      
+    case EDIT_TASK_START:
+      return state;
+      case TASK_EDITED:
+      console.log(action.payload);
+      return {
+        ...state,
+        needsNewTask: true,
+        errorMessage: null
+      };
+    case EDIT_TASK_FAIL:
+      return {
+        ...state,
+        errorMessage:action.payload
+      };
+    case GET_CURRENT_GROUP:
+      return state;
+    case SAVE_CURRENT_GROUP:
+      return {
+        ...state,
+        currentGroup: action.payload,
+        errorMessage: null
+      };
+  
+    default:
+      return state
        
       };
 

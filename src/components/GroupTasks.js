@@ -4,7 +4,7 @@ import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
 //import { withRouter } from "react-router";
 import {
-    MDBBtn,
+    // MDBBtn,
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -39,7 +39,8 @@ class GroupTasks extends Component {
             searchField: "",
             groupId: null,
             userId: null,
-            currentGroupTasks: null
+            currentGroupTasks: null,
+            currentGroupUsers: []
         };
     }
     componentWillMount(){
@@ -47,10 +48,12 @@ class GroupTasks extends Component {
         this.props.getGroupTasks(this.props.match.params.id);
         // this.setState({...this.state,
         //     currentGroupTasks: this.props.currentGroupTasks});
-        }
+        console.log(this.props.currentGroup);
+        this.state.currentGroupUsers = this.props.getGroupUsers(this.props.currentGroup);
+    }
         
     componentDidMount(){
-            console.log(this.props.currentGroupTasks);
+            console.log(this.props.currentGroupUsers);
     }
 
     componentDidUpdate(previousProps){
@@ -141,19 +144,27 @@ render() {
                     <div class="dropdown">
                         <span>Assigned</span>
                         <div class="dropdown-content">
-                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"all")}>All</div>
+                        <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Me</a>
-                            <a class="dropdown-item" href="#">Alex</a>
+                            { console.log(this.props.currentGroup)
+                            //     this.props.currentGroup !== null
+                            // ? this.props.currentGroup.data.map(task => (
+                                
+                            // ))
+                            // : null
+                            }
+                            
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                      
                         </div>
                     </div>
                     <div class="dropdown">
                         <span>Complete</span>
                         <div class="dropdown-content">
-                            <div class="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
                             <div class="dropdown-divider"></div>
-                            <div class="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"completed")}>Complete</div>
-                            <div class="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
                         </div>
                     </div>                    
                 </div>
@@ -163,6 +174,7 @@ render() {
                     ? this.state.currentGroupTasks.data.map(task => (
                      
                         <TaskCard
+                            task={task}
                             taskID={task.id}
                             taskName={task.taskName}
                             requestedBy={task.createdBy}
@@ -170,7 +182,7 @@ render() {
                             comments={task.comments}
                             repeated={0}
                             assignee={task.completedBy}
-                            group={1}
+                            group={task.groupID}
                             updateGroup={this.saveGroupName}
                             removeGroup={this.deleteGroup}
                         />

@@ -27,6 +27,8 @@ export const CHANGE_GROUP_NAME_SUCCESS = 'CHANGE_GROUP_NAME_SUCCESS';
 export const REMOVE_GROUP_START = 'REMOVE_GROUP_START';
 export const REMOVE_GROUP_SUCCESS = 'REMOVE_GROUP_SUCCESS';
 export const CLEARING_CURRENT_GROUP = 'CLEARING_CURRENT_GROUP';
+export const GET_CURRENT_GROUP = 'GET_CURRENT_GROUP';
+export const SAVE_CURRENT_GROUP = 'SAVE_CURRENT_GROUP';
 
 // GROUP PROFILE
 export const GET_GROUP_USERS = 'GET_GROUP_USERS';
@@ -496,6 +498,33 @@ export const removeGroup = (groupID, userID) => dispatch => {
 export const clearCurrentGroup = () => {
   return dispatch => {
     dispatch({type: CLEARING_CURRENT_GROUP});
+  }
+}
+
+/**
+ * Get and save the current group
+ * @returns {Function}
+ */
+export const getCurrentGroup = (groupID) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/group/${groupID}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_CURRENT_GROUP})
+
+    endpoint.then(res => {
+      dispatch({type: SAVE_CURRENT_GROUP, payload: res.data})
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+
   }
 }
 
@@ -1066,7 +1095,7 @@ export const getTasksByInput = (input) => {
  * --------------------------------------------------------------------------------
  */
 //adds task to group list updated
- export const createGroupTask = (task) => {
+ export const createGroupTask = (task,groupID) => {
   const token = localStorage.getItem('jwt');
   
   const options = {
@@ -1087,6 +1116,7 @@ export const getTasksByInput = (input) => {
       dispatch({type: GROUP_TASK_CREATED, payload:res.data})
 
     })
+        .then(() => {dispatch(getGroupTasks(groupID))})
         .catch(err => {
           console.log(err);
           dispatch({type: GROUP_TASK_ERROR, payload:err})
@@ -1191,7 +1221,7 @@ export const getTaskComments = (id) => {
  *  TASK-CREATE TASK COMMENTS ACTIONS
  * --------------------------------------------------------------------------------
  */
- export const createTaskComments = (comment) => {
+ export const createTaskComments = (comment,taskID) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1206,7 +1236,8 @@ export const getTaskComments = (id) => {
     .then(res => {
       console.log(res);
       dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
-    }).catch(err =>{
+    }).then(() => {dispatch(getTaskComments(taskID))})
+    .catch(err =>{
       dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
     })
   }

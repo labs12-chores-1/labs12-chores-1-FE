@@ -46,3 +46,6 @@ MDBBtn{
   .dropdown:hover .dropdown-content {
     display: block;
   }
+  .dropdown-item:hover {
+      cursor: pointer;
+  }
