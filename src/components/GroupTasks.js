@@ -38,8 +38,9 @@ class GroupTasks extends Component {
             taskcompletedBy: 1,
             searchField: "",
             groupId: null,
-            userId: null
-            
+            userId: null,
+            toggleMod: false,
+            toggleRadio:false
 
         };
     }
@@ -52,28 +53,95 @@ class GroupTasks extends Component {
     }
     createTask = (e) => {
         e.preventDefault();
-        this.setState({taskName: ''});
+        this.setState({taskName: '', taskDescription:''});
         let task = {
             taskName:this.state.taskName,
+            taskDescription:this.state.taskDescription,
             groupID:this.props.match.params.id
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
-    
+        this.setState({
+            toggleMod:!this.state.toggleMod
+        })
     };
+
+    toggleMod= (e) => {
+        this.setState({
+            toggleMod:!this.state.toggleMod
+        })
+        console.log('toggleModalState:',this.state.toggleMod);
+    }
+
+    toggleRadio= (e) => {
+        this.setState({
+            toggleRadio:!this.state.toggleRadio
+        }); console.log('toggleRadiotoggle:', this.state.toggleRadio);
+    }
+
 
 render() {
     return (
         <MDBContainer className="group-task-container">
+        
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a> 
                     <div className="nav-btns">
-                        <MDBBtn outline color="success">New Task</MDBBtn>
+                        <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
                     
                     </div>
                 </MDBCol>
             </MDBRow>
+            <div className= {
+                this.state.toggleMod=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                                
+                <span className="x" onClick={this.toggleMod}>X</span>
+                <h3>New Task</h3>
+                <form className={'create-task-form'}onSubmit={this.createTask}>
+                    <input 
+                        type="text"
+                        placeholder="enter task"
+                        name="taskName"
+                        value={this.state.taskName}
+                        onChange={this.handleChanges}
+                    />
+                    <input 
+                        type="text"
+                        placeholder="enter description"
+                        name="taskDescription"
+                        value={this.state.taskDescription}
+                        onChange={this.handleChanges}
+                    />
+                    <input 
+                        type="text"
+                        placeholder="Assign to (optional)"
+                        name="assign"
+                        // value={this.state.taskDescription}
+                        onChange={this.handleChanges}
+                    />
+                    <div>
+                        {/* <span onClick={this.toggleRadio}>Yes</span> */}
+                        <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
+                        <span>Would you like to make this task repeating?</span>
+                    </div>
+                    <div className= {
+                        this.state.toggleRadio=== false
+                            ? 'dropdown-hidden'
+                            : 'dropdown-display'}>
+
+                        How often should this task be completed?
+                        <div className="dropdown-options">
+                            <ul>1 hour</ul>
+                            <ul>2 hours</ul>
+                            <ul>3 hours</ul>
+                        </div>
+                    </div>
+                    <button type='submit'>Submit</button>
+                </form>
+            </div>
             <MDBContainer className="task-cards">
                 {/* {console.log(this.props.currentGroupTasks)} */}
                 {this.props.currentGroupTasks !== null
@@ -81,6 +149,7 @@ render() {
                         <TaskCard
                             taskID={task.id}
                             taskName={task.taskName}
+                            taskDescription={task.taskDescription}
                             requestedBy={""}
                             done={task.completed}
                             comments={task.comments}
@@ -98,16 +167,8 @@ render() {
                 }  
 
             </MDBContainer>
-            <form onSubmit={this.createTask}>
-        <input 
-            type="text"
-            placeholder="enter task"
-            name="taskName"
-            value={this.state.taskName}
-            onChange={this.handleChanges}
-          />
-          <button type='submit'>Submit</button>
-      </form>
+            
+          
         </MDBContainer>
 
         
