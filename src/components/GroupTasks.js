@@ -67,7 +67,8 @@ class GroupTasks extends Component {
                             tempTaskName: ''});
         let task = {
             taskName:this.state.tempTaskName,
-            groupID:this.props.match.params.id
+            groupID:this.props.match.params.id,
+            createdBy:localStorage.getItem("name")
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
@@ -82,23 +83,23 @@ class GroupTasks extends Component {
 
     handleFilter =(event, filterString) =>{
         event.preventDefault();
-        if (filterString =="all-completeness"){
+        if (filterString === "all-completeness"){
             this.setState({...this.state,
                 currentGroupTasks: this.props.currentGroupTasks});
         }
-        else if (filterString =="completed"){
+        else if (filterString ==="completed"){
             this.setState({...this.state,
                 currentGroupTasks: {
                     data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
         }
-        else if (filterString =="incomplete"){
+        else if (filterString ==="incomplete"){
             this.setState({...this.state,
                 currentGroupTasks: {
                     data:this.props.currentGroupTasks.data.filter(task=>!task.completed)}});
         }
-        else if (filterString =="incomplete"){
+        else if (filterString ==="all-assignee"){
             this.setState({...this.state,
-                currentGroupTasks: this.props.currentGroupTasks.filter(task=>!task.completed)});
+                currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy.include())});
         }
     }
 
@@ -162,11 +163,11 @@ render() {
                         <TaskCard
                             taskID={task.id}
                             taskName={task.taskName}
-                            requestedBy={"Alex"}
+                            requestedBy={task.createdBy}
                             done={task.completed}
                             comments={task.comments}
                             repeated={0}
-                            assignee={1}
+                            assignee={2}
                             // group={1}
                         />
                       ))

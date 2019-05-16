@@ -55,18 +55,6 @@ class TaskCard extends Component {
     this.props.getTaskComments(this.props.match.params.id);
   };
 
-  // getUserName = () =>{
-  //   // e.preventDefault();
-    
-  //   this.props.getUserName(this.props.assignee);
-  //   this.setState({
-  //     assigneeName: this.props.tempUserName
-  //   });
-  //   console.log("here");
-  //   console.log(this.state.assigneeName); 
-  //   return this.state.assigneeName;//this.props.tempUserName;
-  // }
-
   render(){
 
   return (
