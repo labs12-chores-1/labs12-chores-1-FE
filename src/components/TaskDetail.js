@@ -3,7 +3,8 @@ import axios from 'axios';
 //import { Link } from 'react-router-dom';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
-import TaskCard from "./TaskCard";
+//import TaskCard from "./TaskCard";
+import TaskCardDetail from "./TaskCardDetail";
 import { withRouter } from "react-router";
 import {
     MDBBtn,
@@ -30,7 +31,7 @@ class TaskDetail extends Component {
             modal: false,
             commentString:'',
             commentedBy:1,
-            groupID:1,
+            groupID: props.match.params.id,
             taskID: 0,
         };
         
@@ -43,7 +44,7 @@ class TaskDetail extends Component {
 
     getTaskDetails(){
         let taskId = this.props.match.params.id;
-        axios.get(`http://localhost:3000/api/task/${taskId}`)
+        axios.get(`http://localhost:9000/api/task/${taskId}`)
         .then(response => {
           this.setState({
             name: response.data.name,
@@ -57,7 +58,7 @@ class TaskDetail extends Component {
         editTask(newTask){
             axios.request({
               method:'put',
-              url:`http://localhost:3000/api/task/${this.state.id}`,
+              url:`http://localhost:9000/api/task/${this.state.id}`,
               data: newTask
             }).then(response => {
               this.props.history.push('/');
@@ -67,8 +68,8 @@ class TaskDetail extends Component {
           onSubmit(e){
             const newTask = {
               name: this.refs.name.value2,
-              city: this.refs.city.value2,
-              address: this.refs.address.value2
+              task: this.refs.task.value2
+              
             }
             this.editTask(newTask);
             e.preventDefault();
@@ -80,7 +81,7 @@ class TaskDetail extends Component {
         this.props.deleteTask(this.props.match.params.id);
         this.props.history.goBack();
         //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
-
+      
     }
 
      createComments = (e) => {
@@ -105,13 +106,13 @@ class TaskDetail extends Component {
         const target = e.target;
         const value2 = target.value2;
         const name = target.name;
-    
+        //api/task/:id
         this.setState({
           [name]: value2
         });
       }
 
-    backToTask = (e) => {
+      backToTask = (e) => {
         e.preventDefault();
         this.props.history.goBack();
     }
@@ -179,7 +180,7 @@ render() {
 
             <MDBContainer className="task-card">
                 {console.log (this.props.match.params.id)}
-                <TaskCard
+                <TaskCardDetail
                     taskID = {this.props.match.params.id}
                     taskname={""}
                     requestedBy={""}
@@ -221,7 +222,7 @@ const mapStateToProps = state => {
     return {
       //state items
       taskComments: state.taskComments,
-      errorMessage: state.errorMessage
+      errorMessage: state.errorMessage,currentGroup:state.currentGroup
     };
 };
   
