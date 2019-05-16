@@ -61,6 +61,9 @@ class GroupTasks extends Component {
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
+        this.setState({
+            toggleMod:!this.state.toggleMod
+        })
     };
 
     toggleMod= (e) => {
@@ -110,6 +113,13 @@ render() {
                         placeholder="enter description"
                         name="taskDescription"
                         value={this.state.taskDescription}
+                        onChange={this.handleChanges}
+                    />
+                    <input 
+                        type="text"
+                        placeholder="Assign to (optional)"
+                        name="assign"
+                        // value={this.state.taskDescription}
                         onChange={this.handleChanges}
                     />
                     <div>
