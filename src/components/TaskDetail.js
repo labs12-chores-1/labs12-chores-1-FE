@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-// import { Link } from 'react-router-dom';
-=======
 import axios from 'axios';
 //import { Link } from 'react-router-dom';
->>>>>>> master
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
 import TaskCard from "./TaskCard";
@@ -238,14 +234,9 @@ const mapStateToProps = state => {
     };
 };
   
-export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,getTaskComments,createTaskComments})(TaskDetail));
-
-
-
-
-
-<<<<<<< HEAD
 export default withRouter(connect(mapStateToProps,{//deleteComment,
     deleteTask,getTaskComments,createTaskComments})(TaskDetail));
-=======
->>>>>>> master
+
+
+
+

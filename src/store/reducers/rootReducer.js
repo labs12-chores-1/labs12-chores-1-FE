@@ -60,8 +60,8 @@ import {
   TASK_EDITED,
   EDIT_TASK_FAIL,
   DELETE_COMMENT_START,
-  // COMMENT_DELETED,
-  // DELETE_COMMENT_FAIL
+  COMMENT_DELETED,
+  DELETE_COMMENT_FAIL
 } from "../actions/";
 
 const initialState = {
@@ -211,7 +211,6 @@ export const rootReducer = (state = initialState, action) => {
       errorMessage: null
     };
   
->>>>>>> master
 
 
     case CHECKING_EMAIL:
@@ -516,15 +515,8 @@ export const rootReducer = (state = initialState, action) => {
        
       };
 
-<<<<<<< HEAD
-    default:
-      return state;
-  }
-};
-=======
-    
+ 
 
     
       
   };
->>>>>>> master
