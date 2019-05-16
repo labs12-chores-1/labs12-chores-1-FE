@@ -197,7 +197,6 @@ export const rootReducer = (state = initialState, action) => {
   //     errorMessage: null
   //   };
 
-<<<<<<< HEAD
   // case DELETE_COMMENT_FAIL:
   //   return {
   //     ...state,
@@ -205,7 +204,6 @@ export const rootReducer = (state = initialState, action) => {
   //     errorMessage: null
   //   };
 
-=======
   case DELETE_COMMENT_FAIL:
     return {
       ...state,
