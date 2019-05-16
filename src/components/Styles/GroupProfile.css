@@ -1,5 +1,7 @@
 
 
+
+
 /* SHOPTRAK */
 
 .group-profile-container {
@@ -69,9 +71,9 @@
     }
 }
 
-.notification-container {
+/* .notification-container {
 
-}
+} */
 
 .label-check input {  display:none;}
 

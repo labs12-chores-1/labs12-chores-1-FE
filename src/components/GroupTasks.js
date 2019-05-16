@@ -4,11 +4,12 @@ import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
 //import { withRouter } from "react-router";
 import {
-    MDBBtn,
+    // MDBBtn,
     MDBRow,
     MDBCol,
     MDBIcon,
     MDBContainer
+    // MDBInput
   } from "mdbreact";
 import {
     checkEmail,
@@ -31,86 +32,175 @@ class GroupTasks extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            tasks:[],
             taskName: "",
-            taskDescription:"",
-            taskCompleted: false,
-            taskcompletedBy: 1,
+            tempTaskDescription:"",
+            tempTaskCompleted: false,
+            tempTaskcompletedBy: 1,
             searchField: "",
             groupId: null,
-            userId: null
-            
-
+            userId: null,
+            currentGroupTasks: null,
+            currentGroupUsers: []
         };
     }
     componentWillMount(){
         document.title = `FairShare - Task`;
         this.props.getGroupTasks(this.props.match.params.id);
+        // this.setState({...this.state,
+        //     currentGroupTasks: this.props.currentGroupTasks});
+        console.log(this.props.currentGroup);
+        this.state.currentGroupUsers = this.props.getGroupUsers(this.props.currentGroup);
     }
-    handleChanges=(e)=>{
-        this.setState({[e.target.name]:e.target.value})
+        
+    componentDidMount(){
+            console.log(this.props.currentGroupUsers);
+    }
+
+    componentDidUpdate(previousProps){
+        if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
+            this.setState({currentGroupTasks:this.props.currentGroupTasks})
+        }
+    }
+
+    handleAddTask=(e)=>{
+        this.setState({[e.target.name]:e.target.value});
+        console.log(this.state.taskName);
     }
     createTask = (e) => {
         e.preventDefault();
-        this.setState({taskName: ''});
+        // this.setState({...this.state,
+        //                     tempTaskName: ''});
         let task = {
             taskName:this.state.taskName,
-            groupID:this.props.match.params.id
+            groupID:this.props.match.params.id,
+            createdBy:localStorage.getItem("name")
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
-    
     };
+
+    handleSearch= event =>{
+        event.preventDefault();
+        this.setState({...this.state,
+                        [event.target.name]:event.target.value});
+        
+    }
+
+    handleFilter =(event, filterString) =>{
+        event.preventDefault();
+        if (filterString === "all-completeness"){
+            this.setState({...this.state,
+                currentGroupTasks: this.props.currentGroupTasks});
+        }
+        else if (filterString ==="completed"){
+            this.setState({...this.state,
+                currentGroupTasks: {
+                    data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
+        }
+        else if (filterString ==="incomplete"){
+            this.setState({...this.state,
+                currentGroupTasks: {
+                    data:this.props.currentGroupTasks.data.filter(task=>!task.completed)}});
+        }
+        else if (filterString ==="all-assignee"){
+            this.setState({...this.state,
+                currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy.include())});
+        }
+    }
+
 
 render() {
     return (
+       
         <MDBContainer className="group-task-container">
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
-                    <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a> 
-                    <div className="nav-btns">
-                        <MDBBtn outline color="success">New Task</MDBBtn>
-                    
-                    </div>
+                    <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
+                    <form onSubmit={this.createTask}>
+                        <input 
+                            type="text"
+                            placeholder="enter task"
+                            name="taskName"
+                            value={this.state.taskName}
+                            onChange={this.handleAddTask}
+                        />
+                        <button type='submit'>Submit</button>
+                    </form>
                 </MDBCol>
             </MDBRow>
             <MDBContainer className="task-cards">
+                <div className="search-dropdown-row">
+                    <form class="form-inline">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <input 
+                            class="form-control form-control-sm ml-3 w-75" 
+                            name="searchField" 
+                            type="text" 
+                            value={this.state.searchField} 
+                            placeholder="Search by name" aria-label="Search" 
+                            onChange={this.handleSearch}/>
+                    </form>
+
+                    <div class="dropdown">
+                        <span>Assigned</span>
+                        <div class="dropdown-content">
+                        <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
+                            <div class="dropdown-divider"></div>
+                            { console.log(this.props.currentGroup)
+                            //     this.props.currentGroup !== null
+                            // ? this.props.currentGroup.data.map(task => (
+                                
+                            // ))
+                            // : null
+                            }
+                            
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                      
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <span>Complete</span>
+                        <div class="dropdown-content">
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
+                        </div>
+                    </div>                    
+                </div>
+                <br></br>
                 {/* {console.log(this.props.currentGroupTasks)} */}
-                {this.props.currentGroupTasks !== null
-                    ? this.props.currentGroupTasks.data.map(task => (
+                {this.state.currentGroupTasks !== null
+                    ? this.state.currentGroupTasks.data.map(task => (
+                     
                         <TaskCard
+                            task={task}
                             taskID={task.id}
                             taskName={task.taskName}
-                            requestedBy={""}
+                            requestedBy={task.createdBy}
                             done={task.completed}
                             comments={task.comments}
                             repeated={0}
                             assignee={task.completedBy}
-                            group={1}
+                            group={task.groupID}
                             updateGroup={this.saveGroupName}
                             removeGroup={this.deleteGroup}
-                            // group & groupID# axios get to that
-                            // look at state/variables after that
-
                         />
                       ))
                     : null
                 }  
-
             </MDBContainer>
-            <form onSubmit={this.createTask}>
-        <input 
-            type="text"
-            placeholder="enter task"
-            name="taskName"
-            value={this.state.taskName}
-            onChange={this.handleChanges}
-          />
-          <button type='submit'>Submit</button>
-      </form>
+            {/* <form onSubmit={this.createTask}>
+                <input 
+                    type="text"
+                    placeholder="enter task"
+                    name="taskName"
+                    value={this.state.taskName}
+                    onChange={this.handleChanges}
+                />
+                <button type='submit'>Submit</button>
+            </form> */}
         </MDBContainer>
-
-        
     )
     }
 }
@@ -149,10 +239,3 @@ export default connect(
         editTask
     }
 )(GroupTasks);
-  
-
-
-
-
-
-

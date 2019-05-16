@@ -17,6 +17,7 @@ import {
   clearError,
   clearGroupHistory,
   updateGroupNotification,
+  getCurrentGroup
 } from "../store/actions/rootActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
@@ -95,6 +96,7 @@ class GroupsProfile extends Component {
       const group = this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id));
       document.title = `${group[0].name} - Group`;
     }
+    this.props.getCurrentGroup(this.props.match.params.id);
   }
 
   /**
@@ -130,7 +132,7 @@ class GroupsProfile extends Component {
       const group = this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id));
       document.title = `${group[0].name} - Group`;
     }
-
+    this.props.getGroupUsers(this.props.currentGroup);
   }
 
   /**
@@ -461,7 +463,8 @@ const mapStateToProps = state => {
     // current user state
     currentUser: state.currentUser,
     userGroups: state.userGroups,
-    errorMessage: state.errorMessage
+    errorMessage: state.errorMessage,
+    currentGroup: state.currentGroup
   };
 };
 
@@ -483,6 +486,7 @@ export default connect(
     getUserGroups,
     clearError,
     clearGroupHistory,
-    updateGroupNotification
+    updateGroupNotification,
+    getCurrentGroup
   }
 )(GroupsProfile);

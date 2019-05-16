@@ -6,7 +6,16 @@ import "./Styles/modal.css";
 import TaskCard from "./TaskCard";
 import { withRouter } from "react-router";
 import {
+    // MDBCard,
+    // MDBCardBody,
+    // MDBCardTitle,
+    // MDBCardText,
     MDBBtn,
+    // MDBModal,
+    // MDBModalBody,
+    // MDBModalHeader,
+    // MDBModalFooter,
+    // MDBInput,
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -19,7 +28,7 @@ import { deleteTask } from '../store/actions/rootActions';
  import { createTaskComments } from '../store/actions/rootActions';
 // import { rootReducer } from "../store/reducers/rootReducer";
 
-import {deleteComment} from '../store/actions/rootActions';
+// import {deleteComment} from '../store/actions/rootActions';
 
 class TaskDetail extends Component {
     constructor(props) {
@@ -225,8 +234,8 @@ const mapStateToProps = state => {
     };
 };
   
-export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,getTaskComments,createTaskComments})(TaskDetail));
-
+export default withRouter(connect(mapStateToProps,{//deleteComment,
+    deleteTask,getTaskComments,createTaskComments})(TaskDetail));
 
 
 
