@@ -132,7 +132,8 @@ class TaskDetail extends Component {
         }
 
         this.props.editTask(task,id);
-    
+    this.setState({toggleMod:!this.state.toggleMod});
+
     };//<-needed?
 
        
@@ -163,7 +164,7 @@ render() {
                     </div>
                 </MDBCol>
             </MDBRow>
-            <form onSubmit={this.updateTask}>
+            {/* <form onSubmit={this.updateTask}>
           <div className="input-field">
             <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
             <label htmlFor="name">Name</label>
@@ -172,8 +173,8 @@ render() {
             <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
             <label htmlFor="task">Task</label>
           </div> */}
-          <input type="submit" value="EDIT" className="btn" />
-          </form>
+          {/*</MDBContainer><input type="submit" value="EDIT" className="btn" />
+          </form> */}
          
 
           <form onSubmit={this.createComments}>
@@ -192,23 +193,17 @@ render() {
                     : 'custom-mod-display'}>
                                 
                 <span className="x" onClick={this.toggleMod}>X</span>
-                <form className={'create-task-form'}onSubmit={this.createTask}>
-                    <input 
-                        type="text"
-                        placeholder="enter task"
-                        name="taskName"
-                        value={this.state.taskName}
-                        onChange={this.handleChanges}
-                    />
-                    <input 
-                        type="text"
-                        placeholder="enter description"
-                        name="taskDescription"
-                        value={this.state.taskDescription}
-                        onChange={this.handleChanges}
-                    />
-                    <button type='submit'>Submit</button>
-                </form>
+                <form onSubmit={this.updateTask}>
+          <div className="input-field">
+            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
+            <label htmlFor="name">Name</label>
+          </div>
+          {/* <div className="input-field">
+            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
+            <label htmlFor="task">Task</label>
+          </div> */}
+          <input type="submit" value="EDIT" className="btn" />
+          </form>
             </div>
             
             
