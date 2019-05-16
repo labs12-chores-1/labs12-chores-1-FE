@@ -20,3 +20,47 @@
 #MDBBtn{
     cursor: pointer;
 }
+
+.custom-mod-hidden {
+    display: none
+}
+
+.custom-mod-display {
+   
+    /* border: 1px solid black; */
+    width:800px;
+    height: 200px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    
+
+}
+
+.create-task-form{
+    display: flex;
+    flex-direction: column;
+    width:50%;
+    align-items: center;
+    justify-content: center;
+    border:3px solid blue;
+    height: 500px;
+    background-color: white;
+}
+
+.x{
+    border:1px solid red;
+    align-self: flex-end;
+    cursor: pointer;
+    
+}
+
+.dropdown-hidden{
+    display: none;
+}
+
+.dropdown-display{
+    display: block;
+}
