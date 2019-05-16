@@ -95,6 +95,10 @@ export const DELETE_TASK_START = "DELETE_TASK_START";
 export const TASK_DELETED= "TASK_DELETED";
 export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
 
+// TASK - EDIT
+export const EDIT_TASK_START = "EDIT_TASK_START";
+export const TASK_EDITED = "TASK_EDITED";
+export const EDIT_TASK_FAIL = "EDIT_TASK_FAIL";
 // COMMENT
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
@@ -1104,6 +1108,37 @@ export const deleteTask = (task) => {
     })
   }
 }
+/*
+ *  TASK - EDIT ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+/**
+ * Update an existing task in a group
+ * @param task - Task changes
+ * @returns {Function}
+ */
+export const editTask = (task, id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.put(`${backendURL}/api/task/${id}`, task, options);
+
+  return dispatch => {
+    dispatch({type: EDIT_TASK_START});
+
+    endpoint.then(res => {
+      dispatch({type: TASK_EDITED});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: EDIT_TASK_FAIL})
+    })
+  }
+}
+
 
 
 
