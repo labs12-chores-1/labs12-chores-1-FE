@@ -32,7 +32,7 @@ class GroupTasks extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            tempTaskName: "",
+            taskName: "",
             tempTaskDescription:"",
             tempTaskCompleted: false,
             tempTaskcompletedBy: 1,
@@ -60,14 +60,15 @@ class GroupTasks extends Component {
     }
 
     handleAddTask=(e)=>{
-        this.setState({[e.target.name]:e.target.value})
+        this.setState({[e.target.name]:e.target.value});
+        console.log(this.state.taskName);
     }
     createTask = (e) => {
         e.preventDefault();
-        this.setState({...this.state,
-                            tempTaskName: ''});
+        // this.setState({...this.state,
+        //                     tempTaskName: ''});
         let task = {
-            taskName:this.state.tempTaskName,
+            taskName:this.state.taskName,
             groupID:this.props.match.params.id,
             createdBy:localStorage.getItem("name")
         }
@@ -149,10 +150,10 @@ render() {
                     <div class="dropdown">
                         <span>Complete</span>
                         <div class="dropdown-content">
-                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
+                            <div class="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
                             <div class="dropdown-divider"></div>
-                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
-                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
+                            <div class="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                            <div class="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
                         </div>
                     </div>                    
                 </div>
@@ -177,7 +178,7 @@ render() {
                     : null
                 }  
             </MDBContainer>
-            <form onSubmit={this.createTask}>
+            {/* <form onSubmit={this.createTask}>
                 <input 
                     type="text"
                     placeholder="enter task"
@@ -186,7 +187,7 @@ render() {
                     onChange={this.handleChanges}
                 />
                 <button type='submit'>Submit</button>
-            </form>
+            </form> */}
         </MDBContainer>
     )
     }
