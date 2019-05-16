@@ -18,6 +18,8 @@ import { connect } from 'react-redux';
 import { getTaskComments } from '../store/actions/rootActions';
 import { deleteTask } from '../store/actions/rootActions';
  import { createTaskComments } from '../store/actions/rootActions';
+ import { editTask } from '../store/actions/rootActions';
+
 // import { rootReducer } from "../store/reducers/rootReducer";
 
 import {deleteComment} from '../store/actions/rootActions';
@@ -47,28 +49,28 @@ class TaskDetail extends Component {
         axios.get(`http://localhost:9000/api/task/${taskId}`)
         .then(response => {
           this.setState({
-            name: response.data.name,
-            task: response.task.city  
+            name: response.data.taskName,
+            task: response.data.id  
           }, () => {
             console.log(this.state);
           });
         })
         .catch(err => console.log(err));
         }
-        editTask(newTask){
-            axios.request({
-              method:'put',
-              url:`http://localhost:9000/api/task/${this.state.id}`,
-              data: newTask
-            }).then(response => {
-              this.props.history.push('/');
-            }).catch(err => console.log(err));
-          }
+        // editTask(newTask){
+        //     axios.request({
+        //       method:'put',
+        //       url:`http://localhost:9000/api/task/${this.state.id}`,
+        //       data: newTask
+        //     }).then(response => {
+        //       this.props.history.push('/');
+        //     }).catch(err => console.log(err));
+        //   }
         
           onSubmit(e){
             const newTask = {
-              name: this.refs.name.value2,
-              task: this.refs.task.value2
+              name: this.refs.name.value,
+              task: this.refs.task.value
               
             }
             this.editTask(newTask);
@@ -102,14 +104,15 @@ class TaskDetail extends Component {
         this.setState({[e.target.name]:e.target.value})
     }
 
-    handleInputChange(e){
-        const target = e.target;
-        const value2 = target.value2;
-        const name = target.name;
-        //api/task/:id
-        this.setState({
-          [name]: value2
-        });
+    handleInputChange=(e)=>{
+      this.setState({[e.target.name]:e.target.value})
+        // const target = e.target;
+        // const value = target.value;
+        // const name = e.target.name;
+        // //api/task/:id
+        // this.setState({
+        //   [name]: value
+        // });
       }
 
       backToTask = (e) => {
@@ -120,12 +123,14 @@ class TaskDetail extends Component {
     updateTask = (e) => {
         e.preventDefault();
         this.setState({taskName: ''});
+        let id = this.props.match.params.id
+        console.log(id)
         let task = {
             taskName:this.state.taskName,
-            groupID:this.props.match.params.id
+            
         }
 
-        this.props.editTask(task, this.props.match.params.id);
+        this.props.editTask(task,id);
     
     };//<-needed?
 
@@ -153,15 +158,15 @@ render() {
 
                 </MDBCol>
             </MDBRow>
-            <form onSubmit={this.onSubmit.bind(this)}>
+            <form onSubmit={this.updateTask}>
           <div className="input-field">
-            <input type="text" name="name" ref="name" value2={this.state.name} onChange={this.handleInputChanges} />
+            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
             <label htmlFor="name">Name</label>
           </div>
-          <div className="input-field">
-            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.handleInputChanges} />
+          {/* <div className="input-field">
+            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
             <label htmlFor="task">Task</label>
-          </div>
+          </div> */}
           <input type="submit" value="EDIT" className="btn" />
           </form>
          
@@ -226,7 +231,7 @@ const mapStateToProps = state => {
     };
 };
   
-export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,getTaskComments,createTaskComments})(TaskDetail));
+export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,editTask,getTaskComments,createTaskComments})(TaskDetail));
 
 
 
