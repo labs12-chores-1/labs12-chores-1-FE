@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
+import "./Styles/Comments.css";
 import TaskCard from "./TaskCard";
+import Comments from './Comments'
 import { withRouter } from "react-router";
 import {
     MDBBtn,
@@ -131,8 +133,19 @@ render() {
                             console.log(comment);
                             return(
                             <>
-                            <h4 key={comment.id}>{comment.commentString}</h4>
-                             <button type="button" outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
+                            <Comments 
+                            commentString= {comment.commentString}
+                            taskID = {this.props.match.params.id}
+                            commentedOn={comment.commentedOn}
+                            commentID={comment.id}
+
+
+
+                            />
+                             <div className="buttons">
+                                <button>Edit</button>
+                                <button type="button" outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>Delete</button> 
+                             </div>
                             </>
                        
                         )})
