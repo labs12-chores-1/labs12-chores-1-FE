@@ -4,7 +4,7 @@ import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
 //import { withRouter } from "react-router";
 import {
-    // MDBBtn,
+    MDBBtn,
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -22,7 +22,8 @@ import {
     updateGroupName,
     removeGroup,
     getGroupTasks,
-    createGroupTask
+    createGroupTask,
+    editTask
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 //import { bool } from 'prop-types';
@@ -167,13 +168,25 @@ render() {
                             done={task.completed}
                             comments={task.comments}
                             repeated={0}
-                            assignee={2}
-                            // group={1}
+                            assignee={task.completedBy}
+                            group={1}
+                            updateGroup={this.saveGroupName}
+                            removeGroup={this.deleteGroup}
                         />
                       ))
                     : null
                 }  
             </MDBContainer>
+            <form onSubmit={this.createTask}>
+                <input 
+                    type="text"
+                    placeholder="enter task"
+                    name="taskName"
+                    value={this.state.taskName}
+                    onChange={this.handleChanges}
+                />
+                <button type='submit'>Submit</button>
+            </form>
         </MDBContainer>
     )
     }
@@ -209,8 +222,7 @@ export default connect(
         removeGroup,
         acceptInvite,
         getGroupTasks,
-        createGroupTask
+        createGroupTask,
+        editTask
     }
 )(GroupTasks);
-
-

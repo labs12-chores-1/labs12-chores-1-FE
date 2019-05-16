@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 // import { Link } from 'react-router-dom';
+=======
+import axios from 'axios';
+//import { Link } from 'react-router-dom';
+>>>>>>> master
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
 import TaskCard from "./TaskCard";
@@ -49,6 +54,40 @@ class TaskDetail extends Component {
         this.props.getTaskComments(this.props.match.params.id);
     }
 
+    getTaskDetails(){
+        let taskId = this.props.match.params.id;
+        axios.get(`http://localhost:3000/api/task/${taskId}`)
+        .then(response => {
+          this.setState({
+            name: response.data.name,
+            task: response.task.city  
+          }, () => {
+            console.log(this.state);
+          });
+        })
+        .catch(err => console.log(err));
+        }
+        editTask(newTask){
+            axios.request({
+              method:'put',
+              url:`http://localhost:3000/api/task/${this.state.id}`,
+              data: newTask
+            }).then(response => {
+              this.props.history.push('/');
+            }).catch(err => console.log(err));
+          }
+        
+          onSubmit(e){
+            const newTask = {
+              name: this.refs.name.value2,
+              city: this.refs.city.value2,
+              address: this.refs.address.value2
+            }
+            this.editTask(newTask);
+            e.preventDefault();
+          }
+    
+
     removeTask = e => {
         e.preventDefault();
         this.props.deleteTask(this.props.match.params.id);
@@ -75,11 +114,34 @@ class TaskDetail extends Component {
         this.setState({[e.target.name]:e.target.value})
     }
 
+    handleInputChange(e){
+        const target = e.target;
+        const value2 = target.value2;
+        const name = target.name;
+    
+        this.setState({
+          [name]: value2
+        });
+      }
+
     backToTask = (e) => {
         e.preventDefault();
         this.props.history.goBack();
     }
 
+    updateTask = (e) => {
+        e.preventDefault();
+        this.setState({taskName: ''});
+        let task = {
+            taskName:this.state.taskName,
+            groupID:this.props.match.params.id
+        }
+
+        this.props.editTask(task, this.props.match.params.id);
+    
+    };//<-needed?
+
+       
     removeComment = (e, id) => {
         e.preventDefault();
         this.props.deleteComment(id, this.props.match.params.id);
@@ -103,6 +165,18 @@ render() {
 
                 </MDBCol>
             </MDBRow>
+            <form onSubmit={this.onSubmit.bind(this)}>
+          <div className="input-field">
+            <input type="text" name="name" ref="name" value2={this.state.name} onChange={this.handleInputChanges} />
+            <label htmlFor="name">Name</label>
+          </div>
+          <div className="input-field">
+            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.handleInputChanges} />
+            <label htmlFor="task">Task</label>
+          </div>
+          <input type="submit" value="Save" className="btn" />
+          </form>
+         
 
           <form onSubmit={this.createComments}>
             <input 
@@ -117,8 +191,9 @@ render() {
 
 
             <MDBContainer className="task-card">
+                {console.log (this.props.match.params.id)}
                 <TaskCard
-                    taskID={1}
+                    taskID = {this.props.match.params.id}
                     taskname={""}
                     requestedBy={""}
                     done={0}
@@ -149,6 +224,7 @@ render() {
             </MDBContainer>
         </MDBContainer>
         </>
+        
     )
     }
 }
@@ -162,6 +238,14 @@ const mapStateToProps = state => {
     };
 };
   
+export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,getTaskComments,createTaskComments})(TaskDetail));
 
+
+
+
+
+<<<<<<< HEAD
 export default withRouter(connect(mapStateToProps,{//deleteComment,
     deleteTask,getTaskComments,createTaskComments})(TaskDetail));
+=======
+>>>>>>> master
