@@ -108,6 +108,9 @@ export const CREATE_COMMENT_START = "CREATE_COMMENT_START";
 export const CREATE_COMMENT_SUCCESS = "CREATE_COMMENT_SUCCESS";
 export const CREATE_COMMENT_FAILURE = "CREATE_COMMENT_FAILURE";
 
+export const UPDATE_COMMENT_START = "UPDATE_COMMENT_START";
+export const UPDATE_COMMENT_SUCCESS = "UPDATE_COMMENT_SUCCESS";
+export const UPDATE_COMMENT_FAIL = "UPDATE_COMMENT_FAIL";
 
 // Defines URL for development and production/staging environments
 let backendURL;
@@ -1193,3 +1196,11 @@ export const deleteComment = (comment, id) => {
   }
 }
 
+/*
+ *  TASK - Update COMMENTS ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+ /**
+ * Update an existing comment from a task*/
+//export const updateComment = (comment, id) =>
