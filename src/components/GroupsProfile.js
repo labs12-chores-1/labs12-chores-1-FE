@@ -132,7 +132,7 @@ class GroupsProfile extends Component {
       const group = this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id));
       document.title = `${group[0].name} - Group`;
     }
-    this.props.getGroupUsers(this.props.currentGroup);
+
   }
 
   /**

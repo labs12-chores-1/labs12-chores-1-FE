@@ -41,6 +41,7 @@ class TaskDetail extends Component {
             commentedBy:1,
             groupID:1,
             taskID: 0,
+            toggleMod:false
         };
         
     }
@@ -141,49 +142,65 @@ class TaskDetail extends Component {
     removeComment = (e, id) => {
         e.preventDefault();
         this.props.deleteComment(id, this.props.match.params.id);
-      }
+    }
+
+    toggleMod= (e) => {
+        this.setState({
+            toggleMod:!this.state.toggleMod
+        })
+    }
 
 render() {
     return (
-        <>
-          <MDBContainer className="task-detail-container">
+
+        <MDBContainer className="task-detail-container">
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
-                <div onClick={this.backToTask}>
-                    <MDBIcon className="card-link" icon="chevron-left" />Back to Task
-                </div>
+                    <div onClick={this.backToTask}>
+                        <MDBIcon className="card-link" icon="chevron-left" />Back to Task
+                    </div>
                     <div className="nav-btns">
-                        <MDBBtn outline color="success">Edit Task</MDBBtn>
-                        <MDBBtn onClick={this.toggle} outline color="success">Add Comment</MDBBtn>
+                        <MDBBtn onClick={this.toggleMod} outline color="success">Edit Task</MDBBtn>
+                        {/* <MDBBtn onClick={this.toggle} outline color="success">Add Comment</MDBBtn> */}
                         <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn>           
                     </div>
-
-
                 </MDBCol>
             </MDBRow>
-            <form onSubmit={this.onSubmit.bind(this)}>
-          <div className="input-field">
-            <input type="text" name="name" ref="name" value2={this.state.name} onChange={this.handleInputChanges} />
-            <label htmlFor="name">Name</label>
-          </div>
-          <div className="input-field">
-            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.handleInputChanges} />
-            <label htmlFor="task">Task</label>
-          </div>
-          <input type="submit" value="Save" className="btn" />
-          </form>
-         
-
-          <form onSubmit={this.createComments}>
-            <input 
-                type="text"
-                placeholder="Write Comment"
-                name="commentString"
-                value={this.state.commentString}
-                onChange={this.handleChanges}
-              />
-              <button type='submit'>Submit</button>
-          </form>
+            <div className= {
+                this.state.toggleMod=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                                
+                <span className="x" onClick={this.toggleMod}>X</span>
+                <form className={'create-task-form'}onSubmit={this.createTask}>
+                    <input 
+                        type="text"
+                        placeholder="enter task"
+                        name="taskName"
+                        value={this.state.taskName}
+                        onChange={this.handleChanges}
+                    />
+                    <input 
+                        type="text"
+                        placeholder="enter description"
+                        name="taskDescription"
+                        value={this.state.taskDescription}
+                        onChange={this.handleChanges}
+                    />
+                    <button type='submit'>Submit</button>
+                </form>
+            </div>
+            
+            <form onSubmit={this.createComments}>
+                <input 
+                    type="text"
+                    placeholder="Write Comment"
+                    name="commentString"
+                    value={this.state.commentString}
+                    onChange={this.handleChanges}
+                />
+                <button type='submit'>Submit</button>
+            </form>
 
 
             <MDBContainer className="task-card">
@@ -191,6 +208,7 @@ render() {
                 <TaskCard
                     taskID = {this.props.match.params.id}
                     taskname={""}
+                    taskDescription={this.props.taskDescription}
                     requestedBy={""}
                     done={0}
                     comments={0}
@@ -219,7 +237,6 @@ render() {
 
             </MDBContainer>
         </MDBContainer>
-        </>
         
     )
     }
