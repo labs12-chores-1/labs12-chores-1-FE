@@ -178,8 +178,9 @@ render() {
 
 
             <MDBContainer className="task-card">
+                {console.log (this.props.match.params.id)}
                 <TaskCard
-                    taskID={1}
+                    taskID = {this.props.match.params.id}
                     taskname={""}
                     requestedBy={""}
                     done={0}
@@ -210,18 +211,7 @@ render() {
             </MDBContainer>
         </MDBContainer>
         </>
-        /*
-           <form onSubmit={this.onSubmit.bind(this)}>
-          <div className="input-field">
-            <input type="text" name="name" ref="name" value2={this.state.name} onChange={this.handleInputChanges} />
-            <label htmlFor="name">Name</label>
-          </div>
-          <div className="input-field">
-            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.handleInputChanges} />
-            <label htmlFor="task">Task</label>
-          </div>
-          </form>
-          */
+        
     )
     }
 }
@@ -237,13 +227,7 @@ const mapStateToProps = state => {
   
 export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,getTaskComments,createTaskComments})(TaskDetail));
 
-//GetTaskDetails(){
-  //  let taskId = this.props.match.params.id;
- //   axios.get(`http://localhost:9000/api/task/${taskId}`)
-  //  .then(response => {
-  //    this.setState({
-  //      id: response.data.id,
-    //    name: response.data.name,
+
 
 
 
