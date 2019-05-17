@@ -3,6 +3,9 @@ import axios from 'axios';
 //import { Link } from 'react-router-dom';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
+import "./Styles/Comments.css";
+import TaskCard from "./TaskCard";
+import Comments from './Comments'
 //import TaskCard from "./TaskCard";
 import TaskCardDetail from "./TaskCardDetail";
 import { withRouter } from "react-router";
@@ -17,8 +20,9 @@ import { connect } from 'react-redux';
 
 import { getTaskComments } from '../store/actions/rootActions';
 import { deleteTask } from '../store/actions/rootActions';
- import { createTaskComments } from '../store/actions/rootActions';
- import { editTask } from '../store/actions/rootActions';
+import { createTaskComments } from '../store/actions/rootActions';
+import { editTask } from '../store/actions/rootActions';
+import { updateComment } from '../store/actions/rootActions';
 
 // import { rootReducer } from "../store/reducers/rootReducer";
 
@@ -104,6 +108,10 @@ class TaskDetail extends Component {
       handleChanges=(e)=>{
         this.setState({[e.target.name]:e.target.value})
     }
+    
+    handleUpdateCommentChange=(e)=> {
+        this.setState({[e.target.name]:e.target.value});
+    }
 
     handleInputChange=(e)=>{
       this.setState({[e.target.name]:e.target.value})
@@ -135,6 +143,13 @@ class TaskDetail extends Component {
     this.setState({toggleMod:!this.state.toggleMod});
 
     };//<-needed?
+    editComment = (e, id) => {
+        e.preventDefault();
+        let comment = {
+            commentString: this.state.commentString
+        }
+        this.props.updateComment(comment,id)
+    }
 
        
     removeComment = (e, id) => {
@@ -187,6 +202,18 @@ render() {
               />
               <button type='submit'>Submit</button>
           </form>
+          
+          {/* <form onSubmit={(e)=>this.editComment(e,5)}>
+            <input 
+                type="text"
+                placeholder="Comment Changes"
+                name="commentString"
+                value={this.state.commentString}
+                onChange={this.handleUpdateCommentChange}
+              />
+              <button type='submit'>Edit</button>
+          </form> */}
+            
             <div className= {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
@@ -232,9 +259,23 @@ render() {
                     {this.props.taskComments !== null
                         ? this.props.taskComments.data.map(comment => {
                             console.log(comment);
-                            return(<>
-                            <h4 key={comment.id}>{comment.commentString}</h4>
-                             <MDBBtn outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>Delete Comment</MDBBtn> </>
+                            return(
+                            <>
+                            <Comments 
+                            commentString= {comment.commentString}
+                            taskID = {this.props.match.params.id}
+                            commentedOn={comment.commentedOn}
+                            commentID={comment.id}
+
+
+
+                            />
+                             <div className="buttons">
+                                <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
+                                <button type="button" outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>Delete</button> 
+                             </div>
+                            </>
+                       
                         )})
                         : null
                     } 
@@ -257,7 +298,7 @@ const mapStateToProps = state => {
     };
 };
   
-export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,editTask,getTaskComments,createTaskComments})(TaskDetail));
+export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment })(TaskDetail));
 
 
 
