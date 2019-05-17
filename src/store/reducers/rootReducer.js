@@ -195,6 +195,13 @@ export const rootReducer = (state = initialState, action) => {
       deleteComment: action.payload,
       errorMessage: null
     };
+
+  case UPDATE_COMMENT_START:
+    return {...state, errorMessage:null};
+  case UPDATE_COMMENT_SUCCESS:
+    return state;
+  case UPDATE_COMMENT_FAIL:
+    return {...state, errorMessage: action.payload}
   
 
 

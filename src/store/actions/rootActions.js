@@ -1232,10 +1232,30 @@ export const deleteComment = (comment, id) => {
 }
 
 /*
- *  TASK - Update COMMENTS ACTIONS
+ *  TASK - Update COMMENTS ACTION
  * --------------------------------------------------------------------------------
  */
 
  /**
  * Update an existing comment from a task*/
-//export const updateComment = (comment, id) =>
+export const updateComment = (comment, id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.put(`${backendURL}/api/comment/${id}`, comment, options);
+
+  return dispatch => {
+    dispatch({type: UPDATE_COMMENT_START});
+
+    endpoint.then(res => {
+      dispatch({type: UPDATE_COMMENT_SUCCESS});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: UPDATE_COMMENT_FAIL,payload:err})
+    })
+  }
+}
