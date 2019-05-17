@@ -67,7 +67,7 @@ class Home extends React.Component{
           <MDBCol>
                  <MDBRow className="home-content-top">
                     <MDBCol  md="8" size="10">
-                    <h1 className="font-weight-bold caption">Organize like a pro</h1>
+                    <h2 className="font-weight-bold caption">Organize like a pro</h2>
                     <p className="">FairShare keeps your mind at ease with all task in one place. For people who needs to unclutter their mind and manage their time better. </p>
                     <button class="createAccount" onClick={this.signIn}>Create a free account </button>
                     </MDBCol>
@@ -98,7 +98,7 @@ class Home extends React.Component{
 
                 <main className = 'home-content'>
                 <section className = 'about'>
-                    <h2>Get your shopping lists on the same page.</h2>
+                    <h2>Features at a glance</h2>
                 <div className = 'about-tile-grid'>
                     <div className = 'about-tile'>
                         <div className = 'about-icon'>
@@ -181,7 +181,7 @@ class Home extends React.Component{
                 <section className = 'plans'>
 
                 <MDBCard>
-                    <MDBCardHeader><h1>Basic Plan</h1></MDBCardHeader>
+                    <MDBCardHeader><p className="header-plan">Basic Plan</p></MDBCardHeader>
                     <MDBCardBody>
                         <MDBCardTitle>
                             <h2>$0</h2> <p>Per Month</p>
@@ -198,7 +198,7 @@ class Home extends React.Component{
                 </MDBCard>
 
                 <MDBCard>
-                    <MDBCardHeader><h1>Premium Plan</h1></MDBCardHeader>
+                    <MDBCardHeader><h1 className="header-plan">Premium Plan</h1></MDBCardHeader>
                     <MDBCardBody>
                         <MDBCardTitle>
                             <h2>$9.99</h2> <p>Per Month</p>

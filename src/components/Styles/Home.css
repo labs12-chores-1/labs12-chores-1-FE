@@ -9,13 +9,15 @@
     color: #715be7; 
 }
 
+.home-container h1 {
+    font-size: 60px;
+}
 
 .home-container h2{
     font-family: "Montserrat", sans-serif;
     color: #333333;
     /* padding-top: 80px; */
 }
-
 
 .home-container h3{
     font-family: "Montserrat", sans-serif;
@@ -116,6 +118,14 @@
     padding: 60px 60px;
     margin: 0 auto;
     max-width: 80%;
+}
+.home-content h2::before{
+    background-color: #E5E5E5;
+    content: "";
+    display: block;
+    height: 2px;
+    margin-bottom: 2rem;
+    width: 100%;
 }
 
 
@@ -221,6 +231,11 @@ section {
     color: white;
     text-align: center;
 }
+
+.plans .header-plan{
+    font-size: 2rem;
+}
+
 
 .plans .card-title h2{
     text-align: center;
