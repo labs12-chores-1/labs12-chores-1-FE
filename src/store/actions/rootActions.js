@@ -1311,7 +1311,10 @@ export const deleteComment = (comment, id) => {
     })
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
 /*
  *  TASK - Update COMMENTS ACTION
