@@ -671,7 +671,7 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   if(process.env.NODE_ENV === 'development'){
     frontendURL = 'localhost:3000'
   } else {
-    frontendURL = 'https://labs10-shopping-list.netlify.com'
+    frontendURL = 'https://goofy-sinoussi-c017bd.netlify.com/'
   }
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})

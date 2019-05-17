@@ -128,7 +128,7 @@ export const rootReducer = (state = initialState, action) => {
     case GET_GROUP_TASKS_SUCCESS:
     return {
       ...state,
-      currentGroupTasks: action.payload
+      currentGroupTasks: action.payload.data
       };
     case GET_GROUP_TASKS_FAILURE:
     return {

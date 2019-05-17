@@ -44,19 +44,23 @@ class GroupTasks extends Component {
     }
     componentWillMount(){
         document.title = `FairShare - Task`;
-        this.props.getGroupTasks(this.props.match.params.id);
+        // console.log(this.props.match.params.id);
+        this.props.getGroupTasks(this.props.match.params.id);        
         // this.setState({...this.state,
         //     currentGroupTasks: this.props.currentGroupTasks});
         }
         
     componentDidMount(){
-            console.log(this.props.currentGroupTasks);
+            // console.log(this.props.currentGroupTasks);
     }
 
     componentDidUpdate(previousProps){
+        console.log("this.props: ",this.props.currentGroupTasks);
         if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
-            this.setState({currentGroupTasks:this.props.currentGroupTasks})
+            // console.log("here");
+            this.setState({currentGroupTasks:this.props.currentGroupTasks});
         }
+        // console.log("this.state: ",this.state.currentGroupTasks);
     }
 
     handleAddTask=(e)=>{
@@ -158,9 +162,9 @@ render() {
                     </div>                    
                 </div>
                 <br></br>
-                {/* {console.log(this.props.currentGroupTasks)} */}
+                {/* {console.log(this.state.currentGroupTasks)} */}
                 {this.state.currentGroupTasks !== null
-                    ? this.state.currentGroupTasks.data.map(task => (
+                    ? this.state.currentGroupTasks.map(task => (
                      
                         <TaskCard
                             taskID={task.id}
