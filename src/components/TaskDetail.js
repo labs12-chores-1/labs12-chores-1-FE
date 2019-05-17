@@ -203,7 +203,7 @@ render() {
               <button type='submit'>Submit</button>
           </form>
           
-          <form onSubmit={(e)=>this.editComment(e,5)}>
+          {/* <form onSubmit={(e)=>this.editComment(e,5)}>
             <input 
                 type="text"
                 placeholder="Comment Changes"
@@ -212,7 +212,7 @@ render() {
                 onChange={this.handleUpdateCommentChange}
               />
               <button type='submit'>Edit</button>
-          </form>
+          </form> */}
             
             <div className= {
                 this.state.toggleMod=== false
