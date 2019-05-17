@@ -50,7 +50,7 @@ class TaskCard extends Component {
                 <h7>Requested by: {this.props.requestedBy}</h7>
             </div>
             <div className="task-card-middle">
-                <h5>{this.props.assignee}</h5>
+                <h5>Assigned To {this.props.assigneeName}</h5>
                 <div>{this.props.taskDescription}</div>
             </div>
             <div className="task-card-right">

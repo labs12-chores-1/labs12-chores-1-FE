@@ -34,6 +34,7 @@ class GroupTasks extends Component {
             tasks:[],
             taskName: "",
             taskDescription:"",
+            assigneeName:"",
             taskCompleted: false,
             taskcompletedBy: 1,
             searchField: "",
@@ -53,10 +54,11 @@ class GroupTasks extends Component {
     }
     createTask = (e) => {
         e.preventDefault();
-        this.setState({taskName: '', taskDescription:''});
+        this.setState({taskName: '', taskDescription:'', assigneeName:''});
         let task = {
             taskName:this.state.taskName,
             taskDescription:this.state.taskDescription,
+            assigneeName:this.state.assigneeName,
             groupID:this.props.match.params.id
         }
 
@@ -118,8 +120,8 @@ render() {
                     <input 
                         type="text"
                         placeholder="Assign to (optional)"
-                        name="assign"
-                        // value={this.state.taskDescription}
+                        name="assigneeName"
+                        value={this.state.assigneeName}
                         onChange={this.handleChanges}
                     />
                     <div>
@@ -150,6 +152,7 @@ render() {
                             taskID={task.id}
                             taskName={task.taskName}
                             taskDescription={task.taskDescription}
+                            assigneeName={task.assigneeName}
                             requestedBy={""}
                             done={task.completed}
                             comments={task.comments}
