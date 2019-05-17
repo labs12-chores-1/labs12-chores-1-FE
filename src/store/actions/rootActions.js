@@ -95,6 +95,11 @@ export const DELETE_TASK_START = "DELETE_TASK_START";
 export const TASK_DELETED= "TASK_DELETED";
 export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
 
+// TASK - EDIT
+export const EDIT_TASK_START = "EDIT_TASK_START";
+export const TASK_EDITED = "TASK_EDITED";
+export const EDIT_TASK_FAIL = "EDIT_TASK_FAIL";
+
 // COMMENT
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
@@ -108,6 +113,9 @@ export const CREATE_COMMENT_START = "CREATE_COMMENT_START";
 export const CREATE_COMMENT_SUCCESS = "CREATE_COMMENT_SUCCESS";
 export const CREATE_COMMENT_FAILURE = "CREATE_COMMENT_FAILURE";
 
+export const UPDATE_COMMENT_START = "UPDATE_COMMENT_START";
+export const UPDATE_COMMENT_SUCCESS = "UPDATE_COMMENT_SUCCESS";
+export const UPDATE_COMMENT_FAIL = "UPDATE_COMMENT_FAIL";
 
 // Defines URL for development and production/staging environments
 let backendURL;
@@ -1102,7 +1110,36 @@ export const deleteTask = (task) => {
   }
 }
 
+/*
+ *  TASK - EDIT ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+/**
+ * Update an existing task in a group
+ * @param task - Task changes
+ * @returns {Function}
+ */
+export const editTask = (task, id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
 
+  const endpoint = axios.put(`${backendURL}/api/task/${id}`, task, options);
+
+  return dispatch => {
+    dispatch({type: EDIT_TASK_START});
+
+    endpoint.then(res => {
+      dispatch({type: TASK_EDITED});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: EDIT_TASK_FAIL})
+    })
+  }
+}
 
 /*
  *  TASK-GET COMMENTS ACTIONS
@@ -1193,3 +1230,31 @@ export const deleteComment = (comment, id) => {
   }
 }
 
+/*
+ *  TASK - Update COMMENTS ACTION
+ * --------------------------------------------------------------------------------
+ */
+
+ /**
+ * Update an existing comment from a task*/
+export const updateComment = (comment, id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.put(`${backendURL}/api/comment/${id}`, comment, options);
+
+  return dispatch => {
+    dispatch({type: UPDATE_COMMENT_START});
+
+    endpoint.then(res => {
+      dispatch({type: UPDATE_COMMENT_SUCCESS});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: UPDATE_COMMENT_FAIL,payload:err})
+    })
+  }
+}

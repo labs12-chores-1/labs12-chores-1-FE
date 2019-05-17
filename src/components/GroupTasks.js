@@ -97,7 +97,7 @@ render() {
                 }  
 
             </MDBContainer>
-            <form onSubmit={this.createTask}>
+            {/* <form onSubmit={this.createTask}>
         <input 
             type="text"
             placeholder="enter task"
@@ -106,7 +106,7 @@ render() {
             onChange={this.handleChanges}
           />
           <button type='submit'>Submit</button>
-      </form>
+      </form> */}
         </MDBContainer>
 
         

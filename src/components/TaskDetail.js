@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 //import { Link } from 'react-router-dom';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
 import TaskCard from "./TaskCard";
+import Comments from './Comments';
+import TaskCardDetail from "./TaskCardDetail";
 import { withRouter } from "react-router";
 import {
     MDBBtn,
@@ -17,9 +19,11 @@ import { connect } from 'react-redux';
 import { getTaskComments } from '../store/actions/rootActions';
 import { deleteTask } from '../store/actions/rootActions';
  import { createTaskComments } from '../store/actions/rootActions';
+ import {editTask} from '../store/actions/rootActions';
+ import {updateComment} from '../store/actions/rootActions';
 // import { rootReducer } from "../store/reducers/rootReducer";
 
-import {deleteComment, editTask, updateComment} from '../store/actions/rootActions';
+import {deleteComment} from '../store/actions/rootActions';
 
 class TaskDetail extends Component {
     constructor(props) {
@@ -184,7 +188,7 @@ render() {
             </div>
 
             <MDBContainer className="task-card">
-                <TaskCard
+                <TaskCardDetail
                     taskID={this.props.match.params.id}
                     taskname={""}
                     taskDescription={this.props.taskDescription}
