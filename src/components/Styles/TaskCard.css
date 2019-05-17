@@ -13,7 +13,7 @@
 }
 
 .task-card{
-    width: 60%;
+    width: 80%;
     
     /* margin-top: 5rem; */
 }
@@ -38,6 +38,8 @@
 
 .task-card-middle {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 

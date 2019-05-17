@@ -386,7 +386,7 @@ class UserProfile extends React.Component {
             </MDBModal>
         </MDBContainer>
 
-   </div>
+       </div>
    )
 
 
