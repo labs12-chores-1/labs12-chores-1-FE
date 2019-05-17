@@ -29,6 +29,13 @@ export const REMOVE_GROUP_SUCCESS = 'REMOVE_GROUP_SUCCESS';
 export const CLEARING_CURRENT_GROUP = 'CLEARING_CURRENT_GROUP';
 export const GET_CURRENT_GROUP = 'GET_CURRENT_GROUP';
 export const SAVE_CURRENT_GROUP = 'SAVE_CURRENT_GROUP';
+export const CREATE_GROUP_TASK = 'CREATE_TASK';
+export const GROUP_TASK_CREATED = 'TASK_CREATED';
+export const GROUP_TASK_ERROR = 'GROUP_TASK_ERROR';
+export const REMOVE_GROUP_MEMBER_START = "REMOVE_GROUP_MEMBER_START";
+export const REMOVE_GROUP_MEMBER_SUCCESS = "REMOVE_GROUP_MEMBER_SUCCESS";
+export const REMOVE_GROUP_MEMBER_FAIL = "REMOVE_GROUP_MEMBER_FAIL";
+
 
 // GROUP PROFILE
 export const GET_GROUP_USERS = 'GET_GROUP_USERS';
@@ -112,6 +119,9 @@ export const CREATE_COMMENT_START = "CREATE_COMMENT_START";
 export const CREATE_COMMENT_SUCCESS = "CREATE_COMMENT_SUCCESS";
 export const CREATE_COMMENT_FAILURE = "CREATE_COMMENT_FAILURE";
 
+export const UPDATE_COMMENT_START = "UPDATE_COMMENT_START";
+export const UPDATE_COMMENT_SUCCESS = "UPDATE_COMMENT_SUCCESS";
+export const UPDATE_COMMENT_FAIL = "UPDATE_COMMENT_FAIL";
 
 // Defines URL for development and production/staging environments
 let backendURL;
@@ -488,6 +498,31 @@ export const removeGroup = (groupID, userID) => dispatch => {
     getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
   }).catch(err => {
     console.log("ERR => ", err);
+  })
+}
+
+//Leave Household endpoint - remove Group Member
+
+export const removeGroupMember = (userID,groupID) => dispatch => {
+  dispatch({type: REMOVE_GROUP_MEMBER_START});
+
+  const token = localStorage.getItem('jwt');
+  const endpoint = `${backendURL}/api/groupmember/remove/${userID}/group/${groupID}`;
+
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  axios.delete(endpoint, options).then(res => {
+    console.log("RES => ", res);
+    dispatch({ type: REMOVE_GROUP_MEMBER_SUCCESS});
+  }).then(() => {
+    // getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
+  }).catch(err => {
+    console.log("ERR => ", err);
+    dispatch({type:REMOVE_GROUP_MEMBER_FAIL, payload: err})
   })
 }
 
@@ -1245,3 +1280,31 @@ export const getTaskComments = (id) => {
  };
 
 
+/*
+ *  TASK - Update COMMENTS ACTION
+ * --------------------------------------------------------------------------------
+ */
+
+ /**
+ * Update an existing comment from a task*/
+export const updateComment = (comment, id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.put(`${backendURL}/api/comment/${id}`, comment, options);
+
+  return dispatch => {
+    dispatch({type: UPDATE_COMMENT_START});
+
+    endpoint.then(res => {
+      dispatch({type: UPDATE_COMMENT_SUCCESS});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: UPDATE_COMMENT_FAIL,payload:err})
+    })
+  }
+}

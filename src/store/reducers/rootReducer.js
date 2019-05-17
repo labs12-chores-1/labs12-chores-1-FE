@@ -64,6 +64,12 @@ import {
   DELETE_COMMENT_FAIL,
   GET_CURRENT_GROUP,
   SAVE_CURRENT_GROUP,
+  REMOVE_GROUP_MEMBER_START, 
+  REMOVE_GROUP_MEMBER_SUCCESS,
+  REMOVE_GROUP_MEMBER_FAIL,
+  UPDATE_COMMENT_START, 
+  UPDATE_COMMENT_SUCCESS, 
+  UPDATE_COMMENT_FAIL
 } from "../actions/";
 
 const initialState = {
@@ -212,6 +218,13 @@ export const rootReducer = (state = initialState, action) => {
       deleteComment: action.payload,
       errorMessage: null
     };
+
+  case UPDATE_COMMENT_START:
+    return {...state, errorMessage:null};
+  case UPDATE_COMMENT_SUCCESS:
+    return state;
+  case UPDATE_COMMENT_FAIL:
+    return {...state, errorMessage: action.payload}
   
 
 
@@ -465,6 +478,23 @@ export const rootReducer = (state = initialState, action) => {
 
     case REMOVE_ACCOUNT:
       return (state = initialState);
+
+    case REMOVE_GROUP_MEMBER_START:
+      return {
+        ...state,
+        errorMessage: null,
+    };
+    case REMOVE_GROUP_MEMBER_SUCCESS:
+      return {
+        ...state,
+        errorMessage: null,
+    };
+    case REMOVE_GROUP_MEMBER_FAIL:
+      return {
+        ...state,
+        errorMessage: action.payload,
+    };
+
 
     case ERROR:
       return {
