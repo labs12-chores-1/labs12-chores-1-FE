@@ -49,3 +49,46 @@ MDBBtn{
   .dropdown-item:hover {
       cursor: pointer;
   }
+  .custom-mod-hidden {
+    display: none
+}
+
+.custom-mod-display {
+   
+    border: 1px solid black;
+    background-color: white;
+    width:800px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    top:50;
+}
+
+.create-task-form{
+    display: flex;
+    flex-direction: column;
+    width:50%;
+    align-items: center;
+    justify-content: center;
+    border:3px solid blue;
+    height: 500px;
+    background-color: white;
+}
+
+.x{
+    border:1px solid red;
+    align-self: flex-end;
+    cursor: pointer;
+    
+}
+
+.dropdown-hidden{
+    display: none;
+}
+
+.dropdown-display{
+    display: block;
+}

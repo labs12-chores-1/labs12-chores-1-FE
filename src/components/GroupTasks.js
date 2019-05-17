@@ -41,7 +41,7 @@ class GroupTasks extends Component {
             searchField: "",
             groupId: null,
             userId: null,
-            currentGroupTasks: null,
+            currentGroupTasks: {data:[]},
             groupMembers: [],
             groupUserNames: []
         };
@@ -115,9 +115,12 @@ class GroupTasks extends Component {
                 currentGroupTasks: this.props.currentGroupTasks});
         }
         else if (filterArg ==="completed"){
-            this.setState({...this.state,
-                currentGroupTasks: {
-                    data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
+            // console.log(this.state.currentGroupTasks);
+            if (this.state.currentGroupTasks.data.length !== 0){
+                this.setState({...this.state,
+                    currentGroupTasks: {
+                        data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
+            }
         }
         else if (filterArg ==="incomplete"){
             this.setState({...this.state,
