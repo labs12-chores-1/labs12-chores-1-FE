@@ -1278,6 +1278,40 @@ export const getTaskComments = (id) => {
 
  };
 
+ /*
+ *  TASK - DELETE COMMENTS ACTIONS
+ * --------------------------------------------------------------------------------
+ */
+
+ /**
+ * Remove an existing comment from a task
+ * @param task to be removed
+ * @returns {Function}
+ */
+export const deleteComment = (comment, id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  let deleteCommentId = comment;
+  const endpoint = axios.delete(`${backendURL}/api/comment/${deleteCommentId}`, options);
+
+  return dispatch => {
+    dispatch({type: DELETE_COMMENT_START})
+    endpoint.then(res => {
+      console.log('delete working');
+      dispatch({type: COMMENT_DELETED, payload: 'Comment Deleted' })
+    }).then(() => {dispatch(getTaskComments(id))})
+      .catch(err => {
+      //console.log(err);
+      dispatch({type: DELETE_COMMENT_FAIL, payload: err})
+    })
+  }
+}
+
 
 /*
  *  TASK - Update COMMENTS ACTION
