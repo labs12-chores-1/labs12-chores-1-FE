@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import axios from 'axios';
 import commentImg from '../images/comment-img.jpg';
 import {
   MDBCard,
@@ -29,25 +30,43 @@ class TaskCard extends Component {
         groupId: null,
         userId: null,
         comments: props.comments,
-        assigneeName: ""
+        assigneeName: "",
+        task: {}
 
     };
   }
   componentWillMount(){
-      document.title = `FairShare - Task`;
-      this.props.getGroupTasks(this.props.match.params.id);  
-      
+        document.title = `FairShare - Task`; 
+        this.setState({task: this.props.task});
 
-      this.props.getUserName(this.props.assignee);
+        let backendURL;
+        if(process.env.NODE_ENV === 'development'){
+        backendURL = `http://localhost:9000`
+        } else {
+        backendURL = `https://labs12-fairshare.herokuapp.com/`
+        }
+        
+        let token = localStorage.getItem('jwt');
+        let options = {
+            headers: {
+            Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios.get(`${backendURL}/api/user/${this.props.task.completedBy}/name`, options).then(response => {
+            console.log('res', response.data.name);
+            this.setState({
+                assigneeName: response.data.name
+            })
+        })
+    //   this.props.getUserName(this.props.task.completedBy);
       // console.log(this.props.tempUserName);
-  }
-
-  componentDidMount(){
+    }
     
-    this.setState({...this.state,
-      assigneeName: this.props.assigneeName});
-    console.log("this.state.assigneeName: ", this.state.assigneeName);
-  }
+    componentDidMount(){
+
+    }
+
 
 
   getComments = e => {
@@ -60,16 +79,15 @@ class TaskCard extends Component {
   return (
       
       <MDBCard className="task-card" 
-        onClick={()=>this.props.history.push(`/task/${this.props.taskID}`)}
-      >
+        onClick={()=>this.props.history.push(`/task/${this.state.task.id}`)}>
         <MDBCardBody className="task-card-body">
             <div className="task-card-left">
-                <h7>{this.props.taskName}</h7>
-                <h7>Requested by: {this.props.requestedBy}</h7>
+                <h7>{this.state.task.taskName}</h7>
+                <h7>Requested by: {this.state.task.createdBy}</h7>
             </div>
             <div className="task-card-middle">
-                <h5>{this.props.assignee}</h5>
-                <div>{this.props.taskDescription}</div>
+                <h5>{this.state.assigneeName}</h5>
+                <div>{this.state.task.description}</div>
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
@@ -88,7 +106,8 @@ const mapStateToProps = state => {
     //state items
     taskComments: state.taskComments,
     errorMessage: state.errorMessage,
-    assigneeName: state.tempUserName
+    assigneeName: state.tempUserName,
+    currentTask: state.currentTask
   };
 };
 

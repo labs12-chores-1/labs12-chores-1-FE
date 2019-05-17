@@ -102,8 +102,8 @@ const initialState = {
 //***** FairShare***********
   currentGroupTasks: null,
   taskComments: null,
-  tempUserName: null
-
+  tempUserName: null,
+  currentTask: null
 };
 
 
@@ -487,6 +487,7 @@ export const rootReducer = (state = initialState, action) => {
       console.log(action.payload);
       return {
         ...state,
+        currentTask:action.payload,
         //currentGroupTasks: action.payload,
         errorMessage: null
       };

@@ -1104,7 +1104,7 @@ export const getTasksByInput = (input) => {
     }
   };
 
-  console.log("ITEM => ", task);
+  // console.log("ITEM => ", task);
 
   const endpoint = axios.post(`${backendURL}/api/task`, task, options);
 

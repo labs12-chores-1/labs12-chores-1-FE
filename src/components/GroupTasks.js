@@ -46,26 +46,26 @@ class GroupTasks extends Component {
         document.title = `FairShare - Task`;
         // console.log(this.props.match.params.id);
         this.props.getGroupTasks(this.props.match.params.id);        
-        // this.setState({...this.state,
-        //     currentGroupTasks: this.props.currentGroupTasks});
+        this.setState({...this.state,
+            currentGroupTasks: this.props.currentGroupTasks});
         }
         
     componentDidMount(){
             // console.log(this.props.currentGroupTasks);
+            // console.log("this.state: ",this.state.currentGroupTasks);
     }
 
     componentDidUpdate(previousProps){
-        console.log("this.props: ",this.props.currentGroupTasks);
+        // console.log("this.props: ",this.props.currentGroupTasks);
         if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
             // console.log("here");
             this.setState({currentGroupTasks:this.props.currentGroupTasks});
         }
-        // console.log("this.state: ",this.state.currentGroupTasks);
     }
 
     handleAddTask=(e)=>{
         this.setState({[e.target.name]:e.target.value});
-        console.log(this.state.taskName);
+        // console.log(this.state.taskName);
     }
     createTask = (e) => {
         e.preventDefault();
@@ -74,7 +74,8 @@ class GroupTasks extends Component {
         let task = {
             taskName:this.state.taskName,
             groupID:this.props.match.params.id,
-            createdBy:localStorage.getItem("name")
+            createdBy:localStorage.getItem("name"),
+            completedBy:1
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
@@ -131,10 +132,10 @@ render() {
             </MDBRow>
             <MDBContainer className="task-cards">
                 <div className="search-dropdown-row">
-                    <form class="form-inline">
-                        <i class="fas fa-search" aria-hidden="true"></i>
+                    <form className="form-inline">
+                        <i className="fas fa-search" aria-hidden="true"></i>
                         <input 
-                            class="form-control form-control-sm ml-3 w-75" 
+                            className="form-control form-control-sm ml-3 w-75" 
                             name="searchField" 
                             type="text" 
                             value={this.state.searchField} 
@@ -142,31 +143,32 @@ render() {
                             onChange={this.handleSearch}/>
                     </form>
 
-                    <div class="dropdown">
+                    <div className="dropdown">
                         <span>Assigned</span>
-                        <div class="dropdown-content">
-                            <div class="dropdown-item" onClick={(event)=>this.handleFilter(event,"all")}>All</div>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Me</a>
-                            <a class="dropdown-item" href="#">Alex</a>
+                        <div className="dropdown-content">
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all")}>All</div>
+                            <div className="dropdown-divider"></div>
+                            <a className="dropdown-item" href="#">Me</a>
+                            <a className="dropdown-item" href="#">Alex</a>
                         </div>
                     </div>
-                    <div class="dropdown">
+                    <div className="dropdown">
                         <span>Complete</span>
-                        <div class="dropdown-content">
-                            <div class="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
-                            <div class="dropdown-divider"></div>
-                            <div class="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"completed")}>Complete</div>
-                            <div class="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
+                        <div className="dropdown-content">
+                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
+                            <div className="dropdown-divider"></div>
+                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
                         </div>
                     </div>                    
                 </div>
                 <br></br>
                 {/* {console.log(this.state.currentGroupTasks)} */}
                 {this.state.currentGroupTasks !== null
-                    ? this.state.currentGroupTasks.map(task => (
+                    ? this.state.currentGroupTasks.data.map(task => (
                      
                         <TaskCard
+                            task={task}
                             taskID={task.id}
                             taskName={task.taskName}
                             requestedBy={task.createdBy}
@@ -174,7 +176,7 @@ render() {
                             comments={task.comments}
                             repeated={0}
                             assignee={task.completedBy}
-                            group={1}
+                            group={task.groupID}
                             updateGroup={this.saveGroupName}
                             removeGroup={this.deleteGroup}
                         />
