@@ -35,7 +35,7 @@ import { updateComment } from '../store/actions/rootActions';
 
 // import { rootReducer } from "../store/reducers/rootReducer";
 
-// import {deleteComment} from '../store/actions/rootActions';
+import {deleteComment} from '../store/actions/rootActions';
 
 class TaskDetail extends Component {
     constructor(props) {
