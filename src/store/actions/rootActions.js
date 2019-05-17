@@ -91,8 +91,8 @@ export const GET_GROUP_TASKS_FAILURE = 'GET_GROUP_TASKS_FAILURE';
 
 // TASK - CREATE
 export const CREATE_TASK = 'CREATE_TASK';
-export const GROUP_TASK_CREATED = 'TASK_CREATED';
-export const GROUP_TASK_ERROR = 'TASK_ERROR';
+export const TASK_CREATED = 'TASK_CREATED';
+export const TASK_ERROR = 'TASK_ERROR';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const TASK_UPDATED = 'TASK_UPDATED';
 
