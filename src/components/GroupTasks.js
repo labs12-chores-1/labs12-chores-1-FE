@@ -5,7 +5,7 @@ import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
 //import { withRouter } from "react-router";
 import {
-    // MDBBtn,
+    MDBBtn,
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -34,16 +34,19 @@ class GroupTasks extends Component {
     constructor(props) {
         super(props);
         this.state= {
+            tasks:[],
             taskName: "",
-            tempTaskDescription:"",
-            tempTaskCompleted: false,
-            tempTaskcompletedBy: 1,
+            taskDescription:"",
+            taskCompleted: false,
+            taskcompletedBy: 1,
             searchField: "",
             groupId: null,
             userId: null,
             currentGroupTasks: {data:[]},
             groupMembers: [],
-            groupUserNames: []
+            groupUserNames: [],
+            toggleMod: false,
+            toggleRadio:false
         };
     }
     componentWillMount(){
@@ -75,6 +78,9 @@ class GroupTasks extends Component {
         });
         
     }
+    handleChanges=(e)=>{
+        this.setState({[e.target.name]:e.target.value})
+    }
         
     componentDidMount(){
    
@@ -86,19 +92,22 @@ class GroupTasks extends Component {
         }
     }
 
-    handleAddTask=(e)=>{
-        this.setState({[e.target.name]:e.target.value});
-    }
     createTask = (e) => {
         e.preventDefault();
+        this.setState({taskName: '', taskDescription:'', assigneeName:''});
         let task = {
             taskName:this.state.taskName,
+            taskDescription:this.state.taskDescription,
+            assigneeName:this.state.assigneeName,
             groupID:this.props.match.params.id,
             createdBy:localStorage.getItem("name"),
             completedBy:1
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
+        this.setState({
+            toggleMod:!this.state.toggleMod
+        })
     };
 
     handleSearch= event =>{
@@ -140,6 +149,18 @@ class GroupTasks extends Component {
             })
         }
     }
+    toggleMod= (e) => {
+        this.setState({
+            toggleMod:!this.state.toggleMod
+        })
+        console.log('toggleModalState:',this.state.toggleMod);
+    }
+
+    toggleRadio= (e) => {
+        this.setState({
+            toggleRadio:!this.state.toggleRadio
+        }); console.log('toggleRadiotoggle:', this.state.toggleRadio);
+    }
 
     getGroupUserNames =()=>{
         if (this.state.groupMembers.length > 0){
@@ -174,22 +195,72 @@ class GroupTasks extends Component {
 render() {
     return (       
         <MDBContainer className="group-task-container">
-                 {/* {this.getGroupUserNames()} */}
+                 
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
-                    <form onSubmit={this.createTask}>
-                        <input 
-                            type="text"
-                            placeholder="enter task"
-                            name="taskName"
-                            value={this.state.taskName}
-                            onChange={this.handleAddTask}
-                        />
-                        <button type='submit'>Submit</button>
-                    </form>
+                    <div className="nav-btns">
+                        <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
+                    
+                    </div>
                 </MDBCol>
             </MDBRow>
+            <div className= {
+                this.state.toggleMod=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                                
+                <span className="x" onClick={this.toggleMod}>X</span>
+                <h3>New Task</h3>
+                <form className={'create-task-form'}onSubmit={this.createTask}>
+                    <input 
+                        type="text"
+                        placeholder="enter task"
+                        name="taskName"
+                        value={this.state.taskName}
+                        onChange={this.handleChanges}
+                    />
+                    <input 
+                        type="text"
+                        placeholder="enter task"
+                        name="taskName"
+                        value={this.state.taskName}
+                        onChange={this.handleChanges}
+                    />
+                    <input 
+                        type="text"
+                        placeholder="enter description"
+                        name="taskDescription"
+                        value={this.state.taskDescription}
+                        onChange={this.handleChanges}
+                    />
+                    <input 
+                        type="text"
+                        placeholder="Assign to (optional)"
+                        name="assigneeName"
+                        value={this.state.assigneeName}
+                        onChange={this.handleChanges}
+                    />
+                    <div>
+                        {/* <span onClick={this.toggleRadio}>Yes</span> */}
+                        <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
+                        <span>Would you like to make this task repeating?</span>
+                    </div>
+                    <div className= {
+                        this.state.toggleRadio=== false
+                            ? 'dropdown-hidden'
+                            : 'dropdown-display'}>
+
+                        How often should this task be completed?
+                        <div className="dropdown-options">
+                            <ul>1 hour</ul>
+                            <ul>2 hours</ul>
+                            <ul>3 hours</ul>
+                        </div>
+                    </div>
+                    <button type='submit'>Submit</button>
+                </form>
+            </div>
             <MDBContainer className="task-cards">
                 <div className="search-dropdown-row">
                     <form className="form-inline">
@@ -236,6 +307,8 @@ render() {
                             task={task}
                             taskID={task.id}
                             taskName={task.taskName}
+                            taskDescription={task.taskDescription}
+                            assigneeName={task.assigneeName}
                             requestedBy={task.createdBy}
                             done={task.completed}
                             comments={task.comments}
