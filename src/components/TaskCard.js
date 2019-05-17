@@ -54,7 +54,7 @@ class TaskCard extends Component {
         }
 
         axios.get(`${backendURL}/api/user/${this.props.task.completedBy}/name`, options).then(response => {
-            console.log('res', response.data.name);
+            // console.log('res', response.data.name);
             this.setState({
                 assigneeName: response.data.name
             })
@@ -86,7 +86,7 @@ class TaskCard extends Component {
                 <h7>Requested by: {this.state.task.createdBy}</h7>
             </div>
             <div className="task-card-middle">
-                <h5>{this.state.assigneeName}</h5>
+                <h7>{this.state.assigneeName}</h7>
                 <div>{this.state.task.description}</div>
             </div>
             <div className="task-card-right">

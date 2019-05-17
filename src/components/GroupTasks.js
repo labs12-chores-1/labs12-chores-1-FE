@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 //import { Link } from 'react-router-dom';
 import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
 //import { withRouter } from "react-router";
 import {
-    MDBBtn,
+    // MDBBtn,
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -23,7 +24,8 @@ import {
     removeGroup,
     getGroupTasks,
     createGroupTask,
-    editTask
+    editTask,
+    getGroupUsers
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 //import { bool } from 'prop-types';
@@ -39,38 +41,56 @@ class GroupTasks extends Component {
             searchField: "",
             groupId: null,
             userId: null,
-            currentGroupTasks: null
+            currentGroupTasks: null,
+            groupMembers: [],
+            groupUserNames: []
         };
     }
     componentWillMount(){
         document.title = `FairShare - Task`;
-        // console.log(this.props.match.params.id);
         this.props.getGroupTasks(this.props.match.params.id);        
         this.setState({...this.state,
             currentGroupTasks: this.props.currentGroupTasks});
+
+        //Get info of all group members
+        let backendURL;
+        if(process.env.NODE_ENV === 'development'){
+        backendURL = `http://localhost:9000`
+        } else {
+        backendURL = `https://labs12-fairshare.herokuapp.com/`
         }
         
+        let token = localStorage.getItem('jwt');
+        let options = {
+            headers: {
+            Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios.get(`${backendURL}/api/groupmember/group/${this.props.match.params.id}`, options)
+        .then(response => {
+            this.setState({
+                groupMembers: response.data
+            })
+        });
+        
+    }
+        
     componentDidMount(){
-            // console.log(this.props.currentGroupTasks);
-            // console.log("this.state: ",this.state.currentGroupTasks);
+   
     }
 
     componentDidUpdate(previousProps){
-        // console.log("this.props: ",this.props.currentGroupTasks);
         if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
-            // console.log("here");
             this.setState({currentGroupTasks:this.props.currentGroupTasks});
         }
     }
 
     handleAddTask=(e)=>{
         this.setState({[e.target.name]:e.target.value});
-        // console.log(this.state.taskName);
     }
     createTask = (e) => {
         e.preventDefault();
-        // this.setState({...this.state,
-        //                     tempTaskName: ''});
         let task = {
             taskName:this.state.taskName,
             groupID:this.props.match.params.id,
@@ -88,33 +108,70 @@ class GroupTasks extends Component {
         
     }
 
-    handleFilter =(event, filterString) =>{
+    handleFilter =(event, filterArg) =>{
         event.preventDefault();
-        if (filterString === "all-completeness"){
+        if (filterArg === "all-completeness"){
             this.setState({...this.state,
                 currentGroupTasks: this.props.currentGroupTasks});
         }
-        else if (filterString ==="completed"){
+        else if (filterArg ==="completed"){
             this.setState({...this.state,
                 currentGroupTasks: {
                     data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
         }
-        else if (filterString ==="incomplete"){
+        else if (filterArg ==="incomplete"){
             this.setState({...this.state,
                 currentGroupTasks: {
                     data:this.props.currentGroupTasks.data.filter(task=>!task.completed)}});
         }
-        else if (filterString ==="all-assignee"){
+        else if (filterArg ==="all-assignee"){
             this.setState({...this.state,
-                currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy.include())});
+                currentGroupTasks: this.props.currentGroupTasks})
+        }
+        else if (this.state.groupMembers !== null){
+            this.state.groupMembers.forEach(userID =>{
+                if (filterArg === userID){
+                    this.setState({...this.state,
+                        currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
+                }
+            })
         }
     }
 
+    getGroupUserNames =()=>{
+        if (this.state.groupMembers.length > 0){
+            // console.log('hello');
+            let backendURL;
+            if(process.env.NODE_ENV === 'development'){
+                backendURL = `http://localhost:9000`
+            } else {
+                backendURL = `https://labs12-fairshare.herokuapp.com/`
+            }
+            
+            let token = localStorage.getItem('jwt');
+            let options = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            //Map list of group members to list of group user names
+            this.state.groupMembers.forEach(function(groupMember){
+                console.log(this.groupMember);
+                axios.get(`${backendURL}/api/user/${groupMember.userID}/name`, options)
+                .then(response => {
+                    // console.log(response.data);
+                    this.setState({
+                        groupUserNames: [...this.state.groupUserNames, response.data]
+                    })
+                }); 
+                })
+        }   
+    }
 
 render() {
-    return (
-       
+    return (       
         <MDBContainer className="group-task-container">
+                 {/* {this.getGroupUserNames()} */}
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
@@ -146,10 +203,15 @@ render() {
                     <div className="dropdown">
                         <span>Assigned</span>
                         <div className="dropdown-content">
-                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all")}>All</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
+                            {console.log('state.groupMembers', this.state.groupMembers)}
                             <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="#">Me</a>
-                            <a className="dropdown-item" href="#">Alex</a>
+                            {this.state.groupUserNames.length >= 1
+                            ? this.state.groupUserNames.map(groupUser=>(
+                                <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,groupUser.userID)}>{groupUser.userID}</div>
+                            ))                            
+                            : null
+                            }
                         </div>
                     </div>
                     <div className="dropdown">
@@ -195,9 +257,9 @@ render() {
                 <button type='submit'>Submit</button>
             </form> */}
         </MDBContainer>
-    )
+    );
     }
-}
+};
 
 const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
@@ -205,7 +267,7 @@ const mapStateToProps = state => {
         //state items
         currentUser: state.currentUser,
         currentGroup: state.currentGruop,
-        currentGroupTasks: state.currentGroupTasks
+        currentGroupTasks: state.currentGroupTasks,
         // userGroups: state.userGroups,
         // userId: state.userId,
         // name: state.name,
@@ -230,6 +292,7 @@ export default connect(
         acceptInvite,
         getGroupTasks,
         createGroupTask,
-        editTask
+        editTask,
+        getGroupUsers
     }
 )(GroupTasks);
