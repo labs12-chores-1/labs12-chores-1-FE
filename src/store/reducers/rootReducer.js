@@ -128,7 +128,7 @@ export const rootReducer = (state = initialState, action) => {
     case GET_GROUP_TASKS_SUCCESS:
     return {
       ...state,
-      currentGroupTasks: action.payload.data
+      currentGroupTasks: action.payload
       };
     case GET_GROUP_TASKS_FAILURE:
     return {
@@ -499,7 +499,6 @@ export const rootReducer = (state = initialState, action) => {
     case EDIT_TASK_START:
       return state;
       case TASK_EDITED:
-      console.log(action.payload);
       return {
         ...state,
         needsNewTask: true,
