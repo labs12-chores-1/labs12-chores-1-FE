@@ -8,8 +8,7 @@ import {
   getUserGroups,
   clearCurrentGroup,
   updateGroupName,
-  removeGroup,
-  getCurrentGroup
+  removeGroup
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 import {
@@ -332,7 +331,6 @@ export default connect(
     getCurrentUser,
     updateGroupName,
     removeGroup,
-    acceptInvite,
-    getCurrentGroup
+    acceptInvite
   }
 )(GroupsPage);
