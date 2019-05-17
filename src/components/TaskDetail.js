@@ -124,10 +124,12 @@ class TaskDetail extends Component {
     updateTask = (e) => {
         e.preventDefault();
         this.setState({taskName: ''});
+        this.setState({taskDescription: ''});
         let id = this.props.match.params.id
         console.log(id)
         let task = {
             taskName:this.state.taskName,
+            taskDescription: this.state.taskDescription
             
         }
 
@@ -196,7 +198,9 @@ render() {
                 <form onSubmit={this.updateTask}>
           <div className="input-field">
             <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Title</label>
+            <input type="text" name="taskDescription" ref="taskDescription" value={this.state.taskDescription} onChange={this.handleInputChange} />
+            <label htmlFor="name">Description</label>
           </div>
           {/* <div className="input-field">
             <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
