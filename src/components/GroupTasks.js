@@ -107,7 +107,7 @@ render() {
                         value={this.state.taskName}
                         onChange={this.handleChanges}
                     />
-                    <input 
+                    <textarea 
                         type="text"
                         placeholder="enter description"
                         name="taskDescription"
