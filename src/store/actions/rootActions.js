@@ -1165,7 +1165,7 @@ export const deleteTask = (task) => {
  * @param task - Task changes
  * @returns {Function}
  */
-export const editTask = task => {
+export const editTask = (task, id) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1173,7 +1173,7 @@ export const editTask = task => {
     }
   }
 
-  const endpoint = axios.put(`${backendURL}/api/task/${task.id}`, task, options);
+  const endpoint = axios.put(`${backendURL}/api/task/${id}`, task, options);
 
   return dispatch => {
     dispatch({type: EDIT_TASK_START});

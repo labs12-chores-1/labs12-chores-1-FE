@@ -68,13 +68,8 @@ class TaskCard extends Component {
                 <h7>Requested by: {this.props.requestedBy}</h7>
             </div>
             <div className="task-card-middle">
-<<<<<<< HEAD
-                <h6>{this.state.assigneeName}</h6>
-                {/* {console.log("this.props.tempUserName: ", this.props.assigneeName)} */}
-=======
                 <h5>{this.props.assignee}</h5>
                 <div>{this.props.taskDescription}</div>
->>>>>>> aa6e75985316ab76bebc41a434fa74fd33baccaa
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>

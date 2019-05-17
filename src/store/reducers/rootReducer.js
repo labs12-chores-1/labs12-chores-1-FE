@@ -498,8 +498,7 @@ export const rootReducer = (state = initialState, action) => {
       
     case EDIT_TASK_START:
       return state;
-      case TASK_EDITED:
-      console.log(action.payload);
+    case TASK_EDITED:
       return {
         ...state,
         needsNewTask: true,
