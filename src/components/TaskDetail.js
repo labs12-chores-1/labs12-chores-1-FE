@@ -3,10 +3,22 @@ import axios from 'axios';
 //import { Link } from 'react-router-dom';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
-import TaskCard from "./TaskCard";
+import "./Styles/Comments.css";
+// import TaskCard from "./TaskCard";
+import Comments from './Comments';
+import TaskCardDetail from "./TaskCardDetail";
 import { withRouter } from "react-router";
 import {
+    // MDBCard,
+    // MDBCardBody,
+    // MDBCardTitle,
+    // MDBCardText,
     MDBBtn,
+    // MDBModal,
+    // MDBModalBody,
+    // MDBModalHeader,
+    // MDBModalFooter,
+    // MDBInput,
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -16,7 +28,10 @@ import { connect } from 'react-redux';
 
 import { getTaskComments } from '../store/actions/rootActions';
 import { deleteTask } from '../store/actions/rootActions';
- import { createTaskComments } from '../store/actions/rootActions';
+import { createTaskComments } from '../store/actions/rootActions';
+import { editTask } from '../store/actions/rootActions';
+import { updateComment } from '../store/actions/rootActions';
+
 // import { rootReducer } from "../store/reducers/rootReducer";
 
 import {deleteComment} from '../store/actions/rootActions';
@@ -30,7 +45,7 @@ class TaskDetail extends Component {
             modal: false,
             commentString:'',
             commentedBy:1,
-            groupID:1,
+            groupID: props.match.params.id,
             taskID: 0,
             toggleMod:false
         };
@@ -43,45 +58,35 @@ class TaskDetail extends Component {
     }
 
     getTaskDetails(){
-        let taskId = this.props.match.params.id;
-        axios.get(`http://localhost:3000/api/task/${taskId}`)
-        .then(response => {
-          this.setState({
-            name: response.data.name,
-            task: response.task.city  
-          }, () => {
-            console.log(this.state);
-          });
-        })
-        .catch(err => console.log(err));
-        }
-        editTask(newTask){
-            axios.request({
-              method:'put',
-              url:`http://localhost:3000/api/task/${this.state.id}`,
-              data: newTask
-            }).then(response => {
-              this.props.history.push('/');
-            }).catch(err => console.log(err));
-          }
+      let taskId = this.props.match.params.id;
+      axios.get(`http://localhost:9000/api/task/${taskId}`)
+      .then(response => {
+        this.setState({
+          name: response.data.taskName,
+          task: response.data.id  
+        }, () => {
+          console.log(this.state);
+        });
+      })
+      .catch(err => console.log(err));
+      }
+      
+    onSubmit(e){
+      const newTask = {
+        name: this.refs.name.value,
+        task: this.refs.task.value
         
-          onSubmit(e){
-            const newTask = {
-              name: this.refs.name.value2,
-              city: this.refs.city.value2,
-              address: this.refs.address.value2
-            }
-            this.editTask(newTask);
-            e.preventDefault();
-          }
-    
+      }
+      this.editTask(newTask);
+      e.preventDefault();
+    }
 
     removeTask = e => {
         e.preventDefault();
         this.props.deleteTask(this.props.match.params.id);
         this.props.history.goBack();
         //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
-
+      
     }
 
      createComments = (e) => {
@@ -98,48 +103,54 @@ class TaskDetail extends Component {
         // window.location.reload()      
     };
       
-      handleChanges=(e)=>{
-        this.setState({[e.target.name]:e.target.value})
-    }
+  handleChanges=(e)=>{
+    this.setState({[e.target.name]:e.target.value})
+  }
 
-    handleInputChange(e){
-        const target = e.target;
-        const value2 = target.value2;
-        const name = target.name;
-    
-        this.setState({
-          [name]: value2
-        });
+  handleUpdateCommentChange=(e)=> {
+    this.setState({[e.target.name]:e.target.value});
+  }
+
+  handleInputChange=(e)=>{
+    this.setState({[e.target.name]:e.target.value})
+  }
+
+  backToTask = (e) => {
+      e.preventDefault();
+      this.props.history.goBack();
+  }
+  updateTask = (e) => {
+      e.preventDefault();
+      this.setState({taskName: ''});
+      let id = this.props.match.params.id
+      console.log(id)
+      let task = {
+          taskName:this.state.taskName,
+          
       }
 
-    backToTask = (e) => {
-        e.preventDefault();
-        this.props.history.goBack();
-    }
+      this.props.editTask(task,id);
+  this.setState({toggleMod:!this.state.toggleMod});
 
-    updateTask = (e) => {
-        e.preventDefault();
-        this.setState({taskName: ''});
-        let task = {
-            taskName:this.state.taskName,
-            groupID:this.props.match.params.id
-        }
+  };//<-needed?
+  editComment = (e, id) => {
+      e.preventDefault();
+      let comment = {
+          commentString: this.state.commentString
+      }
+      this.props.updateComment(comment,id)
+  }
 
-        this.props.editTask(task, this.props.match.params.id);
-    
-    };//<-needed?
+  removeComment = (e, id) => {
+      e.preventDefault();
+      this.props.deleteComment(id, this.props.match.params.id);
+  }
 
-       
-    removeComment = (e, id) => {
-        e.preventDefault();
-        this.props.deleteComment(id, this.props.match.params.id);
-    }
-
-    toggleMod= (e) => {
-        this.setState({
-            toggleMod:!this.state.toggleMod
-        })
-    }
+  toggleMod= (e) => {
+    this.setState({
+        toggleMod:!this.state.toggleMod
+    })
+  }
 
 render() {
     return (
@@ -157,47 +168,81 @@ render() {
                     </div>
                 </MDBCol>
             </MDBRow>
+            {/* <form onSubmit={this.updateTask}>
+          <div className="input-field">
+            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
+            <label htmlFor="name">Name</label>
+          </div>
+          {/* <div className="input-field">
+            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
+            <label htmlFor="task">Task</label>
+          </div> */}
+          {/*</MDBContainer><input type="submit" value="EDIT" className="btn" />
+          </form> */}
+         
+
+          <form onSubmit={this.createComments}>
+            <input 
+                type="text"
+                placeholder="Write Comment"
+                name="commentString"
+                value={this.state.commentString}
+                onChange={this.handleChanges}
+              />
+              <button type='submit'>Submit</button>
+          </form>
+          
+          {/* <form onSubmit={(e)=>this.editComment(e,5)}>
+            <input 
+                type="text"
+                placeholder="Comment Changes"
+                name="commentString"
+                value={this.state.commentString}
+                onChange={this.handleUpdateCommentChange}
+              />
+              <button type='submit'>Edit</button>
+          </form> */}
+            
             <div className= {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
                     : 'custom-mod-display'}>
                                 
                 <span className="x" onClick={this.toggleMod}>X</span>
-                <form className={'create-task-form'}onSubmit={this.createTask}>
-                    <input 
-                        type="text"
-                        placeholder="enter task"
-                        name="taskName"
-                        value={this.state.taskName}
-                        onChange={this.handleChanges}
-                    />
-                    <input 
-                        type="text"
-                        placeholder="enter description"
-                        name="taskDescription"
-                        value={this.state.taskDescription}
-                        onChange={this.handleChanges}
-                    />
-                    <button type='submit'>Submit</button>
-                </form>
+                <form onSubmit={this.updateTask}>
+          <div className="input-field">
+            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
+            <label htmlFor="name">Name</label>
+          </div>
+          {/* <div className="input-field">
+            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
+            <label htmlFor="task">Task</label>
+          </div> */}
+          <input type="submit" value="EDIT" className="btn" />
+          </form>
             </div>
             
-            <form onSubmit={this.createComments}>
-                <input 
-                    type="text"
-                    placeholder="Write Comment"
-                    name="commentString"
-                    value={this.state.commentString}
-                    onChange={this.handleChanges}
-                />
-                <button type='submit'>Submit</button>
-            </form>
+            
 
+          <div className= {
+                this.state.toggleMod=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                                
+                <span className="x" onClick={this.toggleMod}>X</span>
+                <form onSubmit={this.updateTask}>
+          <div className="input-field">
+            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
+            <label htmlFor="name">Name</label>
+          </div>
+ 
+          <input type="submit" value="EDIT" className="btn" />
+          </form>
+            </div>
 
             <MDBContainer className="task-card">
-                {console.log (this.props.match.params.id)}
-                <TaskCard
-                    taskID = {this.props.match.params.id}
+                <TaskCardDetail
+                    taskID={this.props.match.params.id}
                     taskname={""}
                     taskDescription={this.props.taskDescription}
                     requestedBy={""}
@@ -219,8 +264,19 @@ render() {
                             console.log(comment);
                             return(
                             <>
-                            <h4 key={comment.id}>{comment.commentString}</h4>
-                             <button type="button" outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
+                            <Comments 
+                            commentString= {comment.commentString}
+                            taskID = {this.props.match.params.id}
+                            commentedOn={comment.commentedOn}
+                            commentID={comment.id}
+
+
+
+                            />
+                             <div className="buttons">
+                                <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
+                                <button type="button" outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>Delete</button> 
+                             </div>
                             </>
                        
                         )})
@@ -241,11 +297,12 @@ const mapStateToProps = state => {
     return {
       //state items
       taskComments: state.taskComments,
-      errorMessage: state.errorMessage
+      errorMessage: state.errorMessage,
+      currentGroup:state.currentGroup
     };
 };
   
-export default withRouter(connect(mapStateToProps,{deleteComment,deleteTask,getTaskComments,createTaskComments})(TaskDetail));
+export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment })(TaskDetail));
 
 
 
