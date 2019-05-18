@@ -17,7 +17,7 @@
     justify-content: center;
 }
 
-MDBBtn{
+#MDBBtn{
     cursor: pointer;
 }
 
@@ -128,6 +128,16 @@ MDBBtn{
 
 .dropdown-display{
     display: block;
+}
+
+.create-task-form .text-description {
+    width: 260px;
+    height: 120px;
+    border: 3px solid #cccccc;
+    padding: 5px;
+    font-family: Tahoma, sans-serif;
+    background-position: bottom right;
+    background-repeat: no-repeat;
 }
 
 .cta-submit{

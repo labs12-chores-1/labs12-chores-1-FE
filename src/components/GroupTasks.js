@@ -219,7 +219,8 @@ render() {
                         value={this.state.taskName}
                         onChange={this.handleChanges}
                     />
-                    <textarea 
+                    <textarea
+                        className="text-description"
                         type="text"
                         placeholder="enter description"
                         name="taskDescription"
@@ -250,7 +251,7 @@ render() {
                             <ul>3 hours</ul>
                         </div>
                     </div>
-                    <button type='submit'>Submit</button>
+                    <button className="cta-submit" type='submit'>Submit</button>
                 </form>
             </div>
             <MDBContainer className="task-cards">

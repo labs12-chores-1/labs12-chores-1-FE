@@ -275,7 +275,7 @@ render() {
                             />
                              <div className="buttons">
                                 <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
-                                <button type="button" outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>Delete</button> 
+                                <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
                              </div>
                             </>
                        
