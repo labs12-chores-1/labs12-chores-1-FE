@@ -71,6 +71,7 @@
 
     .navbar{
         height: 60px;
+        box-shadow: 0 6px 15px 0 rgba(0,0,0,0.07);
     }
 
     .dropdown-menu {

@@ -4,7 +4,7 @@ import axios from 'axios';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
 import "./Styles/Comments.css";
-import TaskCard from "./TaskCard";
+// import TaskCard from "./TaskCard";
 import Comments from './Comments';
 import TaskCardDetail from "./TaskCardDetail";
 import { withRouter } from "react-router";
@@ -275,7 +275,7 @@ render() {
                             />
                              <div className="buttons">
                                 <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
-                                <button type="button" outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>Delete</button> 
+                                <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
                              </div>
                             </>
                        

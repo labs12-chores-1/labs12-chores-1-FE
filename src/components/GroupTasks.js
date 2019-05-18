@@ -209,10 +209,9 @@ render() {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
                     : 'custom-mod-display'}>
-                                
+                <form className={'create-task-form'}onSubmit={this.createTask}>
                 <span className="x" onClick={this.toggleMod}>X</span>
                 <h3>New Task</h3>
-                <form className={'create-task-form'}onSubmit={this.createTask}>
                     <input 
                         type="text"
                         placeholder="enter task"
@@ -220,14 +219,8 @@ render() {
                         value={this.state.taskName}
                         onChange={this.handleChanges}
                     />
-                    <input 
-                        type="text"
-                        placeholder="enter task"
-                        name="taskName"
-                        value={this.state.taskName}
-                        onChange={this.handleChanges}
-                    />
-                    <input 
+                    <textarea
+                        className="text-description"
                         type="text"
                         placeholder="enter description"
                         name="taskDescription"
@@ -258,7 +251,7 @@ render() {
                             <ul>3 hours</ul>
                         </div>
                     </div>
-                    <button type='submit'>Submit</button>
+                    <button className="cta-submit" type='submit'>Submit</button>
                 </form>
             </div>
             <MDBContainer className="task-cards">

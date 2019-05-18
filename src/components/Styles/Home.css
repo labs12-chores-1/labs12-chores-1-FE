@@ -3,16 +3,21 @@
 .home-container{
     width: 100%;
 }
-
-.home-container h1{
-    font-family: "Montserrat", sans-serif;
+.home-container .my-5{
+    padding-top: 70px; 
+    font-weight: 900;
+    color: #715be7; 
 }
 
+.home-container h1 {
+    font-size: 60px;
+}
 
 .home-container h2{
     font-family: "Montserrat", sans-serif;
+    color: #333333;
+    /* padding-top: 80px; */
 }
-
 
 .home-container h3{
     font-family: "Montserrat", sans-serif;
@@ -21,7 +26,10 @@
 .home-container p{
     font-family: "Roboto" sans-serif;
 }
+.home-banner-overlay{
+   margin-left: 200px;
 
+}
 /* .home-banner{
     background: url('../../images/banner-shop-girl.jpg') no-repeat;
     background-size: cover;
@@ -37,7 +45,7 @@
 
 
 
-.home-banner-vid{
+/* .home-banner-vid{
     position: relative;
     overflow: hidden;
     background-color: black;
@@ -47,15 +55,34 @@
 
 .home-banner-vid img {
     position: absolute;
-    z-index: 1;
     top: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     opacity: 0.8;
+    
+} */
+
+.home-content-top .createAccount{
+    margin: 20px 0 0;
+    border-radius: 8px;
+    padding: 10px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 1px solid #715be7;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 
+    0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    background-color: #715be7;
+    color: #ececec;
+    cursor: pointer;
 }
 
-.home-banner-overlay {
+.home-content-top p {
+    font-size: 1.5rem;
+}
+
+/* .home-banner-overlay {
     z-index: 2;
     position: relative;
     min-height: 100vh;
@@ -63,8 +90,8 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-}
-
+} */
+/* 
 .home-banner-overlay h1{
     font-size: 8rem;
     font-weight: 800;
@@ -79,7 +106,7 @@
     font-size: 4rem;
     color: white;
     text-shadow: 2px 2px 2px black;
-}
+} */
 
 .about p {
     font-size: 1.25rem;
@@ -91,6 +118,14 @@
     padding: 60px 60px;
     margin: 0 auto;
     max-width: 80%;
+}
+.home-content h2::before{
+    background-color: #E5E5E5;
+    content: "";
+    display: block;
+    height: 2px;
+    margin-bottom: 2rem;
+    width: 100%;
 }
 
 
@@ -197,6 +232,11 @@ section {
     text-align: center;
 }
 
+.plans .header-plan{
+    font-size: 2rem;
+}
+
+
 .plans .card-title h2{
     text-align: center;
 }
@@ -225,7 +265,29 @@ footer {
     color: lightgray;
 }
 
+@media (min-width: 801px) and (max-width: 1000px){
+    .home-banner-overlay img {
+        margin-left: 0;
+    }
+    .home-banner-overlay{
+        margin-left: 0;
+    }
+    .home-banner-overlay p{
+        flex-flow: column nowrap;
+        width: 100%; 
+        margin: 0 auto;
+    }
+
+    .home-content-top {
+        grid-template: none;
+    }
+}
+
 @media only screen and (max-width: 767px){
+
+    .home-banner-overlay{
+        margin-left: 0;
+    }
 
     .home-banner-overlay h1{
         font-size: 4rem;
