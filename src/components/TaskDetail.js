@@ -279,9 +279,6 @@ render() {
                             taskID = {this.props.match.params.id}
                             commentedOn={comment.commentedOn}
                             commentID={comment.id}
-
-
-
                             />
                              <div className="buttons">
                                 <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
