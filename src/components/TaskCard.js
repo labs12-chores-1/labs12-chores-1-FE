@@ -43,7 +43,7 @@ class TaskCard extends Component {
         if(process.env.NODE_ENV === 'development'){
         backendURL = `http://localhost:9000`
         } else {
-        backendURL = `https://labs12-fairshare.herokuapp.com/`
+        backendURL = `https://labs12-fairshare.herokuapp.com`
         }
         
         let token = localStorage.getItem('jwt');
