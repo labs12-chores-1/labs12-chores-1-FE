@@ -40,20 +40,30 @@ class TaskDetail extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            comments:[],
+            taskComments: null,
             // searchField: "",
             modal: false,
             commentString:'',
             commentedBy:1,
             groupID: props.match.params.id,
             taskID: 0,
+            
             toggleMod:false
         };
         
     }
 
+    componentWilMount(){
+      this.setState({taskComments:this.props.taskComments});
+    }
+
+    componentDidUpdate(previousProps){
+      if(previousProps.taskComments !== this.props.taskComments){
+          this.setState({taskComments:this.props.taskComments});
+        }
+    }
+
      componentDidMount(){
-        document.title = `FairShare - Task`;
         this.props.getTaskComments(this.props.match.params.id);
     }
 
@@ -259,8 +269,8 @@ render() {
                 <div>
                     {/* {console.log(this.props.taskComments)} */}
                     
-                    {this.props.taskComments !== null
-                        ? this.props.taskComments.data.map(comment => {
+                    {this.state.taskComments !== null
+                        ? this.state.taskComments.data.map(comment => {
                             console.log(comment);
                             return(
                             <>

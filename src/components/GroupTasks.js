@@ -83,7 +83,7 @@ class GroupTasks extends Component {
     }
         
     componentDidMount(){
-   
+        
     }
 
     componentDidUpdate(previousProps){
@@ -124,12 +124,12 @@ class GroupTasks extends Component {
                 currentGroupTasks: this.props.currentGroupTasks});
         }
         else if (filterArg ==="completed"){
-            // console.log(this.state.currentGroupTasks);
-            if (this.state.currentGroupTasks.data.length !== 0){
-                this.setState({...this.state,
-                    currentGroupTasks: {
-                        data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
-            }
+            console.log("", this.state.currentGroupTasks);
+            // if (this.state.currentGroupTasks.data.length !== 0){
+            //     this.setState({...this.state,
+            //         currentGroupTasks: {
+            //             data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
+            // }
         }
         else if (filterArg ==="incomplete"){
             this.setState({...this.state,
@@ -209,17 +209,10 @@ render() {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
                     : 'custom-mod-display'}>
-                                
+                {  console.log(this.state.currentGroupTasks)}       
                 <span className="x" onClick={this.toggleMod}>X</span>
                 <h3>New Task</h3>
-                <form className={'create-task-form'}onSubmit={this.createTask}>
-                    <input 
-                        type="text"
-                        placeholder="enter task"
-                        name="taskName"
-                        value={this.state.taskName}
-                        onChange={this.handleChanges}
-                    />
+                <form className={'create-task-form'}onSubmit={this.createTask}>            
                     <input 
                         type="text"
                         placeholder="enter task"
@@ -278,7 +271,7 @@ render() {
                         <span>Assigned</span>
                         <div className="dropdown-content">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
-                            {console.log('state.groupMembers', this.state.groupMembers)}
+                            {/* {console.log('state.groupMembers', this.state.groupMembers)} */}
                             <div className="dropdown-divider"></div>
                             {this.state.groupUserNames.length >= 1
                             ? this.state.groupUserNames.map(groupUser=>(
