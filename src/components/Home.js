@@ -2,8 +2,9 @@ import React from 'react';
 import './Styles/Home.css';
 import Auth0Lock from 'auth0-lock';
 
-import groceryBag from '../images/grocery-bag.jpg';
-import {MDBIcon, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBCardText, MDBCardFooter} from 'mdbreact';
+import macMockup from '../images/mac-mockup.png';
+//import groceryBag from '../images/grocery-bag.jpg';
+import {MDBIcon, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBCardText, MDBCardFooter,MDBCol,MDBRow} from 'mdbreact';
 
 
 let frontendURL;
@@ -50,26 +51,54 @@ class Home extends React.Component{
 
         render(){
         return(
-            <div className = 'home-container'>
+<div className = 'home-container'>
+<h1 className="h1-responsive text-center my-5">FAIRSHARE</h1>
+        <h3 className="grey-text w-responsive text-center mx-auto mb-5">
+        Shared living, made simple.</h3>
+    <section className="home-banner-overlay">
+          <MDBRow>
+          <MDBCol lg="5" className="mb-lg-0 mb-5">
+            <img
+              src={macMockup}
+              alt=""
+              className="img-fluid rounded"
+            />
+          </MDBCol>
+          <MDBCol>
+                 <MDBRow className="home-content-top">
+                    <MDBCol  md="8" size="10">
+                    <h2 className="font-weight-bold caption">Organize like a pro</h2>
+                    <p className="">FairShare keeps your mind at ease with all task in one place. For people who needs to unclutter their mind and manage their time better. </p>
+                    <button class="createAccount" onClick={this.signIn}>Create a free account </button>
+                    </MDBCol>
+                </MDBRow>
+              
+            
+           
+          </MDBCol>
+          </MDBRow>
+    
+</section>
+
+            
                 
                 <header className = 'home-banner-vid'>
-                
                 {/* <video playsInline autoPlay muted loop poster="poster.jpg" id = "bg-vid">
                 <source src = 'http://adamreid.me/images/time-lapse-cc-blur-low.mp4'  type = "video/mp4" />
                 </video> */}
-                <img src = {groceryBag} alt = 'bag of groceries'></img>
+                {/* <img src = {groceryBag} alt = 'bag of groceries'></img> */}
 
-                <div className = 'home-banner-overlay'>
+                {/* <div className = 'home-banner-overlay'>
                 <h1>FAIRSHARE</h1>
 
                 <h2>Shared living, made simple.</h2>
-                </div>
+                </div> */}
 
                 </header>
 
                 <main className = 'home-content'>
                 <section className = 'about'>
-                    <h2>Get your shopping lists on the same page.</h2>
+                    <h2>Features at a glance</h2>
                 <div className = 'about-tile-grid'>
                     <div className = 'about-tile'>
                         <div className = 'about-icon'>
@@ -152,7 +181,7 @@ class Home extends React.Component{
                 <section className = 'plans'>
 
                 <MDBCard>
-                    <MDBCardHeader><h1>Basic Plan</h1></MDBCardHeader>
+                    <MDBCardHeader><p className="header-plan">Basic Plan</p></MDBCardHeader>
                     <MDBCardBody>
                         <MDBCardTitle>
                             <h2>$0</h2> <p>Per Month</p>
@@ -169,7 +198,7 @@ class Home extends React.Component{
                 </MDBCard>
 
                 <MDBCard>
-                    <MDBCardHeader><h1>Premium Plan</h1></MDBCardHeader>
+                    <MDBCardHeader><h1 className="header-plan">Premium Plan</h1></MDBCardHeader>
                     <MDBCardBody>
                         <MDBCardTitle>
                             <h2>$9.99</h2> <p>Per Month</p>

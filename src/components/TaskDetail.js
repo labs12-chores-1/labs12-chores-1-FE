@@ -4,13 +4,21 @@ import axios from 'axios';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
 import "./Styles/Comments.css";
-import TaskCard from "./TaskCard";
-import Comments from './Comments'
-//import TaskCard from "./TaskCard";
+// import TaskCard from "./TaskCard";
+import Comments from './Comments';
 import TaskCardDetail from "./TaskCardDetail";
 import { withRouter } from "react-router";
 import {
+    // MDBCard,
+    // MDBCardBody,
+    // MDBCardTitle,
+    // MDBCardText,
     MDBBtn,
+    // MDBModal,
+    // MDBModalBody,
+    // MDBModalHeader,
+    // MDBModalFooter,
+    // MDBInput,
     MDBRow,
     MDBCol,
     MDBIcon,
@@ -50,38 +58,28 @@ class TaskDetail extends Component {
     }
 
     getTaskDetails(){
-        let taskId = this.props.match.params.id;
-        axios.get(`http://localhost:9000/api/task/${taskId}`)
-        .then(response => {
-          this.setState({
-            name: response.data.taskName,
-            task: response.data.id  
-          }, () => {
-            console.log(this.state);
-          });
-        })
-        .catch(err => console.log(err));
-        }
-        // editTask(newTask){
-        //     axios.request({
-        //       method:'put',
-        //       url:`http://localhost:9000/api/task/${this.state.id}`,
-        //       data: newTask
-        //     }).then(response => {
-        //       this.props.history.push('/');
-        //     }).catch(err => console.log(err));
-        //   }
+      let taskId = this.props.match.params.id;
+      axios.get(`http://localhost:9000/api/task/${taskId}`)
+      .then(response => {
+        this.setState({
+          name: response.data.taskName,
+          task: response.data.id  
+        }, () => {
+          console.log(this.state);
+        });
+      })
+      .catch(err => console.log(err));
+      }
+      
+    onSubmit(e){
+      const newTask = {
+        name: this.refs.name.value,
+        task: this.refs.task.value
         
-          onSubmit(e){
-            const newTask = {
-              name: this.refs.name.value,
-              task: this.refs.task.value
-              
-            }
-            this.editTask(newTask);
-            e.preventDefault();
-          }
-    
+      }
+      this.editTask(newTask);
+      e.preventDefault();
+    }
 
     removeTask = e => {
         e.preventDefault();
@@ -105,63 +103,54 @@ class TaskDetail extends Component {
         // window.location.reload()      
     };
       
-      handleChanges=(e)=>{
-        this.setState({[e.target.name]:e.target.value})
-    }
-    
-    handleUpdateCommentChange=(e)=> {
-        this.setState({[e.target.name]:e.target.value});
-    }
+  handleChanges=(e)=>{
+    this.setState({[e.target.name]:e.target.value})
+  }
 
-    handleInputChange=(e)=>{
-      this.setState({[e.target.name]:e.target.value})
-        // const target = e.target;
-        // const value = target.value;
-        // const name = e.target.name;
-        // //api/task/:id
-        // this.setState({
-        //   [name]: value
-        // });
+  handleUpdateCommentChange=(e)=> {
+    this.setState({[e.target.name]:e.target.value});
+  }
+
+  handleInputChange=(e)=>{
+    this.setState({[e.target.name]:e.target.value})
+  }
+
+  backToTask = (e) => {
+      e.preventDefault();
+      this.props.history.goBack();
+  }
+  updateTask = (e) => {
+      e.preventDefault();
+      this.setState({taskName: ''});
+      let id = this.props.match.params.id
+      console.log(id)
+      let task = {
+          taskName:this.state.taskName,
+          
       }
 
-      backToTask = (e) => {
-        e.preventDefault();
-        this.props.history.goBack();
-    }
+      this.props.editTask(task,id);
+  this.setState({toggleMod:!this.state.toggleMod});
 
-    updateTask = (e) => {
-        e.preventDefault();
-        this.setState({taskName: ''});
-        let id = this.props.match.params.id
-        console.log(id)
-        let task = {
-            taskName:this.state.taskName,
-            
-        }
+  };//<-needed?
+  editComment = (e, id) => {
+      e.preventDefault();
+      let comment = {
+          commentString: this.state.commentString
+      }
+      this.props.updateComment(comment,id)
+  }
 
-        this.props.editTask(task,id);
-    this.setState({toggleMod:!this.state.toggleMod});
+  removeComment = (e, id) => {
+      e.preventDefault();
+      this.props.deleteComment(id, this.props.match.params.id);
+  }
 
-    };//<-needed?
-    editComment = (e, id) => {
-        e.preventDefault();
-        let comment = {
-            commentString: this.state.commentString
-        }
-        this.props.updateComment(comment,id)
-    }
-
-       
-    removeComment = (e, id) => {
-        e.preventDefault();
-        this.props.deleteComment(id, this.props.match.params.id);
-    }
-
-    toggleMod= (e) => {
-        this.setState({
-            toggleMod:!this.state.toggleMod
-        })
-    }
+  toggleMod= (e) => {
+    this.setState({
+        toggleMod:!this.state.toggleMod
+    })
+  }
 
 render() {
     return (
@@ -235,11 +224,25 @@ render() {
             
             
 
+          <div className= {
+                this.state.toggleMod=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                                
+                <span className="x" onClick={this.toggleMod}>X</span>
+                <form onSubmit={this.updateTask}>
+          <div className="input-field">
+            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
+            <label htmlFor="name">Name</label>
+          </div>
+ 
+          <input type="submit" value="EDIT" className="btn" />
+          </form>
+            </div>
 
             <MDBContainer className="task-card">
-                {console.log (this.props.match.params.id)}
                 <TaskCardDetail
-                    taskID = {this.props.match.params.id}
+                    taskID={this.props.match.params.id}
                     taskname={""}
                     taskDescription={this.props.taskDescription}
                     requestedBy={""}
@@ -272,7 +275,7 @@ render() {
                             />
                              <div className="buttons">
                                 <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
-                                <button type="button" outline color="success" onClick={(e) => this.removeComment(e, comment.id)}>Delete</button> 
+                                <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
                              </div>
                             </>
                        
@@ -294,7 +297,8 @@ const mapStateToProps = state => {
     return {
       //state items
       taskComments: state.taskComments,
-      errorMessage: state.errorMessage,currentGroup:state.currentGroup
+      errorMessage: state.errorMessage,
+      currentGroup:state.currentGroup
     };
 };
   

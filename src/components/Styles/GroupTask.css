@@ -21,13 +21,55 @@
     cursor: pointer;
 }
 
-.custom-mod-hidden {
+.search-dropdown-row{
+    display: flex;
+    flex-flow: row; 
+    justify-content: space-between;
+
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  .dropdown-item:hover {
+      cursor: pointer;
+  }
+  .custom-mod-hidden {
     display: none
 }
 
 .custom-mod-display {
-   
-    border: 1px solid black;
+    position: fixed;
+    background: rgba(27,31,35,.5);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+     z-index: 80;
+     
+
+  /* background: linear-gradient(
+    rgba(0, 0, 0, 0.1), 
+    rgba(0, 0, 0, 0.1)
+    ) */
+/*    
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+    border: 0;
     background-color: white;
     width:800px;
     height: 400px;
@@ -36,25 +78,48 @@
     align-items: center;
     position: fixed;
     z-index: 1000;
-    top:50;
+    top:50; */
 }
 
 .create-task-form{
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+
+    width: 448px;
     display: flex;
     flex-direction: column;
-    width:50%;
     align-items: center;
-    justify-content: center;
-    border:3px solid blue;
-    height: 500px;
+    border-radius: 2%;
     background-color: white;
+    border-color: #444d56;
+    box-shadow: 0 0 18px rgba(0,0,0,.4);
 }
 
 .x{
-    border:1px solid red;
     align-self: flex-end;
     cursor: pointer;
+    font-weight: bold;
+}
+
+.create-task-form > input {
+    font-size: 16px;
+    margin: 14px 0;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 50px;
+    background-color: #efefef;
     
+   
+}
+
+.create-task-form input:focus,
+.create-task-form input:active {
+  outline: none;
 }
 
 .dropdown-hidden{
@@ -63,4 +128,28 @@
 
 .dropdown-display{
     display: block;
+}
+
+.create-task-form .text-description {
+    width: 260px;
+    height: 120px;
+    border: 3px solid #cccccc;
+    padding: 5px;
+    font-family: Tahoma, sans-serif;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+
+.cta-submit{
+    margin: 20px 0 0;
+    border-radius: 8px;
+    padding: 10px 100px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #388e3c;
+    border: 1px solid #388e3c;
+    color: #ffffff;
+    cursor: pointer;
+    
 }
