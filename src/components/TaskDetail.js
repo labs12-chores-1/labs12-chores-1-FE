@@ -4,7 +4,7 @@ import axios from 'axios';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
 import "./Styles/Comments.css";
-import TaskCard from "./TaskCard";
+//import TaskCard from "./TaskCard";
 import Comments from './Comments'
 //import TaskCard from "./TaskCard";
 import TaskCardDetail from "./TaskCardDetail";
