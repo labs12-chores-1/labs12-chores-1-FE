@@ -45,8 +45,18 @@
 
 .task-card-right {
     display: flex;
+    flex-direction: column;
+    
     align-items: center;
-    flex-flow: row;
+    /* flex-flow: row; */
+}
+
+.recurring-display {
+    display: block;
+}
+
+.recurring-hidden {
+    display: none;
 }
 
 
