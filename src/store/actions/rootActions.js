@@ -123,6 +123,12 @@ export const UPDATE_COMMENT_START = "UPDATE_COMMENT_START";
 export const UPDATE_COMMENT_SUCCESS = "UPDATE_COMMENT_SUCCESS";
 export const UPDATE_COMMENT_FAIL = "UPDATE_COMMENT_FAIL";
 
+export const GET_SINGLE_TASK_START = "GET_SINGLE_TASK_START";
+export const GET_SINGLE_TASK_SUCCESS = "GET_SINGLE_TASK_SUCCESS";
+export const GET_SINGLE_TASK_FAILURE = "GET_SINGLE_TASK_FAILURE";
+
+
+
 // Defines URL for development and production/staging environments
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -1120,6 +1126,29 @@ export const getTasksByInput = (input) => {
       dispatch({type: GET_GROUP_TASKS_SUCCESS, payload: res.data});
     }).catch(err => {
       dispatch({type: GET_GROUP_TASKS_FAILURE, payload: err})
+    })
+  }
+}
+
+export const getSingleTask = (taskID) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/task/${taskID}`, options);
+  
+  
+  return dispatch => {
+    dispatch({type: GET_SINGLE_TASK_START})
+    endpoint
+    .then(res => {
+      console.log(res)
+      dispatch({type: GET_SINGLE_TASK_SUCCESS, payload: res.data});
+    }).catch(err => {
+      dispatch({type: GET_SINGLE_TASK_FAILURE, payload: err})
     })
   }
 }
