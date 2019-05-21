@@ -87,7 +87,7 @@ class TaskCard extends Component {
             </div>
             <div className="task-card-middle">
                 <h5>Assigned To {this.state.task.assigneeName}</h5>
-                <div>{this.state.task.taskDescription}</div>
+                {/* <div>{this.state.task.taskDescription}</div> */}
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
