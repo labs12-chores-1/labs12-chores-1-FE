@@ -20,10 +20,10 @@ class Comments extends Component {
         }
     }
 
-    removeComment = (e, id) => {
-        e.preventDefault();
-        this.props.deleteComment(id, this.props.match.params.id);
-      }
+    // removeComment = (e, id) => {
+    //     e.preventDefault();
+    //     this.props.deleteComment(id, this.props.match.params.id);
+    //   }
 
 
     render(){

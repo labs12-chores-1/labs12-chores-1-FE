@@ -37,7 +37,7 @@ class TaskDetail extends Component {
             modal: false,
             commentString:'',
             commentedBy:1,
-            groupID: props.match.params.id,
+            groupID: 1,
             taskID: 0,
             toggleMod:false
         };
