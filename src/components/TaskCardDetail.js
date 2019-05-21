@@ -58,7 +58,8 @@ class TaskCardDetail extends Component {
                 <h7>Requested by: {this.props.task.createdBy}</h7>
             </div>
             <div className="task-card-middle">
-                <h5>{this.props.task.assignee}</h5>
+                <h5>{this.props.assignee}</h5>
+                <div>{this.props.taskDescription}</div>
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>

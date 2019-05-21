@@ -46,7 +46,7 @@ class TaskDetail extends Component {
             modal: false,
             commentString:'',
             commentedBy:1,
-            groupID: props.match.params.id,
+            groupID: this.props.match.params.groupId,
             taskID: 0,
             toggleMod:false,
             taskDescription: ""
@@ -57,7 +57,7 @@ class TaskDetail extends Component {
      componentDidMount(){
         document.title = `FairShare - Task`;
         this.props.getTaskComments(this.props.match.params.id);
-        this.props.getSingleTask(this.props.match.params.id)
+        this.props.getSingleTask(this.props.match.params.taskId)
     }
 
   //   getTaskDetails(){
@@ -95,7 +95,7 @@ class TaskDetail extends Component {
 
     removeTask = e => {
         e.preventDefault();
-        this.props.deleteTask(this.props.match.params.id);
+        this.props.deleteTask(this.props.match.params.taskId, this.state.groupID);
         this.props.history.goBack();
         //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
       
@@ -108,10 +108,10 @@ class TaskDetail extends Component {
             commentString:this.state.commentString,
             commentedBy:this.state.commentedBy,
             groupID:this.state.groupID,
-            taskID: this.props.match.params.id
+            taskID: this.props.match.params.taskId
         }
 
-        this.props.createTaskComments(comment, this.props.match.params.id);
+        this.props.createTaskComments(comment, this.props.match.params.taskId);
         // window.location.reload()      
     };
       
@@ -157,7 +157,8 @@ class TaskDetail extends Component {
 
   removeComment = (e, id) => {
       e.preventDefault();
-      this.props.deleteComment(id, this.props.match.params.id);
+      this.props.deleteComment(id, this.props.match.params.taskId);
+      // window.location.reload()
   }
 
   toggleMod= (e) => {
@@ -240,21 +241,7 @@ render() {
             
             
 
-          <div className= {
-                this.state.toggleMod=== false
-                    ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
-                                
-                <span className="x" onClick={this.toggleMod}>X</span>
-                <form onSubmit={this.updateTask}>
-          <div className="input-field">
-            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
-            <label htmlFor="name">Name</label>
-          </div>
- 
-          <input type="submit" value="EDIT" className="btn" />
-          </form>
-            </div>
+         
             {console.log(this.props.singleTask, "right here")}
             <MDBContainer className="task-card">
             {this.props.singleTask !== null
@@ -295,7 +282,7 @@ render() {
                         ? this.props.taskComments.data.map(comment => {
                             console.log(comment);
                             return(
-                            <>
+                            <div key={comment.id}>
                             <Comments 
                             commentString= {comment.commentString}
                             taskID = {this.props.match.params.id}
@@ -309,7 +296,7 @@ render() {
                                 <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
                                 <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
                              </div>
-                            </>
+                            </div>
                        
                         )})
                         : null

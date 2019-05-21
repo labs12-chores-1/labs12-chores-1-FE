@@ -60,7 +60,7 @@ import {
   TASK_EDITED,
   EDIT_TASK_FAIL,
   DELETE_COMMENT_START,
-  // COMMENT_DELETED,
+  COMMENT_DELETED,
   DELETE_COMMENT_FAIL,
   GET_CURRENT_GROUP,
   SAVE_CURRENT_GROUP,
@@ -202,19 +202,12 @@ export const rootReducer = (state = initialState, action) => {
     case DELETE_COMMENT_START:
     return state;
   
-  // case COMMENT_DELETED:
-  //   return {
-  //     ...state,
-  //     deleteComment: action.payload,
-  //     errorMessage: null
-  //   };
-
-  // case DELETE_COMMENT_FAIL:
-  //   return {
-  //     ...state,
-  //     deleteComment: action.payload,
-  //     errorMessage: null
-  //   };
+  case COMMENT_DELETED:
+    return {
+      ...state,
+      deleteComment: action.payload,
+      errorMessage: null
+    };
 
   case DELETE_COMMENT_FAIL:
     return {
