@@ -144,6 +144,7 @@ class TaskDetail extends Component {
   removeComment = (e, id) => {
       e.preventDefault();
       this.props.deleteComment(id, this.props.match.params.taskId);
+      // window.location.reload()
   }
 
   toggleMod= (e) => {
@@ -242,7 +243,7 @@ render() {
                         ? this.props.taskComments.data.map(comment => {
                             console.log(comment);
                             return(
-                            <>
+                            <div key={comment.id}>
                             <Comments 
                             commentString= {comment.commentString}
                             taskID = {this.props.match.params.id}
@@ -256,7 +257,7 @@ render() {
                                 <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
                                 <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
                              </div>
-                            </>
+                            </div>
                        
                         )})
                         : null
