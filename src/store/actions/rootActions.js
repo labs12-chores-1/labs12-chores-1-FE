@@ -12,6 +12,9 @@ export const SAVE_USERNAME = 'SAVE_USERNAME';
 export const SAVE_PROFILEPIC = 'SAVE_PROFILEPIC';
 export const REMOVE_ACCOUNT = 'REMOVE_ACCOUNT';
 
+export const GET_USER_NAME_START = 'GET_USER_NAME_START';
+export const GET_USER_NAME_SUCCESS = 'GET_USER_NAME_SUCCESS';
+
 // GROUP
 export const FETCHING_SINGLE_GROUP = 'FETCHING_SINGLE_GROUP';
 export const SINGLE_GROUP_FETCHED = 'SINGLE_GROUP_FETCHED';
@@ -24,6 +27,8 @@ export const CHANGE_GROUP_NAME_SUCCESS = 'CHANGE_GROUP_NAME_SUCCESS';
 export const REMOVE_GROUP_START = 'REMOVE_GROUP_START';
 export const REMOVE_GROUP_SUCCESS = 'REMOVE_GROUP_SUCCESS';
 export const CLEARING_CURRENT_GROUP = 'CLEARING_CURRENT_GROUP';
+export const GET_CURRENT_GROUP = 'GET_CURRENT_GROUP';
+export const SAVE_CURRENT_GROUP = 'SAVE_CURRENT_GROUP';
 export const CREATE_GROUP_TASK = 'CREATE_TASK';
 export const GROUP_TASK_CREATED = 'TASK_CREATED';
 export const GROUP_TASK_ERROR = 'GROUP_TASK_ERROR';
@@ -87,6 +92,7 @@ export const GET_GROUP_TASKS_FAILURE = 'GET_GROUP_TASKS_FAILURE';
 // TASK - CREATE
 export const CREATE_TASK = 'CREATE_TASK';
 export const TASK_CREATED = 'TASK_CREATED';
+export const TASK_ERROR = 'TASK_ERROR';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const TASK_UPDATED = 'TASK_UPDATED';
 
@@ -103,9 +109,10 @@ export const EDIT_TASK_FAIL = "EDIT_TASK_FAIL";
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
 export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
+export const DELETE_COMMENTS = "DELETE_COMMENTS";
 
-export const DELETE_COMMENT_START = "DELETE_COMMENT_START";
 export const COMMENT_DELETED = "COMMENT_DELETED";
+export const DELETE_COMMENT_START = "DELETE_COMMENT_START";
 export const DELETE_COMMENT_FAIL = "DELETE_COMMENT_FAIL";
 
 export const CREATE_COMMENT_START = "CREATE_COMMENT_START";
@@ -115,6 +122,12 @@ export const CREATE_COMMENT_FAILURE = "CREATE_COMMENT_FAILURE";
 export const UPDATE_COMMENT_START = "UPDATE_COMMENT_START";
 export const UPDATE_COMMENT_SUCCESS = "UPDATE_COMMENT_SUCCESS";
 export const UPDATE_COMMENT_FAIL = "UPDATE_COMMENT_FAIL";
+
+export const GET_SINGLE_TASK_START = "GET_SINGLE_TASK_START";
+export const GET_SINGLE_TASK_SUCCESS = "GET_SINGLE_TASK_SUCCESS";
+export const GET_SINGLE_TASK_FAILURE = "GET_SINGLE_TASK_FAILURE";
+
+
 
 // Defines URL for development and production/staging environments
 let backendURL;
@@ -144,12 +157,10 @@ export const checkEmail = () => {
       Authorization: `Bearer ${token}`, // we can extract the email from the token instead of explicitly sending it in req.body
     }
   }
-
   const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
 
   return (dispatch) => {
     dispatch({type: CHECKING_EMAIL});
-
     fetchUserId.then(res => {
       dispatch({type: EMAIL_CHECKED, payload: res.data.profile});
       localStorage.setItem('userId', res.data.id);
@@ -209,16 +220,41 @@ export const getUserProfile = userId => {
     }
   }
 
-  const fetchGroupProfile = axios.get(`${backendURL}/api/user/${userId}`, options);
+  const fetchUserProfile = axios.get(`${backendURL}/api/user/${userId}`, options);
 
   return dispatch => {
     dispatch({type: GET_USER_PROFILE});
 
-    fetchGroupProfile.then(res => {
+    fetchUserProfile.then(res => {
       dispatch({type: SAVE_USER_PROFILE, payload: res.data});
     })
   }
 }
+
+/**
+ * Returns the name of a user
+ * @param userId - ID of the targeted user
+ * @returns {Function}
+ */
+export const getUserName = userId => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const fetchUserName = axios.get(`${backendURL}/api/user/${userId}/name`, options);
+
+  return dispatch => {
+    dispatch({type: GET_USER_NAME_START});
+
+    fetchUserName.then(res => {
+      dispatch({type: GET_USER_NAME_SUCCESS, payload: res.data.name});
+    })
+  }
+}
+
 
 /**
  * Updates the current user's username/name
@@ -331,7 +367,7 @@ export const removeAccount = () => {
  */
 export const getSingleGroup = (groupId) => {
   let token = localStorage.getItem('jwt');
-  
+
   let options = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -505,6 +541,33 @@ export const clearCurrentGroup = () => {
   }
 }
 
+/**
+ * Get and save the current group
+ * @returns {Function}
+ */
+export const getCurrentGroup = (groupID) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/group/${groupID}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_CURRENT_GROUP})
+
+    endpoint.then(res => {
+      dispatch({type: SAVE_CURRENT_GROUP, payload: res.data})
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+
+  }
+}
+
 /*
  * GROUP PROFILE ACTIONS
  * --------------------------------------------------------------------------------
@@ -648,7 +711,7 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   if(process.env.NODE_ENV === 'development'){
     frontendURL = 'localhost:3000'
   } else {
-    frontendURL = 'https://labs10-shopping-list.netlify.com'
+    frontendURL = 'https://goofy-sinoussi-c017bd.netlify.com/'
   }
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
@@ -1012,10 +1075,10 @@ export const clearError = () => {
 }
 
 /*
- * TASK - GET GROUPTASK ACTIONS
+ * TASK ACTIONS
  * --------------------------------------------------------------------------------
  */
-/** 
+/** GET GROUPTASK
  * Return the current group's tasks
  * @param groupId - ID of the current group
  * @returns {Function}
@@ -1036,8 +1099,56 @@ export const getGroupTasks = (groupId) => {
     .then(res => {
       dispatch({type: GET_GROUP_TASKS_SUCCESS, payload: res.data});
     }).catch(err => {
-      //console.log(err);
       dispatch({type: GET_GROUP_TASKS_FAILURE, payload: err})
+    })
+  }
+}
+
+/** GET GROUPTASK by search input
+ * Return all tasks containing the search input
+ * @param input - search input
+ * @returns {Function}
+ */
+export const getTasksByInput = (input) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }   
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/task/group/${input}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_GROUP_TASKS_START})
+    endpoint
+    .then(res => {
+      dispatch({type: GET_GROUP_TASKS_SUCCESS, payload: res.data});
+    }).catch(err => {
+      dispatch({type: GET_GROUP_TASKS_FAILURE, payload: err})
+    })
+  }
+}
+
+export const getSingleTask = (taskID) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/task/${taskID}`, options);
+  
+  
+  return dispatch => {
+    dispatch({type: GET_SINGLE_TASK_START})
+    endpoint
+    .then(res => {
+      console.log(res)
+      dispatch({type: GET_SINGLE_TASK_SUCCESS, payload: res.data});
+    }).catch(err => {
+      dispatch({type: GET_SINGLE_TASK_FAILURE, payload: err})
     })
   }
 }
@@ -1047,7 +1158,7 @@ export const getGroupTasks = (groupId) => {
  * --------------------------------------------------------------------------------
  */
 //adds task to group list updated
- export const createGroupTask = (task, groupID) => {
+ export const createGroupTask = (task,groupID) => {
   const token = localStorage.getItem('jwt');
   
   const options = {
@@ -1056,7 +1167,7 @@ export const getGroupTasks = (groupId) => {
     }
   };
 
-  console.log("ITEM => ", task);
+  // console.log("ITEM => ", task);
 
   const endpoint = axios.post(`${backendURL}/api/task`, task, options);
 
@@ -1066,9 +1177,9 @@ export const getGroupTasks = (groupId) => {
     endpoint.then(res => {
       console.log(res.data, 'new task');
       dispatch({type: GROUP_TASK_CREATED, payload:res.data})
-    })
 
-    .then(() => {dispatch(getGroupTasks(groupID))})
+    })
+        .then(() => {dispatch(getGroupTasks(groupID))})
         .catch(err => {
           console.log(err);
           dispatch({type: GROUP_TASK_ERROR, payload:err})
@@ -1086,7 +1197,7 @@ export const getGroupTasks = (groupId) => {
  * @param task to be removed
  * @returns {Function}
  */
-export const deleteTask = (task) => {
+export const deleteTask = (task, id) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1101,13 +1212,18 @@ export const deleteTask = (task) => {
     dispatch({type: DELETE_TASK_START})
     endpoint.then(res => {
       console.log('delete working');
-      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
-    }).catch(err => {
+      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })  
+    }).then(() => {
+      dispatch(getGroupTasks(id))
+    })
+    .catch(err => {
       //console.log(err);
       dispatch({type: DELETE_TASK_FAIL, payload: err})
     })
   }
 }
+
+
 /*
  *  TASK - EDIT ACTIONS
  * --------------------------------------------------------------------------------
@@ -1139,11 +1255,8 @@ export const editTask = (task, id) => {
   }
 }
 
-
-
-
 /*
- *  TASK-GET COMMENTS ACTIONS
+ *  TASK-GET TASK COMMENTS ACTIONS
  * --------------------------------------------------------------------------------
  */
 
@@ -1162,8 +1275,7 @@ export const getTaskComments = (id) => {
     .then(res => {
       console.log(res.data);
       dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
-    })
-      .catch(err =>{
+    }).catch(err =>{
       dispatch({type: GET_COMMENTS_FAILURE, payload:err});
     })
   }
@@ -1171,10 +1283,10 @@ export const getTaskComments = (id) => {
  };
 
  /*
- *  TASK-CREATE COMMENTS ACTIONS
+ *  TASK-CREATE TASK COMMENTS ACTIONS
  * --------------------------------------------------------------------------------
  */
- export const createTaskComments = (comment, id) => {
+ export const createTaskComments = (comment,taskId) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1189,7 +1301,7 @@ export const getTaskComments = (id) => {
     .then(res => {
       console.log(res);
       dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
-    }).then(() => {dispatch(getTaskComments(id))})
+    }).then(() => {dispatch(getTaskComments(taskId))})
     .catch(err =>{
       dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
     })

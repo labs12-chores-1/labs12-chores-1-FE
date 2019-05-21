@@ -48,9 +48,11 @@ import {
   GET_GROUP_TASKS_START, 
   GET_GROUP_TASKS_SUCCESS,
   GET_GROUP_TASKS_FAILURE,
+  GET_USER_NAME_START,
+  GET_USER_NAME_SUCCESS,
+  CREATE_GROUP_TASK,
   GROUP_TASK_CREATED,
   GROUP_TASK_ERROR,
-  CREATE_GROUP_TASK,
   CREATE_COMMENT_START,
   CREATE_COMMENT_SUCCESS,
   CREATE_COMMENT_FAILURE,
@@ -60,12 +62,17 @@ import {
   DELETE_COMMENT_START,
   COMMENT_DELETED,
   DELETE_COMMENT_FAIL,
+  GET_CURRENT_GROUP,
+  SAVE_CURRENT_GROUP,
   REMOVE_GROUP_MEMBER_START, 
   REMOVE_GROUP_MEMBER_SUCCESS,
   REMOVE_GROUP_MEMBER_FAIL,
   UPDATE_COMMENT_START, 
   UPDATE_COMMENT_SUCCESS, 
-  UPDATE_COMMENT_FAIL
+  UPDATE_COMMENT_FAIL,
+  GET_SINGLE_TASK_START,
+  GET_SINGLE_TASK_SUCCESS,
+  GET_SINGLE_TASK_FAILURE
 } from "../actions/";
 
 const initialState = {
@@ -103,14 +110,27 @@ const initialState = {
 
 //***** FairShare***********
   currentGroupTasks: null,
-  taskComments: null
-
+  taskComments: null,
+  tempUserName: null,
+  currentTask: null,
+  singleTask: null
 };
+
 
 export const rootReducer = (state = initialState, action) => {
 
 
   switch (action.type) {
+    case GET_USER_NAME_START:
+      return {...state,
+        errorMessage: null
+      };
+    case GET_USER_NAME_SUCCESS:
+      return{
+        ...state,
+        tempUserName: action.payload
+      };
+
     case GET_GROUP_TASKS_START:
       return {...state,
       errorMessage: null
@@ -485,41 +505,70 @@ export const rootReducer = (state = initialState, action) => {
         errorMessage: null
       };
 
-      case CREATE_GROUP_TASK:
-        return {
-          ...state,
-          errorMessage: null
-        };
-        case GROUP_TASK_CREATED:
-        console.log(action.payload);
-        return {
-          ...state,
-          //currentGroupTasks: action.payload,
-          errorMessage: null
-        };
-        case GROUP_TASK_ERROR:
-        return {
-          ...state,
-          errorMessage:action.payload
-        };
-        
-        case EDIT_TASK_START:
-        return state;
-        case TASK_EDITED:
-        return state
-        case EDIT_TASK_FAIL:
-        return {
-          ...state,
-          errorMessage:action.payload
-        };
-
-    
-        default:
-        return state
+    case CREATE_GROUP_TASK:
+      return {
+        ...state,
+        errorMessage: null
+      };
+    case GROUP_TASK_CREATED:
+      console.log(action.payload);
+      return {
+        ...state,
+        currentTask:action.payload,
+        //currentGroupTasks: action.payload,
+        errorMessage: null
+      };
+    case GROUP_TASK_ERROR:
+      return {
+        ...state,
+        errorMessage:action.payload
+      };
+      
+    case EDIT_TASK_START:
+      return state;
+      case TASK_EDITED:
+      return {
+        ...state,
+        needsNewTask: true,
+        errorMessage: null
+      };
+    case EDIT_TASK_FAIL:
+      return {
+        ...state,
+        errorMessage:action.payload
+      };
+    case GET_CURRENT_GROUP:
+      return state;
+    case SAVE_CURRENT_GROUP:
+      return {
+        ...state,
+        currentGroup: action.payload,
+        errorMessage: null
+      };
+    case GET_SINGLE_TASK_START:
+      return {
+        ...state,
+        errorMessage:null,
+        singleTask: null
+      };
+    case GET_SINGLE_TASK_SUCCESS:
+    return {
+      ...state,
+      singleTask: action.payload,
+    };
+    case GET_SINGLE_TASK_FAILURE:
+    return {
+      ...state,
+      errorMessage:action.payload
+    };
+  
+    default:
+      return state
        
       };
-
     
+
+ 
 
     
       
