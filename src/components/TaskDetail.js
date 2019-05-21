@@ -125,12 +125,12 @@ class TaskDetail extends Component {
 
   handleInputChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
-  }
+  };
 
   backToTask = (e) => {
   e.preventDefault();
   this.props.history.goBack();
-}  
+} ; 
   updateTask = (e) => {
         e.preventDefault();
         this.setState({taskName: ''});
@@ -146,20 +146,21 @@ class TaskDetail extends Component {
       this.props.editTask(task,id);
   this.setState({toggleMod:!this.state.toggleMod});
 
-  };//<-needed?
+  };
+
   editComment = (e, id) => {
       e.preventDefault();
       let comment = {
           commentString: this.state.commentString
       }
       this.props.updateComment(comment,id)
-  }
+  };
 
   removeComment = (e, id) => {
       e.preventDefault();
       this.props.deleteComment(id, this.props.match.params.taskId);
       // window.location.reload()
-  }
+  };
 
   toggleMod= (e) => {
     this.setState({
@@ -237,12 +238,8 @@ render() {
           </div> */}
           <input type="submit" value="EDIT" className="btn" />
           </form>
-            </div>
-            
-            
-
-         
-            {console.log(this.props.singleTask, "right here")}
+            </div>         
+            {/* {console.log(this.props.singleTask, "right here")} */}
             <MDBContainer className="task-card">
             {this.props.singleTask !== null
                         ? this.props.singleTask.data.map(task => {
