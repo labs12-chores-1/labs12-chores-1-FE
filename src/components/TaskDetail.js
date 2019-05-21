@@ -56,7 +56,7 @@ class TaskDetail extends Component {
 
      componentDidMount(){
         document.title = `FairShare - Task`;
-        this.props.getTaskComments(this.props.match.params.id);
+        this.props.getTaskComments(this.props.match.params.taskId);
         this.props.getSingleTask(this.props.match.params.taskId)
     }
 
@@ -135,7 +135,7 @@ class TaskDetail extends Component {
         e.preventDefault();
         this.setState({taskName: ''});
         this.setState({taskDescription: ''});
-        let id = this.props.match.params.id
+        let id = this.props.match.params.taskId
         console.log(id)
         let task = {
             taskName:this.state.taskName,
