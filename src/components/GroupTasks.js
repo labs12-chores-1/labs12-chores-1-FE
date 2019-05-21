@@ -61,7 +61,7 @@ class GroupTasks extends Component {
         if(process.env.NODE_ENV === 'development'){
         backendURL = `http://localhost:9000`
         } else {
-        backendURL = `https://labs12-fairshare.herokuapp.com/`
+        backendURL = `https://labs12-fairshare.herokuapp.com`
         }
         
         let token = localStorage.getItem('jwt');
@@ -176,7 +176,7 @@ class GroupTasks extends Component {
             if(process.env.NODE_ENV === 'development'){
                 backendURL = `http://localhost:9000`
             } else {
-                backendURL = `https://labs12-fairshare.herokuapp.com/`
+                backendURL = `https://labs12-fairshare.herokuapp.com`
             }
             
             let token = localStorage.getItem('jwt');
@@ -322,10 +322,14 @@ render() {
                 </div>
                 <br></br>
                 {/* {console.log(this.state.currentGroupTasks)} */}
+
                 {this.state.currentGroupTasks !== null
-                    ? this.state.currentGroupTasks.data.map(task => (
+                    ? this.state.currentGroupTasks.data.map(task => {
                      
+                    return(
+                     <div key= {task.id}>
                         <TaskCard
+                            key={task.id}
                             task={task}
                             taskID={task.id}
                             taskName={task.taskName}
@@ -341,9 +345,11 @@ render() {
                             updateGroup={this.saveGroupName}
                             removeGroup={this.deleteGroup}
                         />
-                      ))
+                        </div>
+                      )})
                     : null
                 }  
+                
             </MDBContainer>
             {/* <form onSubmit={this.createTask}>
                 <input 

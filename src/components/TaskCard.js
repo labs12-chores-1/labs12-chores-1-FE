@@ -43,7 +43,7 @@ class TaskCard extends Component {
         if(process.env.NODE_ENV === 'development'){
         backendURL = `http://localhost:9000`
         } else {
-        backendURL = `https://labs12-fairshare.herokuapp.com/`
+        backendURL = `https://labs12-fairshare.herokuapp.com`
         }
         
         let token = localStorage.getItem('jwt');
@@ -79,7 +79,7 @@ class TaskCard extends Component {
   return (
       
       <MDBCard className="task-card" 
-        onClick={()=>this.props.history.push(`/task/${this.state.task.id}`)}>
+        onClick={()=>this.props.history.push(`/groups/${this.props.match.params.id}/task/${this.state.task.id}`)}>
         <MDBCardBody className="task-card-body">
             <div className="task-card-left">
                 <div>{this.state.task.taskName}</div>

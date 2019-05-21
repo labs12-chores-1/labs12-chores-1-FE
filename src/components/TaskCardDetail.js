@@ -21,7 +21,13 @@ class TaskCardDetail extends Component {
   constructor(props){
     super(props);
     this.state={
-      modal:false
+      modal:false,
+      
+        groupId: null,
+        userId: null,
+        comments: props.comments,
+        assigneeName: "",
+        task: {}
     }
   }
 
@@ -36,6 +42,8 @@ class TaskCardDetail extends Component {
     });
   }
 
+  
+
   render(){
 
   return (
@@ -46,11 +54,12 @@ class TaskCardDetail extends Component {
       >
         <MDBCardBody className="task-card-body">
             <div className="task-card-left">
-                <h7>{this.props.taskName}</h7>
-                <h7>Requested by: {this.props.requestedBy}</h7>
+                <h7>{this.props.task.taskName}</h7>
+                <h7>Requested by: {this.props.task.createdBy}</h7>
             </div>
             <div className="task-card-middle">
                 <h5>{this.props.assignee}</h5>
+                <div>{this.props.taskDescription}</div>
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
@@ -70,7 +79,9 @@ const mapStateToProps = state => {
   return {
     //state items
     taskComments: state.taskComments,
-    errorMessage: state.errorMessage
+    errorMessage: state.errorMessage,
+    assigneeName: state.tempUserName,
+    currentTask: state.currentTask
   };
 };
 

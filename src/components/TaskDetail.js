@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 //import { Link } from 'react-router-dom';
 import "./Styles/TaskDetail.css";
 import "./Styles/modal.css";
@@ -31,6 +31,7 @@ import { deleteTask } from '../store/actions/rootActions';
 import { createTaskComments } from '../store/actions/rootActions';
 import { editTask } from '../store/actions/rootActions';
 import { updateComment } from '../store/actions/rootActions';
+import { getSingleTask } from '../store/actions/rootActions';
 
 // import { rootReducer } from "../store/reducers/rootReducer";
 
@@ -45,9 +46,10 @@ class TaskDetail extends Component {
             modal: false,
             commentString:'',
             commentedBy:1,
-            groupID: props.match.params.id,
+            groupID: this.props.match.params.groupId,
             taskID: 0,
-            toggleMod:false
+            toggleMod:false,
+            taskDescription: ""
         };
         
     }
@@ -55,21 +57,31 @@ class TaskDetail extends Component {
      componentDidMount(){
         document.title = `FairShare - Task`;
         this.props.getTaskComments(this.props.match.params.id);
+        this.props.getSingleTask(this.props.match.params.taskId)
     }
 
-    getTaskDetails(){
-      let taskId = this.props.match.params.id;
-      axios.get(`http://localhost:9000/api/task/${taskId}`)
-      .then(response => {
-        this.setState({
-          name: response.data.taskName,
-          task: response.data.id  
-        }, () => {
-          console.log(this.state);
-        });
-      })
-      .catch(err => console.log(err));
-      }
+  //   getTaskDetails(){
+  //     let token = localStorage.getItem('jwt');
+  // // console.log('token', token);
+  // let options = {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`, // we can extract the email from the token instead of explicitly sending it in req.body
+  //   }
+  // }
+  //     let taskId = this.props.match.params.id;
+  //     axios.get(`http://localhost:9000/api/task/${taskId}`,options)
+  //     .then(response => {
+  //       console.log(response)
+  //       this.setState({
+  //         name: response.data.taskName,
+  //         task: response.data.id,
+  //         taskDescription: response.data.description   
+  //       }, () => {
+  //         console.log(this.state);
+  //       });
+  //     })
+      // .catch(err => console.log(err));
+      // }
       
     onSubmit(e){
       const newTask = {
@@ -83,7 +95,7 @@ class TaskDetail extends Component {
 
     removeTask = e => {
         e.preventDefault();
-        this.props.deleteTask(this.props.match.params.id);
+        this.props.deleteTask(this.props.match.params.taskId, this.state.groupID);
         this.props.history.goBack();
         //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
       
@@ -96,10 +108,10 @@ class TaskDetail extends Component {
             commentString:this.state.commentString,
             commentedBy:this.state.commentedBy,
             groupID:this.state.groupID,
-            taskID: this.props.match.params.id
+            taskID: this.props.match.params.taskId
         }
 
-        this.props.createTaskComments(comment, this.props.match.params.id);
+        this.props.createTaskComments(comment, this.props.match.params.taskId);
         // window.location.reload()      
     };
       
@@ -116,18 +128,20 @@ class TaskDetail extends Component {
   }
 
   backToTask = (e) => {
-      e.preventDefault();
-      this.props.history.goBack();
-  }
+  e.preventDefault();
+  this.props.history.goBack();
+}  
   updateTask = (e) => {
-      e.preventDefault();
-      this.setState({taskName: ''});
-      let id = this.props.match.params.id
-      console.log(id)
-      let task = {
-          taskName:this.state.taskName,
-          
-      }
+        e.preventDefault();
+        this.setState({taskName: ''});
+        this.setState({taskDescription: ''});
+        let id = this.props.match.params.id
+        console.log(id)
+        let task = {
+            taskName:this.state.taskName,
+            taskDescription: this.state.taskDescription
+            
+        }
 
       this.props.editTask(task,id);
   this.setState({toggleMod:!this.state.toggleMod});
@@ -143,7 +157,8 @@ class TaskDetail extends Component {
 
   removeComment = (e, id) => {
       e.preventDefault();
-      this.props.deleteComment(id, this.props.match.params.id);
+      this.props.deleteComment(id, this.props.match.params.taskId);
+      // window.location.reload()
   }
 
   toggleMod= (e) => {
@@ -212,7 +227,9 @@ render() {
                 <form onSubmit={this.updateTask}>
           <div className="input-field">
             <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Title</label>
+            <input type="text" name="taskDescription" ref="taskDescription" value={this.state.taskDescription} onChange={this.handleInputChange} />
+            <label htmlFor="name">Description</label>
           </div>
           {/* <div className="input-field">
             <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
@@ -224,28 +241,30 @@ render() {
             
             
 
-          <div className= {
-                this.state.toggleMod=== false
-                    ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
-                                
-                <span className="x" onClick={this.toggleMod}>X</span>
-                <form onSubmit={this.updateTask}>
-          <div className="input-field">
-            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
-            <label htmlFor="name">Name</label>
-          </div>
- 
-          <input type="submit" value="EDIT" className="btn" />
-          </form>
-            </div>
-
+         
+            {console.log(this.props.singleTask, "right here")}
             <MDBContainer className="task-card">
-                <TaskCardDetail
-                    taskID={this.props.match.params.id}
+            {this.props.singleTask !== null
+                        ? this.props.singleTask.data.map(task => {
+                            console.log("here", task);
+                            return(
+                            <>
+                            <TaskCardDetail
+                    task= {task}
+                
+                    // group={1}
+                    // updateGroup={this.saveGroupName}
+                    // removeGroup={this.deleteGroup}
+                />
+                 </>      
+                        )})
+                        : null
+                    } 
+                {/* <TaskCardDetail
+                    taskID= {this.props.singleTask[0].id}
                     taskname={""}
                     taskDescription={this.props.taskDescription}
-                    requestedBy={""}
+                    requestedBy={this.props.singleTask.requestedBy}
                     done={0}
                     comments={0}
                     repeated={0}
@@ -254,7 +273,7 @@ render() {
                     // group={1}
                     // updateGroup={this.saveGroupName}
                     // removeGroup={this.deleteGroup}
-                />
+                /> */}
        
                 <div>
                     {/* {console.log(this.props.taskComments)} */}
@@ -263,7 +282,7 @@ render() {
                         ? this.props.taskComments.data.map(comment => {
                             console.log(comment);
                             return(
-                            <>
+                            <div key={comment.id}>
                             <Comments 
                             commentString= {comment.commentString}
                             taskID = {this.props.match.params.id}
@@ -277,16 +296,18 @@ render() {
                                 <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
                                 <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
                              </div>
-                            </>
+                            </div>
                        
                         )})
                         : null
                     } 
                 </div>  
                 
-
+                    
             </MDBContainer>
         </MDBContainer>
+        
+
         
     )
     }
@@ -298,11 +319,12 @@ const mapStateToProps = state => {
       //state items
       taskComments: state.taskComments,
       errorMessage: state.errorMessage,
-      currentGroup:state.currentGroup
+      currentGroup:state.currentGroup,
+      singleTask: state.singleTask
     };
 };
   
-export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment })(TaskDetail));
+export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment,getSingleTask })(TaskDetail));
 
 
 

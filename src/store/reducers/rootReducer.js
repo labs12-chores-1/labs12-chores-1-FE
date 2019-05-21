@@ -60,7 +60,7 @@ import {
   TASK_EDITED,
   EDIT_TASK_FAIL,
   DELETE_COMMENT_START,
-  // COMMENT_DELETED,
+  COMMENT_DELETED,
   DELETE_COMMENT_FAIL,
   GET_CURRENT_GROUP,
   SAVE_CURRENT_GROUP,
@@ -69,7 +69,10 @@ import {
   REMOVE_GROUP_MEMBER_FAIL,
   UPDATE_COMMENT_START, 
   UPDATE_COMMENT_SUCCESS, 
-  UPDATE_COMMENT_FAIL
+  UPDATE_COMMENT_FAIL,
+  GET_SINGLE_TASK_START,
+  GET_SINGLE_TASK_SUCCESS,
+  GET_SINGLE_TASK_FAILURE
 } from "../actions/";
 
 const initialState = {
@@ -109,7 +112,8 @@ const initialState = {
   currentGroupTasks: null,
   taskComments: null,
   tempUserName: null,
-  currentTask: null
+  currentTask: null,
+  singleTask: null
 };
 
 
@@ -198,19 +202,12 @@ export const rootReducer = (state = initialState, action) => {
     case DELETE_COMMENT_START:
     return state;
   
-  // case COMMENT_DELETED:
-  //   return {
-  //     ...state,
-  //     deleteComment: action.payload,
-  //     errorMessage: null
-  //   };
-
-  // case DELETE_COMMENT_FAIL:
-  //   return {
-  //     ...state,
-  //     deleteComment: action.payload,
-  //     errorMessage: null
-  //   };
+  case COMMENT_DELETED:
+    return {
+      ...state,
+      deleteComment: action.payload,
+      errorMessage: null
+    };
 
   case DELETE_COMMENT_FAIL:
     return {
@@ -548,11 +545,28 @@ export const rootReducer = (state = initialState, action) => {
         currentGroup: action.payload,
         errorMessage: null
       };
+    case GET_SINGLE_TASK_START:
+      return {
+        ...state,
+        errorMessage:null,
+        singleTask: null
+      };
+    case GET_SINGLE_TASK_SUCCESS:
+    return {
+      ...state,
+      singleTask: action.payload,
+    };
+    case GET_SINGLE_TASK_FAILURE:
+    return {
+      ...state,
+      errorMessage:action.payload
+    };
   
     default:
       return state
        
       };
+    
 
  
 

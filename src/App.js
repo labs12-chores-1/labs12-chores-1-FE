@@ -34,7 +34,7 @@ class App extends Component {
         <Route exact path='/groups' component={GroupsPage} />
         <Route exact path='/groups/:id' render={props => <GroupsProfile {...props}/>} />
         <Route exact path= '/groups/:id/tasktrak' render={props => <GroupTasks {...props}/>} />
-        <Route exact path= '/task/:id' render={props => <TaskDetail {...props}/>} />
+        <Route exact path= '/groups/:groupId/task/:taskId' render={props => <TaskDetail {...props}/>} />
         <Route path = '/billing' component = {BillingPage} />
         <Route path = '/invite' component = {Invite} />
         <Route path = '/data/:id' component = {GroupDataBar} />
