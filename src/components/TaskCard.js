@@ -43,7 +43,7 @@ class TaskCard extends Component {
         if(process.env.NODE_ENV === 'development'){
         backendURL = `http://localhost:9000`
         } else {
-        backendURL = `https://labs12-fairshare.herokuapp.com/`
+        backendURL = `https://labs12-fairshare.herokuapp.com`
         }
         
         let token = localStorage.getItem('jwt');
@@ -86,14 +86,21 @@ class TaskCard extends Component {
                 <h7>Requested by: {this.state.task.createdBy}</h7>
             </div>
             <div className="task-card-middle">
-                <h5>Assigned To {this.props.assigneeName}</h5>
+                <h5>Assigned To {this.props.task.assigneeName}</h5>
                 <div>{this.props.taskDescription}</div>
                 
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
-                <input type="checkbox" name="vehicle" value="Bike" onClick={(event)=>{event.stopPropagation()}}></input>
-                <h7>Done</h7>
+                {/* <input type="checkbox" name="vehicle" value="Bike" onClick={(event)=>{event.stopPropagation()}}></input> */}
+                <div>Incomplete</div>
+                <div className={
+                  this.props.task.recurringTime.length > 0
+                  ? 'recurring-display'
+                  : 'recurring-hidden'
+                }>
+                  Complete every:{this.props.task.recurringTime}
+                </div>
             </div>
         </MDBCardBody>
       </MDBCard>

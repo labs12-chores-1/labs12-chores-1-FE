@@ -46,7 +46,8 @@ class GroupTasks extends Component {
             groupMembers: [],
             groupUserNames: [],
             toggleMod: false,
-            toggleRadio:false
+            toggleRadio:false,
+            recurringTime:''
         };
     }
     componentWillMount(){
@@ -60,7 +61,7 @@ class GroupTasks extends Component {
         if(process.env.NODE_ENV === 'development'){
         backendURL = `http://localhost:9000`
         } else {
-        backendURL = `https://labs12-fairshare.herokuapp.com/`
+        backendURL = `https://labs12-fairshare.herokuapp.com`
         }
         
         let token = localStorage.getItem('jwt');
@@ -99,6 +100,7 @@ class GroupTasks extends Component {
             taskName:this.state.taskName,
             taskDescription:this.state.taskDescription,
             assigneeName:this.state.assigneeName,
+            recurringTime:this.state.recurringTime,
             groupID:this.props.match.params.id,
             createdBy:localStorage.getItem("name"),
             completedBy:1
@@ -106,7 +108,8 @@ class GroupTasks extends Component {
 
         this.props.createGroupTask(task, this.props.match.params.id);
         this.setState({
-            toggleMod:!this.state.toggleMod
+            toggleMod:!this.state.toggleMod,
+            recurringTime:''
         })
     };
 
@@ -169,7 +172,7 @@ class GroupTasks extends Component {
             if(process.env.NODE_ENV === 'development'){
                 backendURL = `http://localhost:9000`
             } else {
-                backendURL = `https://labs12-fairshare.herokuapp.com/`
+                backendURL = `https://labs12-fairshare.herokuapp.com`
             }
             
             let token = localStorage.getItem('jwt');
@@ -190,6 +193,28 @@ class GroupTasks extends Component {
                 }); 
                 })
         }   
+    }
+
+    setRecurringTime = (e, recurring) => {
+        e.preventDefault();
+        if (recurring==='1') {
+            this.setState({
+                recurringTime:'1 hour'
+            })
+            console.log('RECURRING TIME:', this.state.recurringTime)
+        }
+        else if (recurring === '2') {
+            this.setState({
+                recurringTime:'2 hours'
+            })
+            console.log('RECURRING TIME:', this.state.recurringTime)
+        }
+        else if (recurring === '3') {
+            this.setState({
+                recurringTime:'3 hours'
+            })
+            console.log('RECURRING TIME:', this.state.recurringTime)
+        }
     }
 
 render() {
@@ -246,9 +271,9 @@ render() {
 
                         How often should this task be completed?
                         <div className="dropdown-options">
-                            <ul>1 hour</ul>
-                            <ul>2 hours</ul>
-                            <ul>3 hours</ul>
+                            <ul><button onClick={(event)=>this.setRecurringTime(event,"1")}>Every 1 Hour</button></ul>
+                            <ul><button onClick={(event)=>this.setRecurringTime(event,"2")}>Every 2 Hours</button></ul>
+                            <ul><button onClick={(event)=>this.setRecurringTime(event,"3")}>Every 3 Hours</button></ul>
                         </div>
                     </div>
                     <button className="cta-submit" type='submit'>Submit</button>
@@ -310,6 +335,7 @@ render() {
                             done={task.completed}
                             comments={task.comments}
                             repeated={0}
+                            recurring={task.recurringTime}
                             assignee={task.completedBy}
                             group={task.groupID}
                             updateGroup={this.saveGroupName}
