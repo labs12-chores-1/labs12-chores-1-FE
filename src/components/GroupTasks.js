@@ -217,6 +217,11 @@ class GroupTasks extends Component {
         }
     }
 
+    handleToggleComplete = (e) => {
+      e.preventDefault();
+      this.setState({taskCompleted:!this.state.taskCompleted});  
+    }
+
 render() {
     return (       
         <MDBContainer className="group-task-container">
@@ -259,6 +264,10 @@ render() {
                         value={this.state.assigneeName}
                         onChange={this.handleChanges}
                     />
+                    <div>
+                        <input type="checkbox" name="Completed" value="taskCompleted" onClick={this.handleToggleComplete}/>
+                        <span>Completed?</span>
+                    </div>
                     <div>
                         {/* <span onClick={this.toggleRadio}>Yes</span> */}
                         <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
