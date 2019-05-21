@@ -297,6 +297,7 @@ render() {
                     ? this.state.currentGroupTasks.data.map(task => (
                      
                         <TaskCard
+                            key={task.id}
                             task={task}
                             taskID={task.id}
                             taskName={task.taskName}
