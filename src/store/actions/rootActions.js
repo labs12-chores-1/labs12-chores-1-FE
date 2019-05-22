@@ -105,13 +105,10 @@ export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
 export const EDIT_TASK_START = "EDIT_TASK_START";
 export const TASK_EDITED = "TASK_EDITED";
 export const EDIT_TASK_FAIL = "EDIT_TASK_FAIL";
-<<<<<<< HEAD
-=======
 // TASK - COMPLETED
 export const GET_COMPLETED_START = "GET_COMPLETED_START";
 export const GET_COMPLETED_SUCCESS = "GET_COMPLETED_SUCCESS";
 export const GET_COMPLETED_FAILURE = "GET_COMPLETED_FAILURE";
->>>>>>> Joseph-Chretien
 // COMMENT
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
@@ -169,10 +166,6 @@ export const checkEmail = () => {
   return (dispatch) => {
     dispatch({type: CHECKING_EMAIL});
     fetchUserId.then(res => {
-<<<<<<< HEAD
-      // console.log("in checkEmail: ", res.data.profile);
-=======
->>>>>>> Joseph-Chretien
       dispatch({type: EMAIL_CHECKED, payload: res.data.profile});
       localStorage.setItem('userId', res.data.id);
 
@@ -204,19 +197,11 @@ export const getCurrentUser = () => {
   }
 
   const endpoint = axios.get(`${backendURL}/api/user/check/email`, options);
-<<<<<<< HEAD
-=======
-
->>>>>>> Joseph-Chretien
   return dispatch => {
     dispatch({type: GET_CURRENT_USER});
 
     endpoint.then(res => {
-<<<<<<< HEAD
       console.log(res, 'RES')
-=======
-      console.log(res.data, 'RES')
->>>>>>> Joseph-Chretien
       dispatch({type: SAVE_CURRENT_USER, payload: res.data.profile});
     }).catch(err => {
       console.log(err);
@@ -734,11 +719,7 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
     endpoint.then(res => {
-<<<<<<< HEAD
       dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite/${res.data.inviteCode}`} })
-=======
-      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite?${res.data.inviteCode}`} })
->>>>>>> Joseph-Chretien
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR, payload: err.response.data.warning})
@@ -1393,12 +1374,10 @@ export const updateComment = (comment, id) => {
     })
   }
 }
-<<<<<<< HEAD
 
 export const testFunction = (arg) => {
   return `test function: ${arg+1}`;
 }
-=======
 /*
  *  TASKDETAIL - Get Completed Tasks
  * --------------------------------------------------------------------------------
@@ -1424,4 +1403,3 @@ export const getCompleted = (id) => {
   }
 
  };
->>>>>>> Joseph-Chretien
