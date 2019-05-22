@@ -117,7 +117,8 @@ const initialState = {
   taskComments: null,
   tempUserName: null,
   currentTask: null,
-  singleTask: null
+  singleTask: null,
+  deleteGroupMessage:null
 };
 
 
@@ -150,6 +151,7 @@ export const rootReducer = (state = initialState, action) => {
       currentGroupTasks: null,
       errorMessage: action.payload
     };
+
 
 
     case DELETE_TASK_START:

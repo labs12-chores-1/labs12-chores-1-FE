@@ -46,6 +46,9 @@ export const GET_GROUP_HISTORY_LIST = 'GET_GROUP_HISTORY_LIST';
 export const SAVE_GROUP_HISTORY_LIST = 'SAVE_GROUP_HISTORY_LIST';
 export const CLEAR_GROUP_USERS = 'CLEAR_GROUP_USERS';
 export const CLEAR_GROUP_HISTORY = 'CLEAR_GROUP_HISTORY';
+export const DELETE_GROUP_START = 'DELETE_GROUP_START';
+export const DELETE_GROUP_SUCCESS = 'DELETE_GROUP_SUCCESS';
+export const DELETE_GROUP_FAILURE = 'DELETE_GROUP_FAILURE';
 
 // GROUP INVITE
 export const GEN_GROUP_INVITE = 'GEN_GROUP_INVITE';
@@ -508,6 +511,8 @@ export const removeGroup = (groupID, userID) => dispatch => {
     console.log("ERR => ", err);
   })
 }
+
+
 
 //Leave Household endpoint - remove Group Member
 
