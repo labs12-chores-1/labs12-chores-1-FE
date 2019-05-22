@@ -32,6 +32,14 @@ class TaskCardDetail extends Component {
         task: {}
     }
   }
+
+  componentWillMount(){
+    if (this.props.task.completed){
+      this.setState({...this.state,
+                    taskCompleted:true});
+    }
+  }
+
    getComments = e => {
     e.preventDefault();
     this.props.getTaskComments(this.props.match.params.id);//<----------------??
@@ -89,7 +97,7 @@ class TaskCardDetail extends Component {
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
-                <input type="checkbox" name="done" value="taskCompleted" onClick={this.handleToggleComplete}/>
+                <input type="checkbox" name="done" value="taskCompleted" checked={this.state.taskCompleted} onClick={this.handleToggleComplete}/>
                 {/* {this.props.task.completed?<h7>Done</h7>:null} */}
                 <h7>Done</h7>
             </div>
