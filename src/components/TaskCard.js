@@ -32,7 +32,6 @@ class TaskCard extends Component {
         comments: props.comments,
         assigneeName: "",
         task: {}
-
     };
   }
   componentWillMount(){
@@ -92,7 +91,8 @@ class TaskCard extends Component {
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
                 {/* <input type="checkbox" name="vehicle" value="Bike" onClick={(event)=>{event.stopPropagation()}}></input> */}
-                <div>Incomplete</div>
+                <div>{this.state.task.completed ===0
+                      ? "Incomplete": "Complete"}</div>
                 <div className={
                   this.state.task.recurringTime.length > 0
                   ? 'recurring-display'
