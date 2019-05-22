@@ -73,7 +73,6 @@ class TaskCardDetail extends Component {
   }
 
   handleToggleComplete = (e) => {
-    e.preventDefault();
     
 
     let backendURL;
@@ -84,17 +83,17 @@ class TaskCardDetail extends Component {
     }
     
     let token = localStorage.getItem('jwt');
-    // console.log(token)
+    
     let options = {
         headers: {
         Authorization: `Bearer ${token}`
         }
     } 
-    console.log(this.props.task.completed);
+    
     let changes = {
-      "completed":true//!this.props.task.completed
+      "completed":!(!!+this.state.task.completed)
     }
-
+    console.log(this.props.task.completed);
     axios.put(`${backendURL}/api/task/${this.props.match.params.taskId}`,changes, options)
     .then(res => {
        this.setState({taskCompleted:!this.state.taskCompleted});
@@ -120,7 +119,9 @@ class TaskCardDetail extends Component {
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
-                <input type="checkbox" name="done" value="taskCompleted" onClick={this.handleToggleComplete}/>
+                <input type="checkbox" name="recurring" value="recurring" onClick={this.handleToggleComplete}/>
+                
+                
                 {/* {this.props.task.completed?<h7>Done</h7>:null} */}
                 <h7>Done</h7>
             </div>
