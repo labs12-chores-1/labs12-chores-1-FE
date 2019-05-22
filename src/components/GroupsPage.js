@@ -266,7 +266,7 @@ class GroupsPage extends Component {
                  name="newGroupName"
                  value={this.state.newGroupName}
                  onChange={this.handleInputChanges}
-                
+                 placeholder="Update Group Name"
                 />
                 
                 
