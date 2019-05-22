@@ -38,7 +38,9 @@ class GroupsPage extends Component {
     groupName: "",
     delete: "",
     groupId: null,
-    modal17: true
+    modal17: true,
+    toggleMod:false,
+    groupId: ''
   };
   this.toggle = this.toggle.bind(this);
 
@@ -91,8 +93,8 @@ class GroupsPage extends Component {
     this.setState({ groupId: id, groupName: name, modal15: true });
   };
 
-  deleteGroup = (id, name) => {
-    this.setState({ groupId: id, groupName: name, modal16: true });
+  deleteGroup = (id, userId) => {
+    this.setState({ groupId: id, userId: userId, toggleMod: true });
   };
 
   handleInput = e => {
@@ -126,13 +128,14 @@ class GroupsPage extends Component {
   };
 
   handleDeleteGroup = event => {
+    event.preventDefault();
 
     if (this.state.groupId !== null) {
       this.props.removeGroup(
         this.state.groupId,
         localStorage.getItem("userId")
       );
-      this.setState({ modal16: false });
+      this.setState({ toggleMod: false });
     }
   };
 
@@ -158,6 +161,14 @@ class GroupsPage extends Component {
     }
   }
 
+  toggleMod= (e) => {
+    e.preventDefault();
+    this.setState({
+        toggleMod:!this.state.toggleMod
+    })
+    console.log('toggleModalState:',this.state.toggleMod);
+}
+
   render() {
     const user = localStorage.getItem("userId");
     return (
@@ -173,8 +184,7 @@ class GroupsPage extends Component {
                           <MDBCardBody>
                             <MDBCardTitle>Create New Group</MDBCardTitle>
                             <MDBCardText>
-                              Create a new group and start inviting to help with the
-                              shopping!
+                              Create a new group and share with confidence!
                             </MDBCardText>
                             <form>
                               <input
@@ -184,6 +194,7 @@ class GroupsPage extends Component {
                                 onChange={this.handleInput}
                                 defaultValue={this.state.groupName}
                                 onKeyDown={this.keyPress}
+                                placeholder="e.g new group"
                               />
                               <button className="create-button" onClick={this.handleAddGroup}>Create Group</button>
                             </form>
@@ -252,33 +263,29 @@ class GroupsPage extends Component {
                   </MDBBtn>
                 </MDBModalFooter>
               </MDBModal>
+              
+              {/* Modal for delete group*/ }
+              <div className= {
+                this.state.toggleMod=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                <form className={'create-task-form'}>
+                <span className="x" onClick={this.toggleMod}>X</span>
+                <h3>Delete this group?</h3>
+                <h6>(cannot be undone)</h6>
+                    
+                    
+                    
+                    <button className="cta-submit" type='submit'onClick={this.handleDeleteGroup}>yes</button>
+                    <button className="cta-submit" type='submit' onClick={this.toggleMod}>no</button>
 
-              <MDBModal isOpen={this.state.modal16} toggle={this.toggle(16)} centered>
-                <MDBModalHeader toggle={this.toggle(16)}>Delete Group</MDBModalHeader>
-                <MDBModalBody>
-                  <h6>Type the full name of the group to completely remove it.</h6>
-                  <MDBInput
-                      label="Group Name"
-                      name={"delete"}
-                      onChange={this.handleInput}
-                      defaultValue={this.state.delete}
-                      onKeyDown={this.deleteKeyPress}
-                  />
-                  <small className="delete-text">{this.state.groupName}</small>
-                </MDBModalBody>
-                <MDBModalFooter>
-                  <MDBBtn color="secondary" onClick={this.toggle(16)}>
-                    Close
-                  </MDBBtn>
-                  <MDBBtn
-                      color="primary"
-                      onClick={this.handleDeleteGroup}
-                      disabled={this.state.groupName !== this.state.delete}
-                  >
-                    Delete
-                  </MDBBtn>
-                </MDBModalFooter>
-              </MDBModal>
+                </form>
+            </div>
+              
+              
+              
+              
+              
               {this.props.errorMessage !== null ? (
                   <MDBModal
                       isOpen={this.state.modal17}

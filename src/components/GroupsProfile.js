@@ -207,10 +207,11 @@ class GroupsProfile extends Component {
         this.props.match.params.id
     );
     if (this.props.currentUser.subscriptionType === 1 && this.props.groupUsers.length >= 2) {
-      this.setState({modal17: true})
+       this.setState({modal17: true})
+      console.log('did it work')
     } else {
-      this.setState({ modal15: true });
-
+       this.setState({ modal15: true });
+      console.log('no')
     }
 
   };
