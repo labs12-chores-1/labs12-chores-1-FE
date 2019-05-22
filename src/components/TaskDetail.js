@@ -30,7 +30,7 @@ import { getTaskComments } from '../store/actions/rootActions';
 import { deleteTask } from '../store/actions/rootActions';
 import { createTaskComments } from '../store/actions/rootActions';
 import { editTask } from '../store/actions/rootActions';
-import { updateComment } from '../store/actions/rootActions';
+import { updateComment, testFunction } from '../store/actions/rootActions';
 
 // import { rootReducer } from "../store/reducers/rootReducer";
 
@@ -61,6 +61,7 @@ class TaskDetail extends Component {
       if(previousProps.taskComments !== this.props.taskComments){
           this.setState({taskComments:this.props.taskComments});
         }
+      this.props.testFunction(2);
     }
 
      componentDidMount(){
@@ -309,7 +310,7 @@ const mapStateToProps = state => {
     };
 };
   
-export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment })(TaskDetail));
+export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment, testFunction })(TaskDetail));
 
 
 

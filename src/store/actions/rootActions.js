@@ -156,6 +156,7 @@ export const checkEmail = () => {
   return (dispatch) => {
     dispatch({type: CHECKING_EMAIL});
     fetchUserId.then(res => {
+      // console.log("in checkEmail: ", res.data.profile);
       dispatch({type: EMAIL_CHECKED, payload: res.data.profile});
       localStorage.setItem('userId', res.data.id);
 
@@ -187,12 +188,11 @@ export const getCurrentUser = () => {
   }
 
   const endpoint = axios.get(`${backendURL}/api/user/check/email`, options);
-
   return dispatch => {
     dispatch({type: GET_CURRENT_USER});
 
     endpoint.then(res => {
-      console.log(res.data, 'RES')
+      console.log(res, 'RES')
       dispatch({type: SAVE_CURRENT_USER, payload: res.data.profile});
     }).catch(err => {
       console.log(err);
@@ -1338,4 +1338,8 @@ export const updateComment = (comment, id) => {
       dispatch({type: UPDATE_COMMENT_FAIL,payload:err})
     })
   }
+}
+
+export const testFunction = (arg) => {
+  return `test function: ${arg+1}`;
 }

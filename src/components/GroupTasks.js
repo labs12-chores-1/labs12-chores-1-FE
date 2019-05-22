@@ -95,7 +95,6 @@ class GroupTasks extends Component {
 
     createTask = (e) => {
         e.preventDefault();
-        this.setState({taskName: '', taskDescription:'', assigneeName:''});
         let task = {
             taskName:this.state.taskName,
             taskDescription:this.state.taskDescription,
@@ -103,13 +102,12 @@ class GroupTasks extends Component {
             recurringTime:this.state.recurringTime,
             groupID:this.props.match.params.id,
             createdBy:localStorage.getItem("name"),
-            completedBy:1
+            completedBy:null
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
         this.setState({
-            toggleMod:!this.state.toggleMod,
-            recurringTime:''
+            toggleMod:!this.state.toggleMod, recurringTime:'', taskName: '', taskDescription:'', assigneeName:''
         })
     };
 
@@ -144,11 +142,14 @@ class GroupTasks extends Component {
                 currentGroupTasks: this.props.currentGroupTasks})
         }
         else if (this.state.groupMembers !== null){
+            console.log("here!!");
             this.state.groupMembers.forEach(userID =>{
-                if (filterArg === userID){
-                    this.setState({...this.state,
-                        currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
-                }
+                this.setState({...this.state,
+                    currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
+                    console.log("group member id match!");
+                // console.log
+                // if (filterArg === userID){
+                // }
             })
         }
     }

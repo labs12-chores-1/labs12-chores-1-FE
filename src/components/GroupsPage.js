@@ -44,16 +44,20 @@ class GroupsPage extends Component {
 
 }
 
-  // componentWillMount() {
-  //   if (localStorage.getItem("email") && !this.props.currentUser) {
-  //     this.props.checkEmail();
-  //   }
-  // }
+  componentWillMount() {
+    if (localStorage.getItem("email") && !this.props.currentUser) {
+      console.log("in componentwillmount - if:");
+      this.props.checkEmail();
+    }
+    // this.props.getCurrentUser(localStorage.getItem("userId"));
+    // console.log("component will mount");
+  }
 
   componentDidMount() {
+    console.log("here: ", this.props.currentUser);
     document.title = `FairShare - Groups`;
     if (!this.props.userGroups && this.props.currentUser) {
-      console.log("in componentDidMount");
+      // console.log("in componentdidmount");
       this.props.getUserGroups(this.props.currentUser.id);
     }
 
@@ -76,6 +80,7 @@ class GroupsPage extends Component {
       !this.props.userGroups &&
       this.props.errorMessage === null
     ) {
+      // console.log("In newProps.currentUser: ", this.props.currentUser);
       this.props.getUserGroups(newProps.currentUser.id);
     }
   };
