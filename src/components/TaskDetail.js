@@ -41,7 +41,7 @@ class TaskDetail extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            taskComments: null,
+            comments:[],
             // searchField: "",
             modal: false,
             commentString:'',

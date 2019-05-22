@@ -84,7 +84,7 @@ class GroupTasks extends Component {
     }
         
     componentDidMount(){
-        
+   
     }
 
     componentDidUpdate(previousProps){
@@ -102,7 +102,7 @@ class GroupTasks extends Component {
             recurringTime:this.state.recurringTime,
             groupID:this.props.match.params.id,
             createdBy:localStorage.getItem("name"),
-            completedBy:null
+            completedBy:1
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
@@ -130,12 +130,12 @@ class GroupTasks extends Component {
                 currentGroupTasks: this.props.currentGroupTasks});
         }
         else if (filterArg ==="completed"){
-            console.log("", this.state.currentGroupTasks);
-            // if (this.state.currentGroupTasks.data.length !== 0){
-            //     this.setState({...this.state,
-            //         currentGroupTasks: {
-            //             data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
-            // }
+            // console.log(this.state.currentGroupTasks);
+            if (this.state.currentGroupTasks.data.length !== 0){
+                this.setState({...this.state,
+                    currentGroupTasks: {
+                        data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
+            }
         }
         else if (filterArg ==="incomplete"){
             this.setState({...this.state,
@@ -223,6 +223,11 @@ class GroupTasks extends Component {
         }
     }
 
+    handleToggleComplete = (e) => {
+      e.preventDefault();
+      this.setState({taskCompleted:!this.state.taskCompleted});  
+    }
+
 render() {
     return (       
         <MDBContainer className="group-task-container">
@@ -266,6 +271,10 @@ render() {
                         onChange={this.handleChanges}
                     />
                     <div>
+                        <input type="checkbox" name="Completed" value="taskCompleted" onClick={this.handleToggleComplete}/>
+                        <span>Completed?</span>
+                    </div>
+                    <div>
                         {/* <span onClick={this.toggleRadio}>Yes</span> */}
                         <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
                         <span>Would you like to make this task repeating?</span>
@@ -302,7 +311,7 @@ render() {
                         <span>Assigned</span>
                         <div className="dropdown-content">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
-                            {/* {console.log('state.groupMembers', this.state.groupMembers)} */}
+                            {console.log('state.groupMembers', this.state.groupMembers)}
                             <div className="dropdown-divider"></div>
                             {this.state.groupUserNames.length >= 1
                             ? this.state.groupUserNames.map(groupUser=>(

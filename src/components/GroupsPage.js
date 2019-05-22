@@ -44,6 +44,7 @@ class GroupsPage extends Component {
 
 }
 
+<<<<<<< HEAD
   componentWillMount() {
     if (localStorage.getItem("email") && !this.props.currentUser) {
       console.log("in componentwillmount - if:");
@@ -52,12 +53,23 @@ class GroupsPage extends Component {
     // this.props.getCurrentUser(localStorage.getItem("userId"));
     // console.log("component will mount");
   }
+=======
+  // componentWillMount() {
+  //   if (localStorage.getItem("email") && !this.props.currentUser) {
+  //     this.props.checkEmail();
+  //   }
+  // }
+>>>>>>> Joseph-Chretien
 
   componentDidMount() {
     console.log("here: ", this.props.currentUser);
     document.title = `FairShare - Groups`;
     if (!this.props.userGroups && this.props.currentUser) {
+<<<<<<< HEAD
       // console.log("in componentdidmount");
+=======
+      console.log("in componentDidMount");
+>>>>>>> Joseph-Chretien
       this.props.getUserGroups(this.props.currentUser.id);
     }
 
