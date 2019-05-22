@@ -14,7 +14,7 @@ import { withRouter } from "react-router-dom";
 import "./Styles/TaskCard.css";
 import "./Styles/Comments.css";
 
-import { getTaskComments, getCompleted } from '../store/actions/rootActions';
+import { getTaskComments, getCompleted, getGroupTasks } from '../store/actions/rootActions';
 //import { rootReducer } from "../store/reducers/rootReducer";
 
 class TaskCardDetail extends Component {
@@ -44,8 +44,6 @@ class TaskCardDetail extends Component {
   }
 
   handleToggleComplete = (e) => {
-    e.preventDefault();
-    
 
     let backendURL;
     if(process.env.NODE_ENV === 'development'){
@@ -68,7 +66,8 @@ class TaskCardDetail extends Component {
     axios.put(`${backendURL}/api/task/${this.props.match.params.taskId}`,changes, options)
     .then(res => {
        this.setState({taskCompleted:!this.state.taskCompleted});
-          }).catch(err=>{console.log("error")});  
+       this.props.getGroupTasks(this.props.task.groupId);
+    }).catch(err=>{console.log("error")});  
   }
 
   render(){
@@ -113,4 +112,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps,{getTaskComments, getCompleted})(TaskCardDetail));
+export default withRouter(connect(mapStateToProps,{getTaskComments, getCompleted,getGroupTasks})(TaskCardDetail));
