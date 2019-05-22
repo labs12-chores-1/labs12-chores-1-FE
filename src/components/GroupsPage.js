@@ -40,7 +40,7 @@ class GroupsPage extends Component {
     groupId: null,
     modal17: true,
     toggleMod:false,
-    groupId: '',
+    newGroupName:'',
     userId: localStorage.getItem('userId')
   };
   this.toggle = this.toggle.bind(this);
@@ -125,7 +125,7 @@ class GroupsPage extends Component {
 
   handleUpdateGroupName = (e) => {
       e.preventDefault();
-      const changes = { name: this.state.groupName };
+      const changes = { name: this.state.newGroupName };
       this.props.updateGroupName(this.state.groupId, changes);
 
       this.setState({ modal15: false });
@@ -249,6 +249,8 @@ class GroupsPage extends Component {
                 </MDBModalFooter>
               </MDBModal>
 
+              {/*Update Group Name Modal*/}
+
               <div className= {
                 this.state.modal15=== false
                     ? 'custom-mod-hidden'
@@ -260,8 +262,8 @@ class GroupsPage extends Component {
                 <input
                  type="text"
                  placeholder="enter new group name"
-                 name="groupName"
-                 value={this.state.groupName}
+                 name="newGroupName"
+                 value={this.state.newGroupName}
                  onChange={this.handleInputChanges}
                 
                 />

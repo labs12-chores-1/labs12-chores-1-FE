@@ -1,6 +1,5 @@
 import axios from 'axios';
 import moment from 'moment';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 // USER
 export const CHECKING_EMAIL = 'CHECKING_EMAIL';
@@ -510,57 +509,7 @@ export const removeGroup = (groupID, userID) => dispatch => {
   })
 }
 
-export const deleteGroup = (groupID,userID) => dispatch => {
-  dispatchEvent({type: DELETE_GROUP_START});
 
-  const token = localStorage.getItem('jwt');
-  const endpoint = axios.delete(`${backendURL}/api/group/remove/${groupID}/${userID}`,options);
-
-  const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    }
-  }; 
-  endpoint.then(res => {
-    console.log(" delete group RES => ", res);
-    dispatch({ type: DELETE_GROUP_SUCCESS, payload: 'group deleted'});
-  }).then(() => {
-    getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
-  }).catch(err => {
-    dispatchEvent({type:DELETE_GROUP_FAILURE, payload:err})
-    console.log("ERR => ", err);
-
-  })
-}
-
-// export const createGroupTask = (task,groupID) => {
-//   const token = localStorage.getItem('jwt');
-  
-//   const options = {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     }
-//   };
-
-//   // console.log("ITEM => ", task);
-
-//   const endpoint = axios.post(`${backendURL}/api/task`, task, options);
-
-//   return dispatch => {
-//     dispatch({type: CREATE_GROUP_TASK})
-
-//     endpoint.then(res => {
-//       console.log(res.data, 'new task');
-//       dispatch({type: GROUP_TASK_CREATED, payload:res.data})
-
-//     })
-//         .then(() => {dispatch(getGroupTasks(groupID))})
-//         .catch(err => {
-//           console.log(err);
-//           dispatch({type: GROUP_TASK_ERROR, payload:err})
-//         })
-//   }
-// }
 
 //Leave Household endpoint - remove Group Member
 

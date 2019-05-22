@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from 'react-redux';
 import {
   MDBCard,
   MDBCardBody,
@@ -12,8 +11,6 @@ import {
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
 import "./Styles/GroupCard.css";
-
-import { deleteGroup } from '../store/actions/rootActions'; 
 
 class  GroupCard extends React.Component {
   constructor(props){
@@ -72,14 +69,7 @@ class  GroupCard extends React.Component {
       }
       
 };
-const mapStateToProps = state => {
-  state = state.rootReducer; // pull values from state root reducer
-  return {
-    //state items
-    deleteGroupMessage: state.deleteGroupMessage,
-    errorMessage: state.errorMessage
-  };
-};
 
 
-export default withRouter(connect(mapStateToProps,{ deleteGroup })(GroupCard));
+
+export default withRouter(GroupCard);
