@@ -95,7 +95,6 @@ class GroupTasks extends Component {
 
     createTask = (e) => {
         e.preventDefault();
-
         let task = {
             taskName:this.state.taskName,
             taskDescription:this.state.taskDescription,
@@ -148,11 +147,14 @@ class GroupTasks extends Component {
                 currentGroupTasks: this.props.currentGroupTasks})
         }
         else if (this.state.groupMembers !== null){
+            console.log("here!!");
             this.state.groupMembers.forEach(userID =>{
-                if (filterArg === userID){
-                    this.setState({...this.state,
-                        currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
-                }
+                this.setState({...this.state,
+                    currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
+                    console.log("group member id match!");
+                // console.log
+                // if (filterArg === userID){
+                // }
             })
         }
     }
@@ -221,6 +223,11 @@ class GroupTasks extends Component {
         }
     }
 
+    handleToggleComplete = (e) => {
+      e.preventDefault();
+      this.setState({taskCompleted:!this.state.taskCompleted});  
+    }
+
 render() {
     return (       
         <MDBContainer className="group-task-container">
@@ -263,6 +270,10 @@ render() {
                         value={this.state.assigneeName}
                         onChange={this.handleChanges}
                     />
+                    {/* <div>
+                        <input type="checkbox" name="Completed" value="taskCompleted" onClick={this.handleToggleComplete}/>
+                        <span>Completed?</span>
+                    </div> */}
                     <div>
                         {/* <span onClick={this.toggleRadio}>Yes</span> */}
                         <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
@@ -313,10 +324,10 @@ render() {
                     <div className="dropdown">
                         <span>Complete</span>
                         <div className="dropdown-content">
-                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
                             <div className="dropdown-divider"></div>
-                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"completed")}>Complete</div>
-                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
                         </div>
                     </div>                    
                 </div>
@@ -327,7 +338,7 @@ render() {
                     ? this.state.currentGroupTasks.data.map(task => {
                      
                     return(
-                     <div key= {task.id}>
+                    //  <div key= {task.id}>
                         <TaskCard
                             key={task.id}
                             task={task}
@@ -345,7 +356,7 @@ render() {
                             updateGroup={this.saveGroupName}
                             removeGroup={this.deleteGroup}
                         />
-                        </div>
+                        // </div>
                       )})
                     : null
                 }  

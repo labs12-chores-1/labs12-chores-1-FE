@@ -28,7 +28,8 @@ var lockOptions = {
     },
     languageDictionary: {
         title: 'ShopTrak'
-    }
+    },
+    rememberLastLogin: false
 
 }
 
