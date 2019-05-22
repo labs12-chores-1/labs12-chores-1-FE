@@ -159,6 +159,7 @@ class GroupTasks extends Component {
         }
     }
     toggleMod= (e) => {
+        e.preventDefault();
         this.setState({
             toggleMod:!this.state.toggleMod
         })
@@ -166,6 +167,7 @@ class GroupTasks extends Component {
     }
 
     toggleRadio= (e) => {
+        e.preventDefault();
         this.setState({
             toggleRadio:!this.state.toggleRadio
         }); console.log('toggleRadiotoggle:', this.state.toggleRadio);
