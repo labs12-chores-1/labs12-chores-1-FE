@@ -95,7 +95,6 @@ class GroupTasks extends Component {
 
     createTask = (e) => {
         e.preventDefault();
-
         let task = {
             taskName:this.state.taskName,
             taskDescription:this.state.taskDescription,
@@ -148,11 +147,14 @@ class GroupTasks extends Component {
                 currentGroupTasks: this.props.currentGroupTasks})
         }
         else if (this.state.groupMembers !== null){
+            console.log("here!!");
             this.state.groupMembers.forEach(userID =>{
-                if (filterArg === userID){
-                    this.setState({...this.state,
-                        currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
-                }
+                this.setState({...this.state,
+                    currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
+                    console.log("group member id match!");
+                // console.log
+                // if (filterArg === userID){
+                // }
             })
         }
     }

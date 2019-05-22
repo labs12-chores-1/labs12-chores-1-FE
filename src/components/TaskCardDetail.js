@@ -14,7 +14,7 @@ import { withRouter } from "react-router-dom";
 import "./Styles/TaskCard.css";
 import "./Styles/Comments.css";
 
-import { getTaskComments, getCompleted } from '../store/actions/rootActions';
+import { getTaskComments, getCompleted, getGroupTasks } from '../store/actions/rootActions';
 //import { rootReducer } from "../store/reducers/rootReducer";
 
 class TaskCardDetail extends Component {
@@ -32,35 +32,6 @@ class TaskCardDetail extends Component {
         task: {}
     }
   }
-//   componentDidMount(){
-//     document.title = `FairShare - Task`;
-//     this.props.getCompleted(this.props.match.params.id);        
-//     this.setState({...this.state,
-//         taskCompleted: this.props.taskCompleted});
-
-    
-//     let backendURL;
-//     if(process.env.NODE_ENV === 'development'){
-//     backendURL = `http://localhost:9000`
-//     } else {
-//     backendURL = `https://labs12-fairshare.herokuapp.com`
-//     }
-    
-//     let token = localStorage.getItem('jwt');
-//     let options = {
-//         headers: {
-//         Authorization: `Bearer ${token}`
-//         }
-//     }
-
-//     axios.get(`${backendURL}/api/groupmember/group/${this.props.match.params.id}`, options)
-//     .then(response => {
-//         this.setState({
-//             groupMembers: response.data
-//         })
-//     });
-    
-// }
    getComments = e => {
     e.preventDefault();
     this.props.getTaskComments(this.props.match.params.id);//<----------------??
@@ -73,7 +44,6 @@ class TaskCardDetail extends Component {
   }
 
   handleToggleComplete = (e) => {
-    
 
     let backendURL;
     if(process.env.NODE_ENV === 'development'){
@@ -83,21 +53,21 @@ class TaskCardDetail extends Component {
     }
     
     let token = localStorage.getItem('jwt');
-    
+    // console.log(token)
     let options = {
         headers: {
         Authorization: `Bearer ${token}`
         }
     } 
-    
     let changes = {
-      "completed":!(!!+this.state.task.completed)
+      "completed":!(!!+this.state.taskCompleted)
     }
-    console.log(this.props.task.completed);
+
     axios.put(`${backendURL}/api/task/${this.props.match.params.taskId}`,changes, options)
     .then(res => {
        this.setState({taskCompleted:!this.state.taskCompleted});
-          }).catch(err=>{console.log("error")});  
+       this.props.getGroupTasks(this.props.task.groupId);
+    }).catch(err=>{console.log("error")});  
   }
 
   render(){
@@ -119,9 +89,7 @@ class TaskCardDetail extends Component {
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
-                <input type="checkbox" name="recurring" value="recurring" onClick={this.handleToggleComplete}/>
-                
-                
+                <input type="checkbox" name="done" value="taskCompleted" onClick={this.handleToggleComplete}/>
                 {/* {this.props.task.completed?<h7>Done</h7>:null} */}
                 <h7>Done</h7>
             </div>
@@ -144,4 +112,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps,{getTaskComments, getCompleted})(TaskCardDetail));
+export default withRouter(connect(mapStateToProps,{getTaskComments, getCompleted,getGroupTasks})(TaskCardDetail));

@@ -197,12 +197,11 @@ export const getCurrentUser = () => {
   }
 
   const endpoint = axios.get(`${backendURL}/api/user/check/email`, options);
-
   return dispatch => {
     dispatch({type: GET_CURRENT_USER});
 
     endpoint.then(res => {
-      console.log(res.data, 'RES')
+      console.log(res, 'RES')
       dispatch({type: SAVE_CURRENT_USER, payload: res.data.profile});
     }).catch(err => {
       console.log(err);
@@ -720,7 +719,7 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
     endpoint.then(res => {
-      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite?${res.data.inviteCode}`} })
+      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite/${res.data.inviteCode}`} })
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR, payload: err.response.data.warning})
@@ -1374,6 +1373,10 @@ export const updateComment = (comment, id) => {
       dispatch({type: UPDATE_COMMENT_FAIL,payload:err})
     })
   }
+}
+
+export const testFunction = (arg) => {
+  return `test function: ${arg+1}`;
 }
 /*
  *  TASKDETAIL - Get Completed Tasks

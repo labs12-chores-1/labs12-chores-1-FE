@@ -31,7 +31,7 @@ import { deleteTask } from '../store/actions/rootActions';
 import { createTaskComments } from '../store/actions/rootActions';
 import { editTask } from '../store/actions/rootActions';
 import { updateComment } from '../store/actions/rootActions';
-import { getSingleTask } from '../store/actions/rootActions';
+import { getSingleTask,testFunction } from '../store/actions/rootActions';
 
 // import { rootReducer } from "../store/reducers/rootReducer";
 
@@ -41,7 +41,7 @@ class TaskDetail extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            comments:[],
+            taskComments:null,
             // searchField: "",
             modal: false,
             commentString:'',
@@ -52,6 +52,17 @@ class TaskDetail extends Component {
             taskDescription: ""
         };
         
+    }
+
+    componentWilMount(){
+      this.setState({taskComments:this.props.taskComments});
+    }
+
+    componentDidUpdate(previousProps){
+      if(previousProps.taskComments !== this.props.taskComments){
+          this.setState({taskComments:this.props.taskComments});
+        }
+      // this.props.testFunction(2);
     }
 
      componentDidMount(){
@@ -242,7 +253,7 @@ render() {
             
 
          
-            {console.log(this.props.singleTask, "right here")}
+            {/* {console.log(this.props.singleTask, "right here")} */}
             <MDBContainer className="task-card">
             {this.props.singleTask !== null
                         ? this.props.singleTask.data.map(task => {
@@ -276,21 +287,18 @@ render() {
                 /> */}
        
                 <div>
-                    {/* {console.log(this.props.taskComments)} */}
+                    {/* {console.log(this.state.taskComments)} */}
                     
-                    {this.props.taskComments !== null
-                        ? this.props.taskComments.data.map(comment => {
-                            console.log(comment);
+                    {this.state.taskComments !== null
+                        ? this.state.taskComments.data.map(comment => {
+                            // console.log(this.state.task);
                             return(
                             <div key={comment.id}>
                             <Comments 
                             commentString= {comment.commentString}
-                            taskID = {this.props.match.params.id}
+                            taskID = {this.props.match.params.taskId}
                             commentedOn={comment.commentedOn}
                             commentID={comment.id}
-
-
-
                             />
                              <div className="buttons">
                                 <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
@@ -324,7 +332,7 @@ const mapStateToProps = state => {
     };
 };
   
-export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment,getSingleTask })(TaskDetail));
+export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment,getSingleTask,testFunction })(TaskDetail));
 
 
 
