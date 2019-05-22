@@ -72,7 +72,11 @@ import {
   UPDATE_COMMENT_FAIL,
   GET_SINGLE_TASK_START,
   GET_SINGLE_TASK_SUCCESS,
-  GET_SINGLE_TASK_FAILURE
+  GET_SINGLE_TASK_FAILURE,
+  GET_COMPLETED_START,
+  GET_COMPLETED_SUCCESS,
+  GET_COMPLETED_FAILURE
+
 } from "../actions/";
 
 const initialState = {
@@ -113,7 +117,8 @@ const initialState = {
   taskComments: null,
   tempUserName: null,
   currentTask: null,
-  singleTask: null
+  singleTask: null,
+  deleteGroupMessage:null
 };
 
 
@@ -146,6 +151,7 @@ export const rootReducer = (state = initialState, action) => {
       currentGroupTasks: null,
       errorMessage: action.payload
     };
+
 
 
     case DELETE_TASK_START:
@@ -561,6 +567,24 @@ export const rootReducer = (state = initialState, action) => {
       ...state,
       errorMessage:action.payload
     };
+    case GET_COMPLETED_START:
+      return {
+        ...state,
+        errorMessage:null,
+        singleTask: null
+      };
+    case GET_COMPLETED_SUCCESS:
+    return {
+      ...state,
+      singleTask: action.payload,
+    };
+    case GET_COMPLETED_FAILURE:
+    return {
+      ...state,
+      errorMessage:action.payload
+    };
+
+
   
     default:
       return state

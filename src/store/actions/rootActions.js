@@ -46,6 +46,9 @@ export const GET_GROUP_HISTORY_LIST = 'GET_GROUP_HISTORY_LIST';
 export const SAVE_GROUP_HISTORY_LIST = 'SAVE_GROUP_HISTORY_LIST';
 export const CLEAR_GROUP_USERS = 'CLEAR_GROUP_USERS';
 export const CLEAR_GROUP_HISTORY = 'CLEAR_GROUP_HISTORY';
+export const DELETE_GROUP_START = 'DELETE_GROUP_START';
+export const DELETE_GROUP_SUCCESS = 'DELETE_GROUP_SUCCESS';
+export const DELETE_GROUP_FAILURE = 'DELETE_GROUP_FAILURE';
 
 // GROUP INVITE
 export const GEN_GROUP_INVITE = 'GEN_GROUP_INVITE';
@@ -105,6 +108,10 @@ export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
 export const EDIT_TASK_START = "EDIT_TASK_START";
 export const TASK_EDITED = "TASK_EDITED";
 export const EDIT_TASK_FAIL = "EDIT_TASK_FAIL";
+// TASK - COMPLETED
+export const GET_COMPLETED_START = "GET_COMPLETED_START";
+export const GET_COMPLETED_SUCCESS = "GET_COMPLETED_SUCCESS";
+export const GET_COMPLETED_FAILURE = "GET_COMPLETED_FAILURE";
 // COMMENT
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
@@ -193,12 +200,11 @@ export const getCurrentUser = () => {
   }
 
   const endpoint = axios.get(`${backendURL}/api/user/check/email`, options);
-
   return dispatch => {
     dispatch({type: GET_CURRENT_USER});
 
     endpoint.then(res => {
-      console.log(res.data, 'RES')
+      console.log(res, 'RES')
       dispatch({type: SAVE_CURRENT_USER, payload: res.data.profile});
     }).catch(err => {
       console.log(err);
@@ -505,6 +511,8 @@ export const removeGroup = (groupID, userID) => dispatch => {
     console.log("ERR => ", err);
   })
 }
+
+
 
 //Leave Household endpoint - remove Group Member
 
@@ -1371,3 +1379,32 @@ export const updateComment = (comment, id) => {
     })
   }
 }
+
+export const testFunction = (arg) => {
+  return `test function: ${arg+1}`;
+}
+/*
+ *  TASKDETAIL - Get Completed Tasks
+ * --------------------------------------------------------------------------------
+ */
+export const getCompleted = (id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.get(`${backendURL}/api/comment/task/${id}`, options);
+  
+  return dispatch => {
+    dispatch({type: GET_COMPLETED_START})
+    endpoint
+    .then(res => {
+      console.log(res.data);
+      dispatch({type: GET_COMPLETED_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: GET_COMPLETED_FAILURE, payload:err});
+    })
+  }
+
+ };

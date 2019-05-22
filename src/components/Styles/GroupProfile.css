@@ -3,6 +3,39 @@
 
 
 /* SHOPTRAK */
+.invite-mod-hidden{
+    display: none;
+
+}
+
+.invite-mod-display {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width:50%;
+    height: 300px;
+    border:2px solid black;
+    position: fixed;
+    z-index: 100;
+    top:0;
+    background-color: white;
+    
+}
+
+
+.settings-mod-hidden{
+    display: none;
+}
+
+.settings-mod-display{
+    display: flex;
+    border:2px solid black;
+    background-color: white;
+    position: fixed;
+    z-index: 100;
+    top:0;
+}
 
 .group-profile-container {
     margin-top: 85px;
