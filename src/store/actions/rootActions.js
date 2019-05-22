@@ -105,6 +105,10 @@ export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
 export const EDIT_TASK_START = "EDIT_TASK_START";
 export const TASK_EDITED = "TASK_EDITED";
 export const EDIT_TASK_FAIL = "EDIT_TASK_FAIL";
+// TASK - COMPLETED
+export const GET_COMPLETED_START = "GET_COMPLETED_START";
+export const GET_COMPLETED_SUCCESS = "GET_COMPLETED_SUCCESS";
+export const GET_COMPLETED_FAILURE = "GET_COMPLETED_FAILURE";
 // COMMENT
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
@@ -1197,7 +1201,7 @@ export const getSingleTask = (taskID) => {
  * @param task to be removed
  * @returns {Function}
  */
-export const deleteTask = (task) => {
+export const deleteTask = (task, id) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1212,8 +1216,11 @@ export const deleteTask = (task) => {
     dispatch({type: DELETE_TASK_START})
     endpoint.then(res => {
       console.log('delete working');
-      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
-    }).catch(err => {
+      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })  
+    }).then(() => {
+      dispatch(getGroupTasks(id))
+    })
+    .catch(err => {
       //console.log(err);
       dispatch({type: DELETE_TASK_FAIL, payload: err})
     })
@@ -1283,7 +1290,7 @@ export const getTaskComments = (id) => {
  *  TASK-CREATE TASK COMMENTS ACTIONS
  * --------------------------------------------------------------------------------
  */
- export const createTaskComments = (comment,taskID) => {
+ export const createTaskComments = (comment,taskId) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1298,7 +1305,7 @@ export const getTaskComments = (id) => {
     .then(res => {
       console.log(res);
       dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
-    }).then(() => {dispatch(getTaskComments(taskID))})
+    }).then(() => {dispatch(getTaskComments(taskId))})
     .catch(err =>{
       dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
     })
@@ -1368,3 +1375,28 @@ export const updateComment = (comment, id) => {
     })
   }
 }
+/*
+ *  TASKDETAIL - Get Completed Tasks
+ * --------------------------------------------------------------------------------
+ */
+export const getCompleted = (id) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const endpoint = axios.get(`${backendURL}/api/comment/task/${id}`, options);
+  
+  return dispatch => {
+    dispatch({type: GET_COMPLETED_START})
+    endpoint
+    .then(res => {
+      console.log(res.data);
+      dispatch({type: GET_COMPLETED_SUCCESS, payload: res.data});
+    }).catch(err =>{
+      dispatch({type: GET_COMPLETED_FAILURE, payload:err});
+    })
+  }
+
+ };

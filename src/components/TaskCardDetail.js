@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import { connect } from 'react-redux';
 import commentImg from '../images/comment-img.jpg';
+import axios from 'axios';
 import {
   MDBCard,
   MDBCardBody,
@@ -13,7 +14,7 @@ import { withRouter } from "react-router-dom";
 import "./Styles/TaskCard.css";
 import "./Styles/Comments.css";
 
-import { getTaskComments } from '../store/actions/rootActions';
+import { getTaskComments, getCompleted } from '../store/actions/rootActions';
 //import { rootReducer } from "../store/reducers/rootReducer";
 
 class TaskCardDetail extends Component {
@@ -22,7 +23,8 @@ class TaskCardDetail extends Component {
     super(props);
     this.state={
       modal:false,
-      
+        taskCompleted: false,
+        taskcompletedBy: 1,
         groupId: null,
         userId: null,
         comments: props.comments,
@@ -30,7 +32,35 @@ class TaskCardDetail extends Component {
         task: {}
     }
   }
+//   componentDidMount(){
+//     document.title = `FairShare - Task`;
+//     this.props.getCompleted(this.props.match.params.id);        
+//     this.setState({...this.state,
+//         taskCompleted: this.props.taskCompleted});
 
+    
+//     let backendURL;
+//     if(process.env.NODE_ENV === 'development'){
+//     backendURL = `http://localhost:9000`
+//     } else {
+//     backendURL = `https://labs12-fairshare.herokuapp.com`
+//     }
+    
+//     let token = localStorage.getItem('jwt');
+//     let options = {
+//         headers: {
+//         Authorization: `Bearer ${token}`
+//         }
+//     }
+
+//     axios.get(`${backendURL}/api/groupmember/group/${this.props.match.params.id}`, options)
+//     .then(response => {
+//         this.setState({
+//             groupMembers: response.data
+//         })
+//     });
+    
+// }
    getComments = e => {
     e.preventDefault();
     this.props.getTaskComments(this.props.match.params.id);//<----------------??
@@ -42,7 +72,34 @@ class TaskCardDetail extends Component {
     });
   }
 
-  
+  handleToggleComplete = (e) => {
+    e.preventDefault();
+    
+
+    let backendURL;
+    if(process.env.NODE_ENV === 'development'){
+    backendURL = `http://localhost:9000`
+    } else {
+    backendURL = `https://labs12-fairshare.herokuapp.com`
+    }
+    
+    let token = localStorage.getItem('jwt');
+    console.log(token)
+    let options = {
+        headers: {
+        Authorization: `Bearer ${token}`
+        }
+    } 
+    console.log(this.props.task.completed);
+    let changes = {
+      "completed":true//!this.props.task.completed
+    }
+
+    axios.put(`${backendURL}/api/task/${this.props.match.params.taskId}`,changes, options)
+    .then(res => {
+       this.setState({taskCompleted:!this.state.taskCompleted});
+          }).catch(err=>{console.log("error")});  
+  }
 
   render(){
 
@@ -63,7 +120,8 @@ class TaskCardDetail extends Component {
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
-                <input type="checkbox" name="vehicle" value="Bike"></input>
+                <input type="checkbox" name="done" value="taskCompleted" onClick={this.handleToggleComplete}/>
+                {/* {this.props.task.completed?<h7>Done</h7>:null} */}
                 <h7>Done</h7>
             </div>
         </MDBCardBody>
@@ -85,4 +143,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps,{getTaskComments})(TaskCardDetail));
+export default withRouter(connect(mapStateToProps,{getTaskComments, getCompleted})(TaskCardDetail));
