@@ -24,7 +24,7 @@ import { connect } from "react-redux";
 import "./Styles/Scrollbar.css";
 import "./Styles/GroupProfile.css";
 import {
-  MDBContainer,
+  // MDBContainer,
   MDBBtn,
   MDBModal,
   MDBModalHeader,
@@ -39,11 +39,12 @@ import GroupDataBar from './GroupDataBar';
 import GroupDataDoughnut from './GroupDataDoughnut';
 
 class GroupsProfile extends Component {
-  state = {
-    modal14: false,
-    modal15: false,
-    modal17: false,
-    modal18: false,
+  constructor(props) {
+    super(props);
+  
+  this.state = {
+    toggleInviteMod:false,
+    toggleSettingsMod:false,
     itemName: "",
     itemPrice: 0.0,
     itemQuantity: 1,
@@ -64,6 +65,7 @@ class GroupsProfile extends Component {
     weekly: false,
     monthly: false,
   };
+}
 
   /**
    * Triggers before the component mounts.
@@ -121,7 +123,7 @@ class GroupsProfile extends Component {
       this.props.getGroupHistoryList(this.props.match.params.id);
     }
 
-    // if current user has been update, gather new user
+    // if current user has been updated, gather new user
     if (!newProps.currentUser) {
       this.props.checkEmail();
     }
@@ -158,12 +160,28 @@ class GroupsProfile extends Component {
    * @param nr - The modal number to toggle
    * @returns {*}
    */
-  toggle = nr => () => {
-    let modalNumber = "modal" + nr;
+  // toggle = nr => () => {
+  //   let modalNumber = "modal" + nr;
+  //   this.setState({
+  //     [modalNumber]: !this.state[modalNumber]
+  //   });
+  // };
+
+  toggleInviteMod= (e) => {
+    e.preventDefault();
     this.setState({
-      [modalNumber]: !this.state[modalNumber]
-    });
-  };
+        toggleInviteMod:!this.state.toggleInviteMod
+    })
+    console.log('inviteState:', this.state.toggleInviteMod)
+  }
+
+  toggleSettingsMod= (e) => {
+    this.setState({
+        toggleSettingsMod:!this.state.toggleSettingsMod
+    })
+    console.log("Notifications:", this.state.toggleSettingsMod)
+    
+}
 
   /**
    * Checks the item checkbox on the list
@@ -202,18 +220,22 @@ class GroupsProfile extends Component {
    * @returns {*}
    */
   toggleInviClass = () => {
+    // e.prevent.Default();
     this.props.generateGroupInviteUrl(
         localStorage.getItem("userId"),
         this.props.match.params.id
     );
+    
     if (this.props.currentUser.subscriptionType === 1 && this.props.groupUsers.length >= 2) {
-      this.setState({modal17: true})
+      this.setState({toggleInviteMod: !this.state.toggleInviteMod})
     } else {
-      this.setState({ modal15: true });
+      this.setState({ toggleInviteMod: true });
 
     }
 
   };
+
+
 
   /**
    * TODO: This may be depreciated depending on if we follow the Basalmiq or not
@@ -287,15 +309,15 @@ class GroupsProfile extends Component {
                   </MDBBtn>
                   <MDBBtn
                       className="btn-dark-green"
-                      onClick={() => {
-                        this.toggleInviClass();
-                      }}
+                      onClick={
+                        this.toggleInviClass}
+                      // onClick={this.toggleInviteMod}
                   >
                     Invite Member
                   </MDBBtn>
                   <MDBBtn
                       className={"btn-dark-green"}
-                      onClick={this.toggle(18)}
+                      onClick={this.toggleSettingsMod}
                   >
                     Notification Settings
                   </MDBBtn>
@@ -346,15 +368,20 @@ class GroupsProfile extends Component {
           * Modals - Keep modals at end to avoid "blank space" in regular components
           */
         }
-        <MDBContainer>
+        <div>
+
+
           {/* Invite modal */}
-          <MDBModal
-            isOpen={this.state.modal15}
-            toggle={this.toggle(15)}
-            centered
+          <div className={
+            this.state.toggleInviteMod===false
+            ? "invite-mod-hidden"
+            : "invite-mod-display"
+          } 
           >
-            <MDBModalHeader toggle={this.toggle(15)}>
-              Group Invitation
+            <MDBModalHeader >
+              {/* <h4>Group Invite</h4>
+              <span onClick={this.toggleInviteMod}>X</span> */}
+              Group Invite  
             </MDBModalHeader>
             <MDBModalBody>
               <p className="text-left">
@@ -364,28 +391,30 @@ class GroupsProfile extends Component {
               </p>
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={this.toggle(15)}>
+              <MDBBtn color="secondary" onClick={this.toggleInviteMod}>
                 Close
               </MDBBtn>
               <CopyToClipboard text={this.props.invites !== null
                   ? this.props.invites[this.props.match.params.id]
                   : ""}
-                               onCopy={() => this.setState({copied: true})}>
-                <MDBBtn
-                    className="btn-dark-green"
-                >
+                  onCopy={() => this.setState({copied: true})}>
+                <MDBBtn className="btn-dark-green">
                   Copy to clipboard
                 </MDBBtn>
               </CopyToClipboard>
 
             </MDBModalFooter>
-          </MDBModal>
-          <MDBModal
-              isOpen={this.state.modal18}
-              toggle={this.toggle(18)}
-              centered
-          >
-            <MDBModalHeader toggle={this.toggle(18)}>Notification Settings</MDBModalHeader>
+          </div>
+
+
+
+          <div className={
+            this.state.toggleSettingsMod===false
+            ? "settings-mod-hidden"
+            : "settings-mod-display"}>
+            <MDBModalHeader 
+            // toggle={this.toggle(18)}
+            >Notification Settings</MDBModalHeader>
             <MDBModalBody>
               Update your group notification settings
               {
@@ -410,18 +439,20 @@ class GroupsProfile extends Component {
               }
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={this.toggle(18)}>
+              <MDBBtn color="secondary" onClick={this.toggleSettingsMod}>
                 Ok
               </MDBBtn>
             </MDBModalFooter>
-          </MDBModal>
+          </div>
           {this.props.errorMessage !== null ? (
               <MDBModal
                   isOpen={this.state.modal17}
-                  toggle={this.toggle(17)}
+                  // toggle={this.toggle(17)}
                   centered
               >
-                <MDBModalHeader toggle={this.toggle(17)}>Warning</MDBModalHeader>
+                <MDBModalHeader 
+                // toggle={this.toggle(17)}
+                >Warning</MDBModalHeader>
                 <MDBModalBody>
                   <h6>{this.props.errorMessage}</h6>
                 </MDBModalBody>
@@ -432,7 +463,7 @@ class GroupsProfile extends Component {
                 </MDBModalFooter>
               </MDBModal>
           ) : null}
-        </MDBContainer>
+        </div>
       </div>
     );
   }
