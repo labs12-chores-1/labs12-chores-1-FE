@@ -55,15 +55,14 @@ class TaskCardDetail extends Component {
     }
     
     let token = localStorage.getItem('jwt');
-    console.log(token)
+    // console.log(token)
     let options = {
         headers: {
         Authorization: `Bearer ${token}`
         }
     } 
-    console.log(this.props.task.completed);
     let changes = {
-      "completed":true//!this.props.task.completed
+      "completed":!(!!+this.state.taskCompleted)
     }
 
     axios.put(`${backendURL}/api/task/${this.props.match.params.taskId}`,changes, options)

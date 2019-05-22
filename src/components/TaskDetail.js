@@ -41,7 +41,7 @@ class TaskDetail extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            comments:[],
+            taskComments:null,
             // searchField: "",
             modal: false,
             commentString:'',
@@ -253,7 +253,7 @@ render() {
             
 
          
-            {console.log(this.props.singleTask, "right here")}
+            {/* {console.log(this.props.singleTask, "right here")} */}
             <MDBContainer className="task-card">
             {this.props.singleTask !== null
                         ? this.props.singleTask.data.map(task => {
@@ -287,16 +287,16 @@ render() {
                 /> */}
        
                 <div>
-                    {/* {console.log(this.props.taskComments)} */}
+                    {/* {console.log(this.state.taskComments)} */}
                     
                     {this.state.taskComments !== null
                         ? this.state.taskComments.data.map(comment => {
-                            console.log(comment);
+                            // console.log(this.state.task);
                             return(
                             <div key={comment.id}>
                             <Comments 
                             commentString= {comment.commentString}
-                            taskID = {this.props.match.params.id}
+                            taskID = {this.props.match.params.taskId}
                             commentedOn={comment.commentedOn}
                             commentID={comment.id}
                             />

@@ -338,7 +338,7 @@ render() {
                     ? this.state.currentGroupTasks.data.map(task => {
                      
                     return(
-                     <div key= {task.id}>
+                    //  <div key= {task.id}>
                         <TaskCard
                             key={task.id}
                             task={task}
@@ -356,7 +356,7 @@ render() {
                             updateGroup={this.saveGroupName}
                             removeGroup={this.deleteGroup}
                         />
-                        </div>
+                        // </div>
                       )})
                     : null
                 }  
