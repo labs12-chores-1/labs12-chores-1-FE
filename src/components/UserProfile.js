@@ -4,7 +4,8 @@ import {
   checkEmail,
   saveUsername,
   saveProfilePic,
-  removeAccount
+  removeAccount,
+  removeGroupMember
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 import {
@@ -25,9 +26,10 @@ import {
   MDBModalHeader,
   MDBModalBody,
   MDBModalFooter,
-    MDBAlert
+  MDBAlert
 } from "mdbreact";
 import "./Styles/UserProfile.css";
+
 
 class UserProfile extends React.Component {
   state = {
@@ -133,13 +135,25 @@ class UserProfile extends React.Component {
         event.preventDefault();
         if (localStorage.getItem("userId")) {
             this.props.removeAccount();
-            this.setState({modal16: false})
+            // this.setState({modal16: false})
           this.props.history.push("/");
         }
   }
+  handleLeaveHousehold = (event) => {
+    event.preventDefault();
+    let userID = localStorage.getItem("userId")
+    let groupID = localStorage.getItem("groupId")
+    console.log(userID,groupID)
+    if (localStorage.getItem("userId")) {
+        this.props.removeGroupMember(userID,groupID);
+      this.props.history.push("/");
+    }
+}
 
 
 
+  
+  
   render() {
     let name,
       email,
@@ -154,7 +168,7 @@ class UserProfile extends React.Component {
     }
 
     const user = localStorage.getItem("userId");
-    return (
+   return (
 
       <div className="user-profile-container">
         {
@@ -233,9 +247,12 @@ class UserProfile extends React.Component {
                           />
 
                           <div className="user-profile-settings-header">
-                            <MDBBtn color="danger" onClick={this.toggle(16)}>
+                            <MDBBtn color="danger" onClick={this.handleDeleteAccount}>
                               Remove Account
                             </MDBBtn>
+                            {/* <MDBBtn color="danger" onClick={this.handleLeaveHousehold}>
+                              Leave Household
+                            </MDBBtn> */}
                             <MDBBtn
                                 disabled={this.state.username === localStorage.getItem("name") ? true : false}
                                 className={
@@ -356,7 +373,7 @@ class UserProfile extends React.Component {
             </MDBModalFooter>
           </MDBModal>
             <MDBModal isOpen={this.state.modal16} toggle={this.toggle(16)} centered>
-                <MDBModalHeader toggle={this.toggle(16)}>Remove Account</MDBModalHeader>
+                <button onClick={this.handleDeleteAccount}>Remove Account</button>
                 <MDBModalBody>
                     <h6>Type the full name of your username to completely remove it.</h6>
                     <MDBInput label="Account Name" name={"delete"} onChange={this.handleInput} defaultValue={this.state.delete}/>
@@ -369,9 +386,12 @@ class UserProfile extends React.Component {
             </MDBModal>
         </MDBContainer>
 
-      </div>
-    );
+       </div>
+   )
+
+
   }
+  
 }
 
 const mapStateToProps = state => {
@@ -390,6 +410,7 @@ export default connect(
     checkEmail,
     saveUsername,
     saveProfilePic,
-    removeAccount
+    removeAccount,
+    removeGroupMember
   }
 )(UserProfile);

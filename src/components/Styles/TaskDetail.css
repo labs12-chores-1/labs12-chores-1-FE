@@ -8,6 +8,7 @@
     flex-flow: row;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 
 .task-card {
@@ -16,7 +17,10 @@
     align-items: center;
     justify-content: center;
 }
+#MDBBtn{
+    cursor: pointer;
+}
 
-MDBBtn{
+#MDBIcon{
     cursor: pointer;
 }
