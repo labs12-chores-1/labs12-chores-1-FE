@@ -123,6 +123,12 @@ export const UPDATE_COMMENT_START = "UPDATE_COMMENT_START";
 export const UPDATE_COMMENT_SUCCESS = "UPDATE_COMMENT_SUCCESS";
 export const UPDATE_COMMENT_FAIL = "UPDATE_COMMENT_FAIL";
 
+export const GET_SINGLE_TASK_START = "GET_SINGLE_TASK_START";
+export const GET_SINGLE_TASK_SUCCESS = "GET_SINGLE_TASK_SUCCESS";
+export const GET_SINGLE_TASK_FAILURE = "GET_SINGLE_TASK_FAILURE";
+
+
+
 // Defines URL for development and production/staging environments
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -1124,6 +1130,29 @@ export const getTasksByInput = (input) => {
   }
 }
 
+export const getSingleTask = (taskID) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/task/${taskID}`, options);
+  
+  
+  return dispatch => {
+    dispatch({type: GET_SINGLE_TASK_START})
+    endpoint
+    .then(res => {
+      console.log(res)
+      dispatch({type: GET_SINGLE_TASK_SUCCESS, payload: res.data});
+    }).catch(err => {
+      dispatch({type: GET_SINGLE_TASK_FAILURE, payload: err})
+    })
+  }
+}
+
 /*
  *  TASK - CREATE GROUP TASK ACTIONS
  * --------------------------------------------------------------------------------
@@ -1168,7 +1197,7 @@ export const getTasksByInput = (input) => {
  * @param task to be removed
  * @returns {Function}
  */
-export const deleteTask = (task) => {
+export const deleteTask = (task, id) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1183,8 +1212,11 @@ export const deleteTask = (task) => {
     dispatch({type: DELETE_TASK_START})
     endpoint.then(res => {
       console.log('delete working');
-      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })
-    }).catch(err => {
+      dispatch({type: TASK_DELETED, payload: 'Task Deleted' })  
+    }).then(() => {
+      dispatch(getGroupTasks(id))
+    })
+    .catch(err => {
       //console.log(err);
       dispatch({type: DELETE_TASK_FAIL, payload: err})
     })
@@ -1254,7 +1286,7 @@ export const getTaskComments = (id) => {
  *  TASK-CREATE TASK COMMENTS ACTIONS
  * --------------------------------------------------------------------------------
  */
- export const createTaskComments = (comment,taskID) => {
+ export const createTaskComments = (comment,taskId) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1269,7 +1301,7 @@ export const getTaskComments = (id) => {
     .then(res => {
       console.log(res);
       dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
-    }).then(() => {dispatch(getTaskComments(taskID))})
+    }).then(() => {dispatch(getTaskComments(taskId))})
     .catch(err =>{
       dispatch({type: CREATE_COMMENT_FAILURE, payload:err});
     })

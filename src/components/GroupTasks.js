@@ -47,7 +47,7 @@ class GroupTasks extends Component {
             groupUserNames: [],
             toggleMod: false,
             toggleRadio:false,
-            recurringTime:''
+            recurringTime:""
         };
     }
     componentWillMount(){
@@ -107,7 +107,12 @@ class GroupTasks extends Component {
 
         this.props.createGroupTask(task, this.props.match.params.id);
         this.setState({
-            toggleMod:!this.state.toggleMod, recurringTime:'', taskName: '', taskDescription:'', assigneeName:''
+            toggleMod:!this.state.toggleMod,
+            recurringTime:"",
+            toggleRadio:false,
+            taskName: "", 
+            taskDescription:"", 
+            assigneeName:""
         })
     };
 
@@ -319,10 +324,14 @@ render() {
                 </div>
                 <br></br>
                 {/* {console.log(this.state.currentGroupTasks)} */}
+
                 {this.state.currentGroupTasks !== null
-                    ? this.state.currentGroupTasks.data.map(task => (
+                    ? this.state.currentGroupTasks.data.map(task => {
                      
+                    return(
+                     <div key= {task.id}>
                         <TaskCard
+                            key={task.id}
                             task={task}
                             taskID={task.id}
                             taskName={task.taskName}
@@ -338,9 +347,11 @@ render() {
                             updateGroup={this.saveGroupName}
                             removeGroup={this.deleteGroup}
                         />
-                      ))
+                        </div>
+                      )})
                     : null
                 }  
+                
             </MDBContainer>
             {/* <form onSubmit={this.createTask}>
                 <input 
