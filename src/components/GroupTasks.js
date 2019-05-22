@@ -106,6 +106,7 @@ class GroupTasks extends Component {
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
+        
         this.setState({
             toggleMod:!this.state.toggleMod,
             recurringTime:"",
@@ -159,7 +160,6 @@ class GroupTasks extends Component {
         }
     }
     toggleMod= (e) => {
-        e.preventDefault();
         this.setState({
             toggleMod:!this.state.toggleMod
         })
@@ -167,7 +167,6 @@ class GroupTasks extends Component {
     }
 
     toggleRadio= (e) => {
-        e.preventDefault();
         this.setState({
             toggleRadio:!this.state.toggleRadio
         }); console.log('toggleRadiotoggle:', this.state.toggleRadio);
@@ -313,7 +312,7 @@ render() {
                         <span>Assigned</span>
                         <div className="dropdown-content">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
-                            {console.log('state.groupMembers', this.state.groupMembers)}
+                            {/* {console.log('state.groupMembers', this.state.groupMembers)} */}
                             <div className="dropdown-divider"></div>
                             {this.state.groupUserNames.length >= 1
                             ? this.state.groupUserNames.map(groupUser=>(
