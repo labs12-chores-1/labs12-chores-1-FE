@@ -63,7 +63,7 @@ class TaskCardDetail extends Component {
             </div>
             <div className="task-card-right">
                 <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
-                <input type="checkbox" name="vehicle" value="Bike"></input>
+                <input type="checkbox" name="vehicle" value="Bike"/>
                 <h7>Done</h7>
             </div>
         </MDBCardBody>

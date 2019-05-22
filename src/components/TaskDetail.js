@@ -62,7 +62,7 @@ class TaskDetail extends Component {
       if(previousProps.taskComments !== this.props.taskComments){
           this.setState({taskComments:this.props.taskComments});
         }
-      this.props.testFunction(2);
+      // this.props.testFunction(2);
     }
 
      componentDidMount(){
