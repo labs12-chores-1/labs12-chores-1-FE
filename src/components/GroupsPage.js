@@ -40,7 +40,8 @@ class GroupsPage extends Component {
     groupId: null,
     modal17: true,
     toggleMod:false,
-    groupId: ''
+    groupId: '',
+    userId: localStorage.getItem('userId')
   };
   this.toggle = this.toggle.bind(this);
 
@@ -89,8 +90,8 @@ class GroupsPage extends Component {
     });
   };
 
-  saveGroupName = (id, name) => {
-    this.setState({ groupId: id, groupName: name, modal15: true });
+  saveGroupName = (id) => {
+    this.setState({ groupId: id,  modal15: true });
   };
 
   deleteGroup = (id, userId) => {
@@ -98,6 +99,12 @@ class GroupsPage extends Component {
   };
 
   handleInput = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  handleInputChanges = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -116,15 +123,16 @@ class GroupsPage extends Component {
     
   };
 
-  handleUpdateGroupName = () => {
-    if (this.state.groupName !== "") {
+  handleUpdateGroupName = (e) => {
+      e.preventDefault();
       const changes = { name: this.state.groupName };
       this.props.updateGroupName(this.state.groupId, changes);
 
       this.setState({ modal15: false });
-    }
+      this.props.getUserGroups(this.state.userId)
+    
     //causes page to reload - added this because the new name would not show otherwise
-    window.location.reload();
+    // window.location.reload();
   };
 
   handleDeleteGroup = event => {
@@ -241,7 +249,34 @@ class GroupsPage extends Component {
                 </MDBModalFooter>
               </MDBModal>
 
-              <MDBModal isOpen={this.state.modal15} toggle={this.toggle(15)} centered>
+              <div className= {
+                this.state.modal15=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                
+                <form className={'create-task-form'}>
+                <span className="x" onClick={this.toggle(15)}>X</span>
+                <h2>Update Group Name</h2>
+                <input
+                 type="text"
+                 placeholder="enter new group name"
+                 name="groupName"
+                 value={this.state.groupName}
+                 onChange={this.handleInputChanges}
+                
+                />
+                
+                
+                    
+                    
+                    
+                    <button className="cta-submit" type='submit'onClick={this.handleUpdateGroupName}>submit</button>
+                    
+                </form>
+            </div>
+              
+              
+              {/* <MDBModal isOpen={this.state.modal15} toggle={this.toggle(15)} centered>
                 <MDBModalHeader toggle={this.toggle(15)}>
                   <p>Update Group Name</p>
                 </MDBModalHeader>
@@ -262,7 +297,7 @@ class GroupsPage extends Component {
                     Update
                   </MDBBtn>
                 </MDBModalFooter>
-              </MDBModal>
+              </MDBModal> */}
               
               {/* Modal for delete group*/ }
               <div className= {

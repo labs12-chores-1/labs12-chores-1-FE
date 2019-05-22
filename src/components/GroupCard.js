@@ -48,7 +48,7 @@ class  GroupCard extends React.Component {
                   <div
                       className="group-card-footer-button"
                       onClick={() =>
-                          this.props.updateGroup(this.props.group.id, this.props.group.name)
+                          this.props.updateGroup(this.props.group.id)
                       }
                   >
                     <MDBIcon icon="edit" />
