@@ -84,7 +84,7 @@ class TaskCardDetail extends Component {
     }
     
     let token = localStorage.getItem('jwt');
-    console.log(token)
+    // console.log(token)
     let options = {
         headers: {
         Authorization: `Bearer ${token}`
