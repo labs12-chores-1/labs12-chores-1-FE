@@ -270,10 +270,10 @@ render() {
                         value={this.state.assigneeName}
                         onChange={this.handleChanges}
                     />
-                    <div>
+                    {/* <div>
                         <input type="checkbox" name="Completed" value="taskCompleted" onClick={this.handleToggleComplete}/>
                         <span>Completed?</span>
-                    </div>
+                    </div> */}
                     <div>
                         {/* <span onClick={this.toggleRadio}>Yes</span> */}
                         <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
@@ -324,10 +324,10 @@ render() {
                     <div className="dropdown">
                         <span>Complete</span>
                         <div className="dropdown-content">
-                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
                             <div className="dropdown-divider"></div>
-                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"completed")}>Complete</div>
-                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
                         </div>
                     </div>                    
                 </div>
