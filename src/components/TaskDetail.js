@@ -169,13 +169,14 @@ class TaskDetail extends Component {
       }
       this.props.updateComment(newComment,id,this.state.taskID)
       this.setState({commentModal:!this.state.commentModal})
+      window.location.reload()
       
   }
 
   removeComment = (e, id) => {
       e.preventDefault();
       this.props.deleteComment(id, this.props.match.params.taskId);
-      // window.location.reload()
+      
   }
 
   toggleMod= (e) => {
