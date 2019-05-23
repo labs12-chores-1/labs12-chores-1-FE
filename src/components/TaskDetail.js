@@ -52,7 +52,8 @@ class TaskDetail extends Component {
             taskDescription: "",
             commentModal:false,
             newCommentString:'',
-            commentID:''
+            commentID:'',
+            task:null
         };
         
     }
