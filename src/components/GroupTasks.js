@@ -25,7 +25,8 @@ import {
     getGroupTasks,
     createGroupTask,
     editTask,
-    getGroupUsers
+    getGroupUsers,
+    getTaskComments
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 //import { bool } from 'prop-types';
@@ -52,7 +53,7 @@ class GroupTasks extends Component {
     }
     componentWillMount(){
         document.title = `FairShare - Task`;
-        this.props.getGroupTasks(this.props.match.params.id);        
+        this.props.getGroupTasks(this.props.match.params.id);
         this.setState({...this.state,
             currentGroupTasks: this.props.currentGroupTasks});
 
@@ -83,10 +84,6 @@ class GroupTasks extends Component {
         this.setState({[e.target.name]:e.target.value})
     }
         
-    componentDidMount(){
-   
-    }
-
     componentDidUpdate(previousProps){
         if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
             this.setState({currentGroupTasks:this.props.currentGroupTasks});
@@ -106,7 +103,7 @@ class GroupTasks extends Component {
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
-        
+
         this.setState({
             toggleMod:!this.state.toggleMod,
             recurringTime:"",
@@ -208,19 +205,19 @@ class GroupTasks extends Component {
             this.setState({
                 recurringTime:'1 hour'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
         else if (recurring === '2') {
             this.setState({
                 recurringTime:'2 hours'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
         else if (recurring === '3') {
             this.setState({
                 recurringTime:'3 hours'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
     }
 
@@ -337,19 +334,20 @@ render() {
 
                 {this.state.currentGroupTasks !== null
                     ? this.state.currentGroupTasks.data.map(task => {
-                     
+                    // this.props.getTaskComments(task.id);
+                    let taskComments = this.props.taskComments;
                     return(
                     //  <div key= {task.id}>
                         <TaskCard
                             key={task.id}
                             task={task}
+                            taskComments = {taskComments}
                             taskID={task.id}
                             taskName={task.taskName}
                             taskDescription={task.taskDescription}
                             assigneeName={task.assigneeName}
                             requestedBy={task.createdBy}
                             done={task.completed}
-                            comments={task.comments}
                             repeated={0}
                             recurring={task.recurringTime}
                             assignee={task.completedBy}
@@ -385,6 +383,7 @@ const mapStateToProps = state => {
         currentUser: state.currentUser,
         currentGroup: state.currentGruop,
         currentGroupTasks: state.currentGroupTasks,
+        taskComments: state.taskComments,
         // userGroups: state.userGroups,
         // userId: state.userId,
         // name: state.name,
@@ -410,6 +409,7 @@ export default connect(
         getGroupTasks,
         createGroupTask,
         editTask,
-        getGroupUsers
+        getGroupUsers,
+        getTaskComments
     }
 )(GroupTasks);

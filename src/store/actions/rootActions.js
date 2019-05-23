@@ -1148,7 +1148,7 @@ export const getSingleTask = (taskID) => {
     dispatch({type: GET_SINGLE_TASK_START})
     endpoint
     .then(res => {
-      console.log(res)
+      // console.log(res)
       dispatch({type: GET_SINGLE_TASK_SUCCESS, payload: res.data});
     }).catch(err => {
       dispatch({type: GET_SINGLE_TASK_FAILURE, payload: err})
@@ -1276,7 +1276,7 @@ export const getTaskComments = (id) => {
     dispatch({type: GET_COMMENTS_START})
     endpoint
     .then(res => {
-      console.log(res.data);
+      // console.log("getTaskComments - res: ",res.data);
       dispatch({type: GET_COMMENTS_SUCCESS, payload: res.data});
     }).catch(err =>{
       dispatch({type: GET_COMMENTS_FAILURE, payload:err});
@@ -1302,7 +1302,7 @@ export const getTaskComments = (id) => {
     dispatch({type: CREATE_COMMENT_START})
     endpoint
     .then(res => {
-      console.log(res);
+      // console.log(res);
       dispatch({type: CREATE_COMMENT_SUCCESS, payload: res.data});
     }).then(() => {dispatch(getTaskComments(taskId))})
     .catch(err =>{
@@ -1312,6 +1312,7 @@ export const getTaskComments = (id) => {
 
  };
 
+ 
  /*
  *  TASK - DELETE COMMENTS ACTIONS
  * --------------------------------------------------------------------------------

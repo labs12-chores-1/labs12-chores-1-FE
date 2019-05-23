@@ -114,7 +114,7 @@ const initialState = {
 
 //***** FairShare***********
   currentGroupTasks: null,
-  taskComments: null,
+  taskComments: [],
   tempUserName: null,
   currentTask: null,
   singleTask: null
@@ -176,13 +176,13 @@ export const rootReducer = (state = initialState, action) => {
     case GET_COMMENTS_SUCCESS:
     return {
       ...state,
-      taskComments: action.payload,
+      taskComments: action.payload.data,
         errorMessage: null,
       };
     case GET_COMMENTS_FAILURE:
     return {
       ...state,
-      taskComments: null,
+      taskComments: [],
       errorMessage: action.payload
     };
 

@@ -41,90 +41,77 @@ class TaskDetail extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            taskComments:null,
-            // searchField: "",
+            taskComments:[],
             modal: false,
             commentString:'',
             commentedBy:1,
             groupID: this.props.match.params.groupId,
             taskID: 0,
             toggleMod:false,
-            taskDescription: ""
+            taskDescription: "",
+            task: null
         };
         
     }
 
     componentWilMount(){
-      this.setState({taskComments:this.props.taskComments});
+      document.title = `FairShare - Task`;
+      // this.props.getSingleTask(this.props.match.params.taskId);
+      // this.props.getTaskComments(this.props.match.params.taskId);
     }
-
+    
     componentDidUpdate(previousProps){
       if(previousProps.taskComments !== this.props.taskComments){
-          this.setState({taskComments:this.props.taskComments});
-        }
-      // this.props.testFunction(2);
-    }
-
-     componentDidMount(){
-        document.title = `FairShare - Task`;
-        this.props.getTaskComments(this.props.match.params.taskId);
-        this.props.getSingleTask(this.props.match.params.taskId)
-    }
-
-  //   getTaskDetails(){
-  //     let token = localStorage.getItem('jwt');
-  // // console.log('token', token);
-  // let options = {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`, // we can extract the email from the token instead of explicitly sending it in req.body
-  //   }
-  // }
-  //     let taskId = this.props.match.params.id;
-  //     axios.get(`http://localhost:9000/api/task/${taskId}`,options)
-  //     .then(response => {
-  //       console.log(response)
-  //       this.setState({
-  //         name: response.data.taskName,
-  //         task: response.data.id,
-  //         taskDescription: response.data.description   
-  //       }, () => {
-  //         console.log(this.state);
-  //       });
-  //     })
-      // .catch(err => console.log(err));
-      // }
-      
-    onSubmit(e){
-      const newTask = {
-        name: this.refs.name.value,
-        task: this.refs.task.value
-        
+          this.setState({ taskComments:this.props.taskComments});
       }
-      this.editTask(newTask);
-      e.preventDefault();
+      if(this.props.singleTask && previousProps.singleTask !== this.props.singleTask){
+          this.setState({task:this.props.singleTask.data[0]});
+      }
+    }
+        
+    componentDidMount(){
+      this.props.getSingleTask(this.props.match.params.taskId);
+      this.props.getTaskComments(this.props.match.params.taskId);
     }
 
-    removeTask = e => {
-        e.preventDefault();
-        this.props.deleteTask(this.props.match.params.taskId, this.state.groupID);
-        this.props.history.goBack();
-        //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
+  onSubmit(e){
+    const newTask = {
+      name: this.refs.name.value,
+      task: this.refs.task.value
       
     }
+    this.editTask(newTask);
+    e.preventDefault();
+  }
 
-     createComments = (e) => {
-        e.preventDefault();
-        this.setState({commentString: ''});
-        let comment = {
-            commentString:this.state.commentString,
-            commentedBy:this.state.commentedBy,
-            groupID:this.state.groupID,
-            taskID: this.props.match.params.taskId
-        }
+  removeTask = e => {
+      e.preventDefault();
+      this.props.deleteTask(this.props.match.params.taskId, this.state.groupID);
+      this.props.history.goBack();
+      //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
+    
+  }
 
-        this.props.createTaskComments(comment, this.props.match.params.taskId);
-        // window.location.reload()      
-    };
+  createComments = (e) => {
+    e.preventDefault();
+    // Create new task comment
+    this.setState({commentString: ''});
+    let comment = {
+        commentString:this.state.commentString,
+        commentedBy:this.state.commentedBy,
+        groupID:this.state.groupID,
+        taskID: this.props.match.params.taskId
+    }
+    this.props.createTaskComments(comment, this.props.match.params.taskId);
+
+    // Update task attribute: numberOfComments
+    this.props.editTask(
+      {...this.state.task,
+      numberOfComments: this.state.task.numberOfComments+1},this.props.match.params.taskId
+    )
+    this.props.getSingleTask(this.props.match.params.taskId);
+    this.setState({numberOfComments: this.state.task.numberOfComments+1})
+  };
       
   handleChanges=(e)=>{
     this.setState({[e.target.name]:e.target.value})
@@ -143,21 +130,19 @@ class TaskDetail extends Component {
   this.props.history.goBack();
 }  
   updateTask = (e) => {
-        e.preventDefault();
-        this.setState({taskName: ''});
-        this.setState({taskDescription: ''});
-        let id = this.props.match.params.taskId
-        console.log(id)
-        let task = {
-            taskName:this.state.taskName,
-            taskDescription: this.state.taskDescription
-            
-        }
+      e.preventDefault();
+      this.setState({taskName: ''});
+      this.setState({taskDescription: ''});
+      let id = this.props.match.params.taskId;
 
+      let task = {
+          taskName:this.state.taskName,
+          taskDescription: this.state.taskDescription          
+      }
       this.props.editTask(task,id);
-  this.setState({toggleMod:!this.state.toggleMod});
+      this.setState({toggleMod:!this.state.toggleMod});
+  }//<-needed?
 
-  };//<-needed?
   editComment = (e, id) => {
       e.preventDefault();
       let comment = {
@@ -169,7 +154,12 @@ class TaskDetail extends Component {
   removeComment = (e, id) => {
       e.preventDefault();
       this.props.deleteComment(id, this.props.match.params.taskId);
-      // window.location.reload()
+      this.props.editTask(
+        {...this.state.task,
+        numberOfComments: this.state.task.numberOfComments-1},this.props.match.params.taskId
+      )
+      this.setState({numberOfComments: this.state.task.numberOfComments-1});
+      this.props.getSingleTask(this.props.match.params.taskId);
   }
 
   toggleMod= (e) => {
@@ -249,49 +239,16 @@ render() {
           <input type="submit" value="EDIT" className="btn" />
           </form>
             </div>
-            
-            
-
-         
-            {/* {console.log(this.props.singleTask, "right here")} */}
+ 
             <MDBContainer className="task-card">
-            {this.props.singleTask !== null
-                        ? this.props.singleTask.data.map(task => {
-                            console.log("here", task);
-                            return(
-                            <>
-                            <TaskCardDetail
-                    task= {task}
-                
-                    // group={1}
-                    // updateGroup={this.saveGroupName}
-                    // removeGroup={this.deleteGroup}
-                />
-                 </>      
-                        )})
-                        : null
-                    } 
-                {/* <TaskCardDetail
-                    taskID= {this.props.singleTask[0].id}
-                    taskname={""}
-                    taskDescription={this.props.taskDescription}
-                    requestedBy={this.props.singleTask.requestedBy}
-                    done={0}
-                    comments={0}
-                    repeated={0}
-                    assignee={""}
-                
-                    // group={1}
-                    // updateGroup={this.saveGroupName}
-                    // removeGroup={this.deleteGroup}
-                /> */}
-       
-                <div>
-                    {/* {console.log(this.state.taskComments)} */}
-                    
-                    {this.state.taskComments !== null
-                        ? this.state.taskComments.data.map(comment => {
-                            // console.log(this.state.task);
+                {this.state.task !== null
+                ? <TaskCardDetail task= {this.state.task} />
+                : null
+                }
+ 
+                <div>                   
+                    {this.state.taskComments.length > 0
+                        ? this.state.taskComments.map(comment => {
                             return(
                             <div key={comment.id}>
                             <Comments 
