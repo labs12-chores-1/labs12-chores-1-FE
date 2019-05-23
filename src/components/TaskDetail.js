@@ -257,7 +257,7 @@ render() {
                     />
                     <input 
                         type="text"
-                        placeholder="Assign to (optional)"
+                        placeholder="edit assignee"
                         name="assigneeName"
                         value={this.state.assigneeName}
                         onChange={this.handleChanges}
