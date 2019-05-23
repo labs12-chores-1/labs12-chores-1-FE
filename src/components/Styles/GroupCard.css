@@ -12,55 +12,14 @@
     color: red;
 }
 
-.task-card{
-    width: 80%;
-    
-    /* margin-top: 5rem; */
-}
-
-#h7 {
-    font-size: 1rem;
-}
-
-.task-card-body{
-    width:100%;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    flex-flow: row; 
-}
-
-.task-card-left {
-    display:flex;
-    flex-flow: column;
-    align-items: center;
-}
-
-.task-card-middle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.task-card-right {
-    display: flex;
-    flex-direction: column;
-    
-    align-items: center;
-    /* flex-flow: row; */
-}
-
-.recurring-display {
-    display: block;
-}
-
-.recurring-hidden {
-    display: none;
+.group-card{
+    margin-bottom: 40px;
+    margin-top: 2%;
+    width: 25%;
 }
 
 
-.task-card-footer {
+.group-card-footer {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -69,7 +28,7 @@
     color: white;
 }
 
-.task-card-footer-button{
+.group-card-footer-button{
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
