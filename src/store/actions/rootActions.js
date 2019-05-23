@@ -1256,7 +1256,8 @@ export const editTask = (task, id) => {
 
     endpoint.then(res => {
       dispatch({type: TASK_EDITED});
-    }).catch(err => {
+    }).then(() => {dispatch(getSingleTask(id))})
+    .catch(err => {
       console.log(err);
       dispatch({type: EDIT_TASK_FAIL})
     })
@@ -1358,7 +1359,7 @@ export const deleteComment = (comment, id) => {
 
  /**
  * Update an existing comment from a task*/
-export const updateComment = (comment, id) => {
+export const updateComment = (comment, commentId,taskId) => {
   let token = localStorage.getItem('jwt');
   let options = {
     headers: {
@@ -1366,14 +1367,17 @@ export const updateComment = (comment, id) => {
     }
   }
 
-  const endpoint = axios.put(`${backendURL}/api/comment/${id}`, comment, options);
+  const endpoint = axios.put(`${backendURL}/api/comment/${commentId}`, comment, options);
 
   return dispatch => {
     dispatch({type: UPDATE_COMMENT_START});
 
     endpoint.then(res => {
       dispatch({type: UPDATE_COMMENT_SUCCESS});
-    }).catch(err => {
+    }).then(()=>{
+      dispatch(getTaskComments(taskId))
+    })
+    .catch(err => {
       console.log(err);
       dispatch({type: UPDATE_COMMENT_FAIL,payload:err})
     })

@@ -47,9 +47,12 @@ class TaskDetail extends Component {
             commentString:'',
             commentedBy:1,
             groupID: this.props.match.params.groupId,
-            taskID: 0,
+            taskID: this.props.match.params.taskId,
             toggleMod:false,
-            taskDescription: ""
+            taskDescription: "",
+            commentModal:false,
+            newCommentString:'',
+            commentID:''
         };
         
     }
@@ -95,13 +98,15 @@ class TaskDetail extends Component {
       // }
       
     onSubmit(e){
+      e.preventDefault();
       const newTask = {
         name: this.refs.name.value,
         task: this.refs.task.value
         
       }
       this.editTask(newTask);
-      e.preventDefault();
+      
+      
     }
 
     removeTask = e => {
@@ -130,9 +135,7 @@ class TaskDetail extends Component {
     this.setState({[e.target.name]:e.target.value})
   }
 
-  handleUpdateCommentChange=(e)=> {
-    this.setState({[e.target.name]:e.target.value});
-  }
+  
 
   handleInputChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
@@ -159,11 +162,14 @@ class TaskDetail extends Component {
 
   };//<-needed?
   editComment = (e, id) => {
+    console.log(this.props.match.params.taskId)
       e.preventDefault();
-      let comment = {
-          commentString: this.state.commentString
+      let newComment = {
+          CommentString: this.state.newCommentString
       }
-      this.props.updateComment(comment,id)
+      this.props.updateComment(newComment,id,this.state.taskID)
+      this.setState({commentModal:!this.state.commentModal})
+      
   }
 
   removeComment = (e, id) => {
@@ -177,6 +183,15 @@ class TaskDetail extends Component {
         toggleMod:!this.state.toggleMod
     })
   }
+  //edit modal for comments
+  toggleModal= (e,id) => {
+    console.log(id)
+    e.preventDefault();
+    this.setState({
+        commentModal:!this.state.commentModal,commentID:id
+    })
+  }
+  
 
 render() {
     return (
@@ -299,9 +314,10 @@ render() {
                             taskID = {this.props.match.params.taskId}
                             commentedOn={comment.commentedOn}
                             commentID={comment.id}
+                            key={comment.id}
                             />
                              <div className="buttons">
-                                <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
+                                <button type="submit" onClick={(e) => this.toggleModal(e, comment.id)}>Edit</button>
                                 <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
                              </div>
                             </div>
@@ -313,6 +329,27 @@ render() {
                 
                     
             </MDBContainer>
+            {/*edit comment modal */}
+            <div className= {
+                this.state.commentModal=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                
+                <form className={'create-task-form'} onSubmit={(e)=>this.editComment(e,this.state.commentID)}>
+                <span className="x" onClick={this.toggleModal}>X</span>
+                <h2>Update Comment</h2>
+                <input
+                 type="text"
+                 placeholder="update comment"
+                 name="newCommentString"
+                 value={this.state.newCommentString}
+                 onChange={this.handleChanges}
+                 placeholder="Update Comment "
+                />
+                <button className="cta-submit" type='submit'onClick={(e)=>this.editComment(e,this.state.commentID)}>submit</button>
+                    
+                    </form>
+                </div>
         </MDBContainer>
         
 
