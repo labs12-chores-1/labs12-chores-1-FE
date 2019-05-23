@@ -262,7 +262,7 @@ class GroupsPage extends Component {
                 <h2>Update Group Name</h2>
                 <input
                  type="text"
-                 placeholder="enter new group name"
+                //  placeholder="enter new group name"
                  name="newGroupName"
                  value={this.state.newGroupName}
                  onChange={this.handleInputChanges}
