@@ -49,6 +49,7 @@ class TaskDetail extends Component {
             groupID: this.props.match.params.groupId,
             taskID: 0,
             toggleMod:false,
+            assigneeName: "",
             taskDescription: ""
         };
         
@@ -146,11 +147,13 @@ class TaskDetail extends Component {
         e.preventDefault();
         this.setState({taskName: ''});
         this.setState({taskDescription: ''});
+        this.setState({assigneeName: ''});
         let id = this.props.match.params.taskId
         console.log(id)
         let task = {
             taskName:this.state.taskName,
-            taskDescription: this.state.taskDescription
+            taskDescription: this.state.taskDescription,
+            assigneeName: this.state.assigneeName
             
         }
 
@@ -257,7 +260,7 @@ render() {
                         placeholder="Assign to (optional)"
                         name="assigneeName"
                         value={this.state.assigneeName}
-                        onChange={this.handleInputChange}
+                        onChange={this.handleChanges}
                     />
                     
                     
