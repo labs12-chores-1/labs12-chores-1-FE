@@ -24,7 +24,8 @@ import {
     MDBIcon,
     MDBContainer,
   } from "mdbreact";
-import { connect } from 'react-redux';
+
+  import { connect } from 'react-redux';
 
 import { getTaskComments } from '../store/actions/rootActions';
 import { deleteTask } from '../store/actions/rootActions';
@@ -59,44 +60,29 @@ class TaskDetail extends Component {
     }
 
     componentWilMount(){
-      this.setState({taskComments:this.props.taskComments});
+      document.title = `FairShare - Task`;  
+      
+      // this.props.getSingleTask(this.props.match.params.taskId);
+      // this.props.getTaskComments(this.props.match.params.taskId);  
     }
-
+    
     componentDidUpdate(previousProps){
       if(previousProps.taskComments !== this.props.taskComments){
-          this.setState({taskComments:this.props.taskComments});
-        }
-      // this.props.testFunction(2);
+          this.setState({ taskComments:this.props.taskComments,
+                          task: {...this.state.task,
+                            numberOfComments:this.props.taskComments.length}});
+      }
+      if(this.props.singleTask && previousProps.singleTask !== this.props.singleTask){
+          this.setState({task:this.props.singleTask.data[0]});
+      }
+    }
+        
+    componentDidMount(){
+      this.props.getSingleTask(this.props.match.params.taskId);
+      this.props.getTaskComments(this.props.match.params.taskId);
     }
 
-     componentDidMount(){
-        document.title = `FairShare - Task`;
-        this.props.getTaskComments(this.props.match.params.taskId);
-        this.props.getSingleTask(this.props.match.params.taskId)
-    }
-
-  //   getTaskDetails(){
-  //     let token = localStorage.getItem('jwt');
-  // // console.log('token', token);
-  // let options = {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`, // we can extract the email from the token instead of explicitly sending it in req.body
-  //   }
-  // }
-  //     let taskId = this.props.match.params.id;
-  //     axios.get(`http://localhost:9000/api/task/${taskId}`,options)
-  //     .then(response => {
-  //       console.log(response)
-  //       this.setState({
-  //         name: response.data.taskName,
-  //         task: response.data.id,
-  //         taskDescription: response.data.description   
-  //       }, () => {
-  //         console.log(this.state);
-  //       });
-  //     })
-      // .catch(err => console.log(err));
-      // }
+  
       
     onSubmit(e){
       e.preventDefault();
@@ -106,10 +92,9 @@ class TaskDetail extends Component {
         
       }
       this.editTask(newTask);
-      
-      
+      this.props.getSingleTask(this.props.match.params.taskId);
     }
-
+  
     removeTask = e => {
         e.preventDefault();
         this.props.deleteTask(this.props.match.params.taskId, this.state.groupID);
@@ -118,51 +103,64 @@ class TaskDetail extends Component {
       
     }
 
-     createComments = (e) => {
-        e.preventDefault();
-        this.setState({commentString: ''});
-        let comment = {
-            commentString:this.state.commentString,
-            commentedBy:this.state.commentedBy,
-            groupID:this.state.groupID,
-            taskID: this.props.match.params.taskId
-        }
-
-        this.props.createTaskComments(comment, this.props.match.params.taskId);
-        // window.location.reload()      
+    createComments = (e) => {
+      e.preventDefault();
+      // Create new task comment
+      this.setState({commentString: ''});
+      let comment = {
+          commentString:this.state.commentString,
+          commentedBy:this.state.commentedBy,
+          groupID:this.state.groupID,
+          taskID: this.props.match.params.taskId
+      }
+      this.props.createTaskComments(comment, this.props.match.params.taskId);
+  
+      // Update task attribute: numberOfComments
+      this.props.editTask(
+        {...this.state.task,
+        numberOfComments: this.state.task.numberOfComments+1},this.props.match.params.taskId
+      )
+      this.props.getSingleTask(this.props.match.params.taskId);
+      this.props.getTaskComments(this.props.match.params.taskId);
+      this.setState({ task: {...this.props.singleTask,
+                        numberOfComments: this.state.task.numberOfComments+1}})
     };
       
-  handleChanges=(e)=>{
-    this.setState({[e.target.name]:e.target.value})
-  }
+    handleChanges=(e)=>{
+      this.setState({[e.target.name]:e.target.value})
+    }
 
   
 
-  handleInputChange=(e)=>{
-    this.setState({[e.target.name]:e.target.value})
-  }
+    handleInputChange=(e)=>{
+      this.setState({[e.target.name]:e.target.value})
+    }
 
-  backToTask = (e) => {
-  e.preventDefault();
-  this.props.history.goBack();
-}  
-  updateTask = (e) => {
-        e.preventDefault();
-        this.setState({taskName: ''});
-        this.setState({taskDescription: ''});
-        let id = this.props.match.params.taskId
-        console.log(id)
-        let task = {
-            taskName:this.state.taskName,
-            taskDescription: this.state.taskDescription
-            
-        }
+    backToTask = (e) => {
+      e.preventDefault();
+      this.props.history.goBack();
+    }  
+    
+    updateTask = (e) => {
+      e.preventDefault();
+      this.setState({taskName: ''});
+      this.setState({taskDescription: ''});
+      this.setState({assigneeName: ''});
+      let id = this.props.match.params.taskId
+      console.log(id)
+      let task = {
+          taskName:this.state.taskName,
+          taskDescription: this.state.taskDescription,
+          assigneeName: this.state.assigneeName
+          
+      }
 
-      this.props.editTask(task,id);
-  this.setState({toggleMod:!this.state.toggleMod});
-
-  };//<-needed?
-  editComment = (e, id) => {
+    this.props.editTask(task,id);      
+    this.props.getSingleTask(this.props.match.params.taskId);
+    this.setState({toggleMod:!this.state.toggleMod});
+}
+  
+editComment = (e, id) => {
     console.log(this.props.match.params.taskId)
       e.preventDefault();
       let newComment = {
@@ -175,16 +173,24 @@ class TaskDetail extends Component {
   }
 
   removeComment = (e, id) => {
-      e.preventDefault();
-      this.props.deleteComment(id, this.props.match.params.taskId);
-      
-  }
+    e.preventDefault();
+    this.props.deleteComment(id, this.props.match.params.taskId);
+    this.props.editTask(
+      {...this.state.task,
+      numberOfComments: this.state.task.numberOfComments-1},this.props.match.params.taskId
+    )
+    this.props.getSingleTask(this.props.match.params.taskId);
+    this.props.getTaskComments(this.props.match.params.taskId);
+    this.setState({task: {...this.props.singleTask, 
+                numberOfComments: this.state.task.numberOfComments-1}});
+}
 
   toggleMod= (e) => {
     this.setState({
         toggleMod:!this.state.toggleMod
     })
   }
+  
   //edit modal for comments
   toggleModal= (e,id) => {
     console.log(id)
@@ -206,133 +212,82 @@ render() {
                     </div>
                     <div className="nav-btns">
                         <MDBBtn onClick={this.toggleMod} outline color="success">Edit Task</MDBBtn>
-                        {/* <MDBBtn onClick={this.toggle} outline color="success">Add Comment</MDBBtn> */}
                         <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn>           
                     </div>
                 </MDBCol>
             </MDBRow>
-            {/* <form onSubmit={this.updateTask}>
-          <div className="input-field">
-            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
-            <label htmlFor="name">Name</label>
-          </div>
-          {/* <div className="input-field">
-            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
-            <label htmlFor="task">Task</label>
-          </div> */}
-          {/*</MDBContainer><input type="submit" value="EDIT" className="btn" />
-          </form> */}
-         
 
-          <form onSubmit={this.createComments}>
-            <input 
-                type="text"
-                placeholder="Write Comment"
-                name="commentString"
-                value={this.state.commentString}
-                onChange={this.handleChanges}
-              />
-              <button type='submit'>Submit</button>
-          </form>
-          
-          {/* <form onSubmit={(e)=>this.editComment(e,5)}>
-            <input 
-                type="text"
-                placeholder="Comment Changes"
-                name="commentString"
-                value={this.state.commentString}
-                onChange={this.handleUpdateCommentChange}
-              />
-              <button type='submit'>Edit</button>
-          </form> */}
-            
-            <div className= {
-                this.state.toggleMod=== false
-                    ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
-                                
+            {/* Edit Task Modal */}
+         <div className= {
+            this.state.toggleMod=== false
+                ? 'custom-mod-hidden'
+                : 'custom-mod-display'}>
                 <span className="x" onClick={this.toggleMod}>X</span>
-                <form onSubmit={this.updateTask}>
-          <div className="input-field">
-            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
-            <label htmlFor="name">Title</label>
-            <input type="text" name="taskDescription" ref="taskDescription" value={this.state.taskDescription} onChange={this.handleInputChange} />
-            <label htmlFor="name">Description</label>
-          </div>
-          {/* <div className="input-field">
-            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
-            <label htmlFor="task">Task</label>
-          </div> */}
-          <input type="submit" value="EDIT" className="btn" />
-          </form>
-            </div>
-            
-            
-
-         
-            {/* {console.log(this.props.singleTask, "right here")} */}
-            <MDBContainer className="task-card">
-            {this.props.singleTask !== null
-                        ? this.props.singleTask.data.map(task => {
-                            console.log("here", task);
-                            return(
-                            <>
-                            <TaskCardDetail
-                    task= {task}
-                
-                    // group={1}
-                    // updateGroup={this.saveGroupName}
-                    // removeGroup={this.deleteGroup}
+            <form className={'create-task-form'}onSubmit={this.updateTask}>
+                <h3>Edit Task</h3>
+                <input 
+                    type="text"
+                    placeholder="edit task name"
+                    name="taskName"
+                    value={this.state.taskName}
+                    onChange={this.handleChanges}
                 />
-                 </>      
-                        )})
-                        : null
-                    } 
-                {/* <TaskCardDetail
-                    taskID= {this.props.singleTask[0].id}
-                    taskname={""}
-                    taskDescription={this.props.taskDescription}
-                    requestedBy={this.props.singleTask.requestedBy}
-                    done={0}
-                    comments={0}
-                    repeated={0}
-                    assignee={""}
+                <textarea
+                    className="text-description"
+                    type="text"
+                    placeholder="edit description"
+                    name="taskDescription"
+                    value={this.state.taskDescription}
+                    onChange={this.handleChanges}
+                />
+                <input 
+                    type="text"
+                    placeholder="edit assignee"
+                    name="assigneeName"
+                    value={this.state.assigneeName}
+                    onChange={this.handleChanges}
+                />
+                <button className="cta-submit" type='submit'>EDIT</button>
+            </form>
+      </div>                 
+      <MDBContainer className="task-card">
+          {this.state.task !== null
+          ? <TaskCardDetail task= {this.state.task} />
+          : null
+          }
+          <div>           
+            <form onSubmit={this.createComments}>
+                <input
+                  type="text"
+                  placeholder="Write Comment"
+                  name="commentString"
+                  value={this.state.commentString}
+                  onChange={this.handleChanges}
+                />
+                <button type="submit">Submit</button>
+              </form>                
+            {this.state.taskComments.length > 0
+                ? this.state.taskComments.map(comment => {
+                    return(
+                    <div key={comment.id}>
+                    <Comments 
+                    commentString= {comment.commentString}
+                    taskID = {this.props.match.params.taskId}
+                    commentedOn={comment.commentedOn}
+                    commentID={comment.id}
+                    />
+                      <div className="buttons">
+                        <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
+                        <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
+                      </div>
+                    </div> 
                 
-                    // group={1}
-                    // updateGroup={this.saveGroupName}
-                    // removeGroup={this.deleteGroup}
-                /> */}
-       
-                <div>
-                    {/* {console.log(this.state.taskComments)} */}
-                    
-                    {this.state.taskComments !== null
-                        ? this.state.taskComments.data.map(comment => {
-                            // console.log(this.state.task);
-                            return(
-                            <div key={comment.id}>
-                            <Comments 
-                            commentString= {comment.commentString}
-                            taskID = {this.props.match.params.taskId}
-                            commentedOn={comment.commentedOn}
-                            commentID={comment.id}
-                            key={comment.id}
-                            />
-                             <div className="buttons">
-                                <button type="submit" onClick={(e) => this.toggleModal(e, comment.id)}>Edit</button>
-                                <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
-                             </div>
-                            </div>
-                       
-                        )})
-                        : null
-                    } 
-                </div>  
-                
-                    
-            </MDBContainer>
-            {/*edit comment modal */}
-            <div className= {
+                )})
+                : null
+            } 
+          </div>  
+          {/*edit comment modal */}
+          <div className= {
                 this.state.commentModal=== false
                     ? 'custom-mod-hidden'
                     : 'custom-mod-display'}>
@@ -352,15 +307,15 @@ render() {
                     
                     </form>
                 </div>
-        </MDBContainer>
-        
-
-        
-    )
-    }
-}
-
-const mapStateToProps = state => {
+          
+              
+      </MDBContainer>
+        </MDBContainer> 
+        )
+      }
+  }
+            
+    const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
       //state items
