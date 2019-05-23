@@ -256,10 +256,10 @@ render() {
                     return(
                     <div key={comment.id}>
                     <Comments 
-                    commentString= {comment.commentString}
-                    taskID = {this.props.match.params.taskId}
-                    commentedOn={comment.commentedOn}
-                    commentID={comment.id}
+                        commentString= {comment.commentString}
+                        taskID = {this.props.match.params.taskId}
+                        commentedOn={comment.commentedOn}
+                        commentID={comment.id}
                     />
                       <div className="buttons">
                         <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
