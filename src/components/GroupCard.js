@@ -12,32 +12,40 @@ import {
 import { withRouter } from "react-router-dom";
 import "./Styles/GroupCard.css";
 
-const GroupCard = props => {
-  return (
+class  GroupCard extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+        userId: localStorage.getItem('userId')
+    }
+  }
+  
+  render(){
+    return (
     <div className="group-card">
       <MDBCard className="text-center">
         <MDBCardHeader color="primary-color" tag="h3">
-          {props.group.name}
+          {this.props.group.name}
         </MDBCardHeader>
         <MDBCardBody>
           <MDBCardTitle />
           <div className={'group-user-image'}>
-            {props.group.members !== undefined
-                ? props.group.members.map(usr => <img  key={usr.name} src={usr.profilePicture} alt='user profile' />)
+            {this.props.group.members !== undefined
+                ? this.props.group.members.map(usr => <img  key={usr.name} src={usr.profilePicture} alt='user profile' />)
               : null}
           </div>
-          <MDBNavLink key={props.key} to={`/groups/${props.group.id}`}>
+          <MDBNavLink key={this.props.key} to={`/groups/${this.props.group.id}`}>
             <MDBBtn color="success">Enter</MDBBtn>
           </MDBNavLink>
         </MDBCardBody>
         {
-          props.group.userID !== Number(localStorage.getItem("userId")) ? null :
+          this.props.group.userID !== Number(localStorage.getItem("userId")) ? null :
               <MDBCardFooter style={{ background: "#2A922D" }}>
                 <div className="group-card-footer">
                   <div
                       className="group-card-footer-button"
                       onClick={() =>
-                          props.updateGroup(props.group.id, props.group.name)
+                          this.props.updateGroup(this.props.group.id)
                       }
                   >
                     <MDBIcon icon="edit" />
@@ -46,7 +54,7 @@ const GroupCard = props => {
                   <div
                       className="group-card-footer-button"
                       onClick={() =>
-                          props.removeGroup(props.group.id, props.group.name)
+                          this.props.removeGroup(this.props.group.id, this.state.userId)
                       }
                   >
                     <MDBIcon icon="trash" />
@@ -58,6 +66,10 @@ const GroupCard = props => {
       </MDBCard>
     </div>
   );
+      }
+      
 };
+
+
 
 export default withRouter(GroupCard);
