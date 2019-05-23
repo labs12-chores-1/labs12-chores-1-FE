@@ -55,9 +55,10 @@ class TaskDetail extends Component {
     }
 
     componentWilMount(){
-      document.title = `FairShare - Task`;
+      document.title = `FairShare - Task`;  
+      
       // this.props.getSingleTask(this.props.match.params.taskId);
-      // this.props.getTaskComments(this.props.match.params.taskId);
+      // this.props.getTaskComments(this.props.match.params.taskId);  
     }
     
     componentDidUpdate(previousProps){
@@ -72,6 +73,10 @@ class TaskDetail extends Component {
     componentDidMount(){
       this.props.getSingleTask(this.props.match.params.taskId);
       this.props.getTaskComments(this.props.match.params.taskId);
+      // this.setState({ taskComments:this.props.taskComments});
+      // if(this.props.singleTaskk){
+      //   this.setState({task:this.props.singleTask.data[0]});
+      // }
     }
 
   onSubmit(e){
@@ -160,6 +165,7 @@ class TaskDetail extends Component {
       )
       this.setState({numberOfComments: this.state.task.numberOfComments-1});
       this.props.getSingleTask(this.props.match.params.taskId);
+      this.props.getTaskComments(this.props.match.params.taskId);
   }
 
   toggleMod= (e) => {
@@ -170,8 +176,8 @@ class TaskDetail extends Component {
 
 render() {
     return (
-
         <MDBContainer className="task-detail-container">
+          {console.log(this.state.task)}
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
                     <div onClick={this.backToTask}>
@@ -246,7 +252,8 @@ render() {
                 : null
                 }
  
-                <div>                   
+                <div>           
+                            
                     {this.state.taskComments.length > 0
                         ? this.state.taskComments.map(comment => {
                             return(
@@ -257,11 +264,11 @@ render() {
                             commentedOn={comment.commentedOn}
                             commentID={comment.id}
                             />
-                             <div className="buttons">
+                              <div className="buttons">
                                 <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
                                 <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
                              </div>
-                            </div>
+                            </div> 
                        
                         )})
                         : null

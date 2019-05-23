@@ -262,18 +262,12 @@ class GroupsPage extends Component {
                 <h2>Update Group Name</h2>
                 <input
                  type="text"
-                 placeholder="enter new group name"
                  name="newGroupName"
                  value={this.state.newGroupName}
                  onChange={this.handleInputChanges}
                  placeholder="Update Group Name"
                 />
-                
-                
-                    
-                    
-                    
-                    <button className="cta-submit" type='submit'onClick={this.handleUpdateGroupName}>submit</button>
+                <button className="cta-submit" type='submit'onClick={this.handleUpdateGroupName}>submit</button>
                     
                 </form>
             </div>
