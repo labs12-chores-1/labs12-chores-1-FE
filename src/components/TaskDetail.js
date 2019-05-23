@@ -174,19 +174,7 @@ class TaskDetail extends Component {
                 </MDBCol>
             </MDBRow>
             
-          <form onSubmit={this.createComments}>
-            <input 
-                type="text"
-                placeholder="Write Comment"
-                name="commentString"
-                value={this.state.commentString}
-                onChange={this.handleChanges}
-              />
-              <button type='submit'>Submit</button>
-          </form>
-          
-          
-
+        
     <div className= {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
