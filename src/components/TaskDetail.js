@@ -205,6 +205,7 @@ render() {
           </div> */}
           {/*</MDBContainer><input type="submit" value="EDIT" className="btn" />
           </form> */}
+          
          
 
           <form onSubmit={this.createComments}>
@@ -218,7 +219,7 @@ render() {
               <button type='submit'>Submit</button>
           </form>
           
-          {/* <form onSubmit={(e)=>this.editComment(e,5)}>
+          {/* /* <form onSubmit={(e)=>this.editComment(e,5)}>
             <input 
                 type="text"
                 placeholder="Comment Changes"
@@ -228,8 +229,49 @@ render() {
               />
               <button type='submit'>Edit</button>
           </form> */}
+
+    <div className= {
+                this.state.toggleMod=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                <form className={'create-task-form'}onSubmit={this.updateTask}>
+                <span className="x" onClick={this.toggleMod}>X</span>
+                <h3>Edit Task</h3>
+                    <input 
+                        type="text"
+                        placeholder="edit task name"
+                        name="taskName"
+                        value={this.state.taskName}
+                        onChange={this.handleChanges}
+                    />
+                    <textarea
+                        className="text-description"
+                        type="text"
+                        placeholder="edit description"
+                        name="taskDescription"
+                        value={this.state.taskDescription}
+                        onChange={this.handleChanges}
+                    />
+                    <input 
+                        type="text"
+                        placeholder="Assign to (optional)"
+                        name="assigneeName"
+                        value={this.state.assigneeName}
+                        onChange={this.handleInputChange}
+                    />
+                    {/* <div>
+                        <input type="checkbox" name="Completed" value="taskCompleted" onClick={this.handleToggleComplete}/>
+                        <span>Completed?</span>
+                    </div> */}
+                    
+                    
+                    
+                    <button className="cta-submit" type='submit'>EDIT</button>
+                </form>
+            </div>
+
             
-            <div className= {
+            {/* <div className= {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
                     : 'custom-mod-display'}>
@@ -246,9 +288,9 @@ render() {
             <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
             <label htmlFor="task">Task</label>
           </div> */}
-          <input type="submit" value="EDIT" className="btn" />
+          {/* <input type="submit" value="EDIT" className="btn" />
           </form>
-            </div>
+            </div> */} */}
             
             
 
