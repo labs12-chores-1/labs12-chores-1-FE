@@ -14,7 +14,7 @@ import {
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { getTaskComments, getUserName, getGroupTasks} from '../store/actions/rootActions';
+import { getTaskComments, getUserName, getGroupTasks,getSingleTask} from '../store/actions/rootActions';
 // import { rootReducer } from "../store/reducers/rootReducer";
 
 import "./Styles/TaskCard.css";
@@ -29,14 +29,16 @@ class TaskCard extends Component {
         searchField: "",
         groupId: null,
         userId: null,
-        comments: props.comments,
+        taskComments: [],
         assigneeName: "",
         task: {}
     };
   }
   componentWillMount(){
         document.title = `FairShare - Task`; 
-        this.setState({task: this.props.task});
+        this.setState({task: this.props.task
+                      // taskComments: this.props.taskComments
+                    });
 
         let backendURL;
         if(process.env.NODE_ENV === 'development'){
@@ -59,13 +61,7 @@ class TaskCard extends Component {
             })
         })
     //   this.props.getUserName(this.props.task.completedBy);
-      // console.log(this.props.tempUserName);
-    }
-    
-    componentDidMount(){
-
-    }
-
+    }  
 
 
   getComments = e => {
@@ -73,12 +69,17 @@ class TaskCard extends Component {
     this.props.getTaskComments(this.props.match.params.id);
   };
 
+  handleClickTaskCard = (e) =>{
+    e.preventDefault();
+    this.props.history.push(`/groups/${this.props.match.params.id}/task/${this.state.task.id}`)
+  }
+
   render(){
 
   return (
       
       <MDBCard className="task-card" 
-        onClick={()=>this.props.history.push(`/groups/${this.props.match.params.id}/task/${this.state.task.id}`)}>
+        onClick={this.handleClickTaskCard}>
         <MDBCardBody className="task-card-body">
             <div className="task-card-left">
                 <div>{this.state.task.taskName}</div>
@@ -89,7 +90,11 @@ class TaskCard extends Component {
                 <div>{this.state.task.taskDescription}</div>
             </div>
             <div className="task-card-right">
-                <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
+                {this.props.task.numberOfComments > 0
+                  ? <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
+                  : null
+                }
+                {/* <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img> */}
                 {/* <input type="checkbox" name="vehicle" value="Bike" onClick={(event)=>{event.stopPropagation()}}></input> */}
                 <div>{this.state.task.completed ===0
                       ? "Incomplete": "Complete"}</div>
@@ -111,15 +116,17 @@ const mapStateToProps = state => {
   state = state.rootReducer; // pull values from state root reducer
   return {
     //state items
-    taskComments: state.taskComments,
+    // taskComments: state.taskComments,
     errorMessage: state.errorMessage,
     assigneeName: state.tempUserName,
-    currentTask: state.currentTask
+    currentTask: state.currentTask,
+    singleTask: state.singleTask
   };
 };
 
 export default withRouter(connect(mapStateToProps,{
   getTaskComments,
   getUserName,
-  getGroupTasks
+  getGroupTasks,
+  getSingleTask
 })(TaskCard));

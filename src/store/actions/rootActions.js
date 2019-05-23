@@ -512,8 +512,6 @@ export const removeGroup = (groupID, userID) => dispatch => {
   })
 }
 
-
-
 //Leave Household endpoint - remove Group Member
 
 export const removeGroupMember = (userID,groupID) => dispatch => {

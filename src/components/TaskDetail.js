@@ -169,7 +169,7 @@ class TaskDetail extends Component {
       }
       this.props.updateComment(newComment,id,this.state.taskID)
       this.setState({commentModal:!this.state.commentModal})
-      window.location.reload()
+      window.location.reload();
       
   }
 
