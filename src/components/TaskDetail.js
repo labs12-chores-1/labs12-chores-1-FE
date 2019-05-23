@@ -259,10 +259,7 @@ render() {
                         value={this.state.assigneeName}
                         onChange={this.handleInputChange}
                     />
-                    {/* <div>
-                        <input type="checkbox" name="Completed" value="taskCompleted" onClick={this.handleToggleComplete}/>
-                        <span>Completed?</span>
-                    </div> */}
+                    
                     
                     
                     
@@ -290,7 +287,7 @@ render() {
           </div> */}
           {/* <input type="submit" value="EDIT" className="btn" />
           </form>
-            </div> */} */}
+            </div> */} 
             
             
 
