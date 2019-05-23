@@ -197,20 +197,7 @@ render() {
                     </div>
                 </MDBCol>
             </MDBRow>
-            {/* <form onSubmit={this.updateTask}>
-          <div className="input-field">
-            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
-            <label htmlFor="name">Name</label>
-          </div>
-          {/* <div className="input-field">
-            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
-            <label htmlFor="task">Task</label>
-          </div> */}
-          {/*</MDBContainer><input type="submit" value="EDIT" className="btn" />
-          </form> */}
-          
-         
-
+            
           <form onSubmit={this.createComments}>
             <input 
                 type="text"
@@ -271,26 +258,7 @@ render() {
             </div>
 
             
-            {/* <div className= {
-                this.state.toggleMod=== false
-                    ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
-                                
-                <span className="x" onClick={this.toggleMod}>X</span>
-                <form onSubmit={this.updateTask}>
-          <div className="input-field">
-            <input type="text" name="taskName" ref="name" value={this.state.taskName} onChange={this.handleInputChange} />
-            <label htmlFor="name">Title</label>
-            <input type="text" name="taskDescription" ref="taskDescription" value={this.state.taskDescription} onChange={this.handleInputChange} />
-            <label htmlFor="name">Description</label>
-          </div>
-          {/* <div className="input-field">
-            <input type="text" name="task" ref="task" value2={this.state.task} onChange={this.updateTask} />
-            <label htmlFor="task">Task</label>
-          </div> */}
-          {/* <input type="submit" value="EDIT" className="btn" />
-          </form>
-            </div> */} 
+            
             
             
 
@@ -313,20 +281,7 @@ render() {
                         )})
                         : null
                     } 
-                {/* <TaskCardDetail
-                    taskID= {this.props.singleTask[0].id}
-                    taskname={""}
-                    taskDescription={this.props.taskDescription}
-                    requestedBy={this.props.singleTask.requestedBy}
-                    done={0}
-                    comments={0}
-                    repeated={0}
-                    assignee={""}
                 
-                    // group={1}
-                    // updateGroup={this.saveGroupName}
-                    // removeGroup={this.deleteGroup}
-                /> */}
        
                 <div>
                     {/* {console.log(this.state.taskComments)} */}
