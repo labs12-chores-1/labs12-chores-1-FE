@@ -113,8 +113,7 @@ class TaskCardDetail extends Component {
               </div>
               {/* {console.log(this.state.taskCompletedOn.toDateString())} */}
               {this.state.taskCompletedOn
-                ?
-                <h8>{`Completed On: ${this.state.taskCompletedOn}`}</h8>
+                ?<h8>{`Completed On: ${this.state.taskCompletedOn}`}</h8>
                 :null}
             </div>
         </MDBCardBody>

@@ -63,7 +63,9 @@ class TaskDetail extends Component {
     
     componentDidUpdate(previousProps){
       if(previousProps.taskComments !== this.props.taskComments){
-          this.setState({ taskComments:this.props.taskComments});
+          this.setState({ taskComments:this.props.taskComments,
+                          task: {...this.state.task,
+                            numberOfComments:this.props.taskComments.length}});
       }
       if(this.props.singleTask && previousProps.singleTask !== this.props.singleTask){
           this.setState({task:this.props.singleTask.data[0]});
@@ -115,7 +117,9 @@ class TaskDetail extends Component {
       numberOfComments: this.state.task.numberOfComments+1},this.props.match.params.taskId
     )
     this.props.getSingleTask(this.props.match.params.taskId);
-    this.setState({numberOfComments: this.state.task.numberOfComments+1})
+    this.props.getTaskComments(this.props.match.params.taskId);
+    this.setState({ task: {...this.props.singleTask,
+                      numberOfComments: this.state.task.numberOfComments+1}})
   };
       
   handleChanges=(e)=>{
@@ -163,9 +167,10 @@ class TaskDetail extends Component {
         {...this.state.task,
         numberOfComments: this.state.task.numberOfComments-1},this.props.match.params.taskId
       )
-      this.setState({numberOfComments: this.state.task.numberOfComments-1});
       this.props.getSingleTask(this.props.match.params.taskId);
       this.props.getTaskComments(this.props.match.params.taskId);
+      this.setState({task: {...this.props.singleTask, 
+                  numberOfComments: this.state.task.numberOfComments-1}});
   }
 
   toggleMod= (e) => {
