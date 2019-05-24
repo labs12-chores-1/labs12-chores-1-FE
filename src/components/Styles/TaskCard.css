@@ -13,7 +13,7 @@
 }
 
 .task-card{
-    width: 80%;
+    width: 100%;
     
     /* margin-top: 5rem; */
 }
@@ -38,9 +38,11 @@ h8 {
 
 .task-card-middle {
     display: flex;
+    width: 54%;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    
+   
 }
 
 .task-card-right {
@@ -53,6 +55,7 @@ h8 {
 
 .recurring-display {
     display: block;
+    font-size:12px;
 }
 
 .recurring-hidden {
@@ -89,4 +92,25 @@ h8 {
     width: 30px;
     border-radius: 30px;
     margin: 3%;
+}
+.assigned-To{
+    font-size: 15px;
+}
+
+.requested-By{
+ font-size: 12px;
+}
+.task-Name{
+    display:flex;
+    font-size:21px;
+   justify-content: center; 
+}
+.complete{
+    font-size: 12px;
+}
+.task-Description{
+    display:flex;
+    font-size:12px;
+   justify-content: center;
+   margin-top: 5px;
 }
