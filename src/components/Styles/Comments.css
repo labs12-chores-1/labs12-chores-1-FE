@@ -1,13 +1,16 @@
+
+.comments-border{
+    border: 2px solid black;
+}
+
 .comments-container{
    display: flex;
-   border: 1px solid black;
    width: 366px;
    margin-top: 20px;
    height: 60px;
-   justify-content: center;
-   
-
+   /* justify-content: center; */
 }
+
 .user-section{
     display: flex;
     width: 120px;
@@ -16,7 +19,6 @@
     
 }
 .comment{
-    
     padding-left: 20px;
     font-size: 20px;
     
@@ -44,13 +46,12 @@ width: 190px;
 }
 .usr-img{
     border-radius: 50%;
+   
 }
 
 .close{
     width: 10px;
     height:10px;
 }
-.buttons{
-    display:flex;
-    justify-content: space-between;
-}
+
+

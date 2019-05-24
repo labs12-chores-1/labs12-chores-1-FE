@@ -24,3 +24,28 @@
 #MDBIcon{
     cursor: pointer;
 }
+
+/* COMMENTS */
+.cta-comment-submit{
+    margin: 0;
+    padding: 10px 200px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #388e3c;
+    border: 1px solid #388e3c;
+    color: #ffffff;
+    cursor: pointer; 
+}
+
+.cta-comment-edit {
+    border: none;
+    color: #42922d;
+}
+
+.cta-comment-close {
+    border: none;
+    color: #42922d;
+    font-weight: bold;
+}
+

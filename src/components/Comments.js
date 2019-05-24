@@ -28,12 +28,12 @@ class Comments extends Component {
 
     render(){
         return(
-            <>
+            <div className="comments-border">
             <div className="comments-container">
-                
                 <div className="user-section">
                     <h3 className="name">{this.state.name}</h3> 
                     <img className="usr-img" alt="userimg" src={this.state.img_url} width="18px" height="19px"/>
+                     <button className="cta-comment-close" type="button" onClick={(e) => this.props.removeComment(e, this.props.commentID)}>x</button> 
                 </div>
                    
                     <div className="comment-details">
@@ -43,7 +43,7 @@ class Comments extends Component {
 
                     
             </div>
-            </>
+            </div>
         )
 
     }
