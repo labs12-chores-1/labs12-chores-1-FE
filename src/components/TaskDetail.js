@@ -50,6 +50,9 @@ class TaskDetail extends Component {
             taskID: 0,
             toggleMod:false,
             taskDescription: "",
+            commentModal:false,
+            newCommentString:'',
+            commentID:'',
             task: null
         };
         
@@ -76,13 +79,11 @@ class TaskDetail extends Component {
     componentDidMount(){
       this.props.getSingleTask(this.props.match.params.taskId);
       this.props.getTaskComments(this.props.match.params.taskId);
-      // this.setState({ taskComments:this.props.taskComments});
-      // if(this.props.singleTaskk){
-      //   this.setState({task:this.props.singleTask.data[0]});
-      // }
+      
     }
 
-  onSubmit(e){
+  
+    onSubmit(e){
     e.preventDefault();
     const newTask = {
       name: this.refs.name.value,
@@ -128,6 +129,7 @@ class TaskDetail extends Component {
     this.setState({[e.target.name]:e.target.value})
   }
 
+
   handleUpdateCommentChange=(e)=> {
     this.setState({[e.target.name]:e.target.value});
   }
@@ -139,7 +141,8 @@ class TaskDetail extends Component {
   backToTask = (e) => {
   e.preventDefault();
   this.props.history.goBack();
-}  
+} 
+
   updateTask = (e) => {
         e.preventDefault();
         this.setState({taskName: ''});
@@ -160,11 +163,15 @@ class TaskDetail extends Component {
   }//<-needed?
 
   editComment = (e, id) => {
+    console.log(this.props.match.params.taskId)
       e.preventDefault();
-      let comment = {
-          commentString: this.state.commentString
+      let newComment = {
+          CommentString: this.state.newCommentString
       }
-      this.props.updateComment(comment,id)
+      this.props.updateComment(newComment,id,this.state.taskID)
+      this.setState({commentModal:!this.state.commentModal})
+      window.location.reload();
+      
   }
 
   removeComment = (e, id) => {
@@ -186,6 +193,16 @@ class TaskDetail extends Component {
     })
   }
 
+//edit modal for comments
+toggleModal= (e,id) => {
+  console.log(id)
+  e.preventDefault();
+  this.setState({
+      commentModal:!this.state.commentModal,commentID:id
+  })
+}
+
+
 render() {
     return (
 
@@ -197,11 +214,11 @@ render() {
                     </div>
                     <div className="nav-btns">
                         <MDBBtn onClick={this.toggleMod} outline color="success">Edit Task</MDBBtn>
-                        {/* <MDBBtn onClick={this.toggle} outline color="success">Add Comment</MDBBtn> */}
                         <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn>           
                     </div>
                 </MDBCol>
             </MDBRow>
+        
         {/* Edit Task Modal */}
          <div className= {
             this.state.toggleMod=== false
