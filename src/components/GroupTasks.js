@@ -310,7 +310,7 @@ render() {
                             value={this.state.searchField} 
                             placeholder="Search by Task Name"
                             // aria-label="Search" 
-                            onChange={this.handleSearch}/>
+                            onKeyPress={this.handleSearch}/>
                     </form>
 
                     <div className="dropdown">
