@@ -232,6 +232,7 @@ render() {
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
+                    <h4>View Your Group's Current Tasks</h4>
                     <div className="nav-btns">
                         <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
                     

@@ -78,9 +78,9 @@ class UserCart extends React.Component {
   render() {
     return (
       <div className="user-cart-container">
-        <h2>Shopping Cart</h2>
-
-        <div className="cart-items">
+      {/* <h6 className="description">Add items you plan to purchase!</h6> */}
+        <h3 >Record Purchased Items:</h3>
+         <div className="cart-items">
           {this.props.userCart !== null ? (
             this.props.userCart.map(item => (
               /** @TODO break these divs into components */
@@ -90,7 +90,7 @@ class UserCart extends React.Component {
               </div>
             ))
           ) : (
-            <h4>No Items in Cart</h4>
+            <h6>No Items in Cart</h6>
           )}
         </div>
 
@@ -128,6 +128,7 @@ class UserCart extends React.Component {
           </MDBModal>
         </MDBContainer>
       </div>
+      
     );
   }
 }
