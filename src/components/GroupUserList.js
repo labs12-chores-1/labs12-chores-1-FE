@@ -21,6 +21,7 @@ class GroupUserList extends React.Component{
 
         return(
             <div className = 'group-user-list-container'>
+            <h6>View total contribution of members! </h6>
                 <h2>Total Expenditures: ${groupTotal.toFixed(2)}</h2>
                 <div className = 'group-user-list-profiles'>
                 {this.props.groupUsers ? (

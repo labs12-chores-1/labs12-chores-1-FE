@@ -224,7 +224,7 @@ export const rootReducer = (state = initialState, action) => {
   case UPDATE_COMMENT_START:
     return {...state, errorMessage:null};
   case UPDATE_COMMENT_SUCCESS:
-    return state;
+    return {...state};
   case UPDATE_COMMENT_FAIL:
     return {...state, errorMessage: action.payload}
   
