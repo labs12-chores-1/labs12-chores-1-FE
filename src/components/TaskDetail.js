@@ -281,7 +281,7 @@ render() {
     )
     }
 }
-        // differ
+
    
 const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
