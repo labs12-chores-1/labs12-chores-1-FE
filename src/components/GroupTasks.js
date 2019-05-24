@@ -25,7 +25,8 @@ import {
     getGroupTasks,
     createGroupTask,
     editTask,
-    getGroupUsers
+    getGroupUsers,
+    getTaskComments
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 //import { bool } from 'prop-types';
@@ -49,10 +50,11 @@ class GroupTasks extends Component {
             toggleRadio:false,
             recurringTime:""
         };
+        this.handleSearch = this.handleSearch.bind(this);
     }
     componentWillMount(){
         document.title = `FairShare - Task`;
-        this.props.getGroupTasks(this.props.match.params.id);        
+        this.props.getGroupTasks(this.props.match.params.id);
         this.setState({...this.state,
             currentGroupTasks: this.props.currentGroupTasks});
 
@@ -79,18 +81,15 @@ class GroupTasks extends Component {
         });
         
     }
-    handleChanges=(e)=>{
-        this.setState({[e.target.name]:e.target.value})
-    }
-        
-    componentDidMount(){
-   
-    }
-
+    
     componentDidUpdate(previousProps){
         if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
             this.setState({currentGroupTasks:this.props.currentGroupTasks});
         }
+    }
+    
+    handleChanges=(e)=>{
+        this.setState({[e.target.name]:e.target.value})
     }
 
     createTask = (e) => {
@@ -116,11 +115,20 @@ class GroupTasks extends Component {
         })
     };
 
-    handleSearch= event =>{
-        event.preventDefault();
-        this.setState({...this.state,
-                        [event.target.name]:event.target.value});
-        
+    handleSearch= (event) =>{      
+        console.log(event.target.value);
+        // this.setState({[event.target.name]:event.target.value});
+        if (this.state.currentGroupTasks.data.length !== 0){
+            this.state.searchField === ""
+            ? this.setState({[event.target.name]:event.target.value,
+                currentGroupTasks:this.props.currentGroupTasks})
+            : this.setState({[event.target.name]:event.target.value,
+                            currentGroupTasks: {
+                                data: this.props.currentGroupTasks.data.filter(task=>task.taskName.includes(event.target.value))
+                            }})
+        }
+        // console.log("this.state.currentGroupTasks:",this.state.currentGroupTasks);
+        // console.log("this.props.currentGroupTasks:",this.props.currentGroupTasks);
     }
 
     handleFilter =(event, filterArg) =>{
@@ -130,7 +138,6 @@ class GroupTasks extends Component {
                 currentGroupTasks: this.props.currentGroupTasks});
         }
         else if (filterArg ==="completed"){
-            // console.log(this.state.currentGroupTasks);
             if (this.state.currentGroupTasks.data.length !== 0){
                 this.setState({...this.state,
                     currentGroupTasks: {
@@ -151,13 +158,14 @@ class GroupTasks extends Component {
             this.state.groupMembers.forEach(userID =>{
                 this.setState({...this.state,
                     currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
-                    console.log("group member id match!");
+                console.log("group member id match!");
                 // console.log
                 // if (filterArg === userID){
-                // }
+                    //}
             })
         }
     }
+    
     toggleMod= (e) => {
         this.setState({
             toggleMod:!this.state.toggleMod
@@ -207,19 +215,19 @@ class GroupTasks extends Component {
             this.setState({
                 recurringTime:'1 hour'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
         else if (recurring === '2') {
             this.setState({
                 recurringTime:'2 hours'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
         else if (recurring === '3') {
             this.setState({
                 recurringTime:'3 hours'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
     }
 
@@ -231,23 +239,23 @@ class GroupTasks extends Component {
 render() {
     return (       
         <MDBContainer className="group-task-container">
-                 
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
+                    {/* Link to go back to Group Profile page */}
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
+                    {/* Add New Task button */}
                     <div className="nav-btns">
                         <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
-                    
                     </div>
                 </MDBCol>
             </MDBRow>
-            <div className= {
-                this.state.toggleMod=== false
-                    ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
+            {/* Modal for Add New Task */}
+            <div className= {this.state.toggleMod=== false
+                            ? 'custom-mod-hidden'
+                            : 'custom-mod-display'}>
                 <form className={'create-task-form'}onSubmit={this.createTask}>
-                <span className="x" onClick={this.toggleMod}>X</span>
-                <h3>New Task</h3>
+                    <span className="x" onClick={this.toggleMod}>X</span>
+                    <h3>New Task</h3>
                     <input 
                         type="text"
                         placeholder="enter task"
@@ -270,10 +278,6 @@ render() {
                         value={this.state.assigneeName}
                         onChange={this.handleChanges}
                     />
-                    {/* <div>
-                        <input type="checkbox" name="Completed" value="taskCompleted" onClick={this.handleToggleComplete}/>
-                        <span>Completed?</span>
-                    </div> */}
                     <div>
                         {/* <span onClick={this.toggleRadio}>Yes</span> */}
                         <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
@@ -296,6 +300,7 @@ render() {
             </div>
             <MDBContainer className="task-cards">
                 <div className="search-dropdown-row">
+                    {/* Search by Task Name field */}
                     <form className="form-inline">
                         <i className="fas fa-search" aria-hidden="true"></i>
                         <input 
@@ -303,15 +308,15 @@ render() {
                             name="searchField" 
                             type="text" 
                             value={this.state.searchField} 
-                            placeholder="Search by name" aria-label="Search" 
-                            onChange={this.handleSearch}/>
+                            placeholder="Search by Task Name"
+                            // aria-label="Search" 
+                            onKeyPress={this.handleSearch}/>
                     </form>
 
                     <div className="dropdown">
                         <span>Assigned</span>
                         <div className="dropdown-content">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
-                            {console.log('state.groupMembers', this.state.groupMembers)}
                             <div className="dropdown-divider"></div>
                             {this.state.groupUserNames.length >= 1
                             ? this.state.groupUserNames.map(groupUser=>(
@@ -332,23 +337,21 @@ render() {
                     </div>                    
                 </div>
                 <br></br>
-                {/* {console.log(this.state.currentGroupTasks)} */}
-
                 {this.state.currentGroupTasks !== null
                     ? this.state.currentGroupTasks.data.map(task => {
-                     
+                    // this.props.getTaskComments(task.id);
+                    let taskComments = this.props.taskComments;
                     return(
-                    //  <div key= {task.id}>
                         <TaskCard
                             key={task.id}
                             task={task}
+                            taskComments = {taskComments}
                             taskID={task.id}
                             taskName={task.taskName}
                             taskDescription={task.taskDescription}
                             assigneeName={task.assigneeName}
                             requestedBy={task.createdBy}
                             done={task.completed}
-                            comments={task.comments}
                             repeated={0}
                             recurring={task.recurringTime}
                             assignee={task.completedBy}
@@ -356,26 +359,14 @@ render() {
                             updateGroup={this.saveGroupName}
                             removeGroup={this.deleteGroup}
                         />
-                        // </div>
                       )})
                     : null
                 }  
-                
             </MDBContainer>
-            {/* <form onSubmit={this.createTask}>
-                <input 
-                    type="text"
-                    placeholder="enter task"
-                    name="taskName"
-                    value={this.state.taskName}
-                    onChange={this.handleChanges}
-                />
-                <button type='submit'>Submit</button>
-            </form> */}
         </MDBContainer>
-    );
-    }
-};
+    )
+}}
+
 
 const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
@@ -384,6 +375,7 @@ const mapStateToProps = state => {
         currentUser: state.currentUser,
         currentGroup: state.currentGruop,
         currentGroupTasks: state.currentGroupTasks,
+        taskComments: state.taskComments,
         // userGroups: state.userGroups,
         // userId: state.userId,
         // name: state.name,
@@ -391,8 +383,8 @@ const mapStateToProps = state => {
         // profilePicture: state.profilePicture,
         // groups: state.groups,
         // errorMessage: state.errorMessage
-    };
-};
+    }
+}
 
 export default connect(
     mapStateToProps,
@@ -409,6 +401,7 @@ export default connect(
         getGroupTasks,
         createGroupTask,
         editTask,
-        getGroupUsers
+        getGroupUsers,
+        getTaskComments
     }
 )(GroupTasks);
