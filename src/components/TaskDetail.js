@@ -47,10 +47,14 @@ class TaskDetail extends Component {
             commentString:'',
             commentedBy:1,
             groupID: this.props.match.params.groupId,
-            taskID: 0,
+            taskID: this.props.match.params.taskId,
             toggleMod:false,
             taskDescription: "",
-            task: null
+            task: null,
+            taskModal: false,
+            newCommentString:'',
+            commentID:null,
+            commentModal:false
         };
         
     }
@@ -157,14 +161,17 @@ class TaskDetail extends Component {
       this.props.editTask(task,id);      
       this.props.getSingleTask(this.props.match.params.taskId);
       this.setState({toggleMod:!this.state.toggleMod});
-  }//<-needed?
+  }
 
-  editComment = (e, id) => {
+  editComment = (e, commentId) => {
       e.preventDefault();
       let comment = {
-          commentString: this.state.commentString
+          commentString: this.state.newCommentString
       }
-      this.props.updateComment(comment,id)
+      this.props.updateComment(comment,commentId,this.state.taskID)
+      this.setState({commentModal:!this.state.commentModal})
+      
+      window.location.reload();
   }
 
   removeComment = (e, id) => {
@@ -184,6 +191,14 @@ class TaskDetail extends Component {
     this.setState({
         toggleMod:!this.state.toggleMod
     })
+  }
+  toggleCommentModal= (e,id) => {
+    console.log('hereeeee',id)
+    e.preventDefault();
+    this.setState({
+        commentModal:!this.state.commentModal, commentID:id
+    })
+    
   }
 
 render() {
@@ -267,8 +282,8 @@ render() {
                     removeComment={this.removeComment}
                     />
                       <div className="buttons">
-                        <button className="cta-comment-edit" type="submit" onClick={(e)=>this.editComment(e,comment.id)}><i class="fas fa-pen"></i></button>
                         {/* <button className="cta-comment-close" type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button>  */}
+                        <button className="cta-comment-edit" type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}><i class="fas fa-pen"></i></button>
                       </div>
                     </div> 
                 
@@ -276,6 +291,28 @@ render() {
                 : null
             } 
           </div>  
+
+          {/* edit comment modal*/}
+          <div className= {
+                this.state.commentModal=== false
+                    ? 'custom-mod-hidden'
+                    : 'custom-mod-display'}>
+                
+                <form className={'create-task-form'} onSubmit={(e)=>this.editComment(e,this.state.commentID)}>
+                <span className="x" onClick={this.toggleCommentModal}>X</span>
+                <h2>Update Comment</h2>
+                <input
+                 type="text"
+                 name="newCommentString"
+                 value={this.state.newCommentString}
+                 onChange={this.handleChanges}
+                 placeholder="Update Comment "
+                />
+                
+                <button className="cta-submit" type='submit'onClick={(e)=>this.editComment(e,this.state.commentID)}>submit</button>
+                    
+                    </form>
+                </div> 
           
               
       </MDBContainer>
@@ -300,6 +337,7 @@ const mapStateToProps = state => {
 };
   
 export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment,getSingleTask,testFunction })(TaskDetail));
+
 
 
 
