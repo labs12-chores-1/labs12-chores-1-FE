@@ -9,23 +9,23 @@ import Comments from './Comments';
 import TaskCardDetail from "./TaskCardDetail";
 import { withRouter } from "react-router";
 import {
-    // MDBCard,
-    // MDBCardBody,
-    // MDBCardTitle,
-    // MDBCardText,
-    MDBBtn,
-    // MDBModal,
-    // MDBModalBody,
-    // MDBModalHeader,
-    // MDBModalFooter,
-    // MDBInput,
-    MDBRow,
-    MDBCol,
-    MDBIcon,
-    MDBContainer,
-  } from "mdbreact";
+  // MDBCard,
+  // MDBCardBody,
+  // MDBCardTitle,
+  // MDBCardText,
+  MDBBtn,
+  // MDBModal,
+  // MDBModalBody,
+  // MDBModalHeader,
+  // MDBModalFooter,
+  // MDBInput,
+  MDBRow,
+  MDBCol,
+  MDBIcon,
+  MDBContainer
+} from "mdbreact";
 
-  import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 import { getTaskComments } from '../store/actions/rootActions';
 import { deleteTask } from '../store/actions/rootActions';
@@ -42,19 +42,15 @@ class TaskDetail extends Component {
     constructor(props) {
         super(props);
         this.state= {
-            taskComments:null,
-            // searchField: "",
+            taskComments:[],
             modal: false,
             commentString:'',
             commentedBy:1,
             groupID: this.props.match.params.groupId,
-            taskID: this.props.match.params.taskId,
+            taskID: 0,
             toggleMod:false,
             taskDescription: "",
-            commentModal:false,
-            newCommentString:'',
-            commentID:'',
-            task:null
+            task: null
         };
         
     }
@@ -80,126 +76,115 @@ class TaskDetail extends Component {
     componentDidMount(){
       this.props.getSingleTask(this.props.match.params.taskId);
       this.props.getTaskComments(this.props.match.params.taskId);
+      // this.setState({ taskComments:this.props.taskComments});
+      // if(this.props.singleTaskk){
+      //   this.setState({task:this.props.singleTask.data[0]});
+      // }
     }
 
-  
-      
-    onSubmit(e){
-      e.preventDefault();
-      const newTask = {
-        name: this.refs.name.value,
-        task: this.refs.task.value
-        
-      }
-      this.editTask(newTask);
-      this.props.getSingleTask(this.props.match.params.taskId);
-    }
-  
-    removeTask = e => {
-        e.preventDefault();
-        this.props.deleteTask(this.props.match.params.taskId, this.state.groupID);
-        this.props.history.goBack();
-        //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
+  onSubmit(e){
+    e.preventDefault();
+    const newTask = {
+      name: this.refs.name.value,
+      task: this.refs.task.value
       
     }
-
-    createComments = (e) => {
-      e.preventDefault();
-      // Create new task comment
-      this.setState({commentString: ''});
-      let comment = {
-          commentString:this.state.commentString,
-          commentedBy:this.state.commentedBy,
-          groupID:this.state.groupID,
-          taskID: this.props.match.params.taskId
-      }
-      this.props.createTaskComments(comment, this.props.match.params.taskId);
-  
-      // Update task attribute: numberOfComments
-      this.props.editTask(
-        {...this.state.task,
-        numberOfComments: this.state.task.numberOfComments+1},this.props.match.params.taskId
-      )
-      this.props.getSingleTask(this.props.match.params.taskId);
-      this.props.getTaskComments(this.props.match.params.taskId);
-      this.setState({ task: {...this.props.singleTask,
-                        numberOfComments: this.state.task.numberOfComments+1}})
-    };
-      
-    handleChanges=(e)=>{
-      this.setState({[e.target.name]:e.target.value})
-    }
-
-  
-
-    handleInputChange=(e)=>{
-      this.setState({[e.target.name]:e.target.value})
-    }
-
-    backToTask = (e) => {
-      e.preventDefault();
-      this.props.history.goBack();
-    }  
-    
-    updateTask = (e) => {
-      e.preventDefault();
-      this.setState({taskName: ''});
-      this.setState({taskDescription: ''});
-      this.setState({assigneeName: ''});
-      let id = this.props.match.params.taskId
-      console.log(id)
-      let task = {
-          taskName:this.state.taskName,
-          taskDescription: this.state.taskDescription,
-          assigneeName: this.state.assigneeName
-          
-      }
-
-    this.props.editTask(task,id);      
+    this.editTask(newTask);
     this.props.getSingleTask(this.props.match.params.taskId);
-    this.setState({toggleMod:!this.state.toggleMod});
-}
-  
-editComment = (e, id) => {
-    console.log(this.props.match.params.taskId)
-      e.preventDefault();
-      let newComment = {
-          CommentString: this.state.newCommentString
-      }
-      this.props.updateComment(newComment,id,this.state.taskID)
-      this.setState({commentModal:!this.state.commentModal})
-      window.location.reload();
-      
   }
 
-  removeComment = (e, id) => {
+  removeTask = e => {
+      e.preventDefault();
+      this.props.deleteTask(this.props.match.params.taskId, this.state.groupID);
+      this.props.history.goBack();
+      //window.location = `/groups/${this.props.match.params.id}/tasktrak`; //routes back to group Task page
+    
+  }
+
+  createComments = (e) => {
     e.preventDefault();
-    this.props.deleteComment(id, this.props.match.params.taskId);
+    // Create new task comment
+    this.setState({commentString: ''});
+    let comment = {
+        commentString:this.state.commentString,
+        commentedBy:this.state.commentedBy,
+        groupID:this.state.groupID,
+        taskID: this.props.match.params.taskId
+    }
+    this.props.createTaskComments(comment, this.props.match.params.taskId);
+
+    // Update task attribute: numberOfComments
     this.props.editTask(
       {...this.state.task,
-      numberOfComments: this.state.task.numberOfComments-1},this.props.match.params.taskId
+      numberOfComments: this.state.task.numberOfComments+1},this.props.match.params.taskId
     )
     this.props.getSingleTask(this.props.match.params.taskId);
     this.props.getTaskComments(this.props.match.params.taskId);
-    this.setState({task: {...this.props.singleTask, 
-                numberOfComments: this.state.task.numberOfComments-1}});
-}
+    this.setState({ task: {...this.props.singleTask,
+                      numberOfComments: this.state.task.numberOfComments+1}})
+  };
+      
+  handleChanges=(e)=>{
+    this.setState({[e.target.name]:e.target.value})
+  }
+
+  handleUpdateCommentChange=(e)=> {
+    this.setState({[e.target.name]:e.target.value});
+  }
+
+  handleInputChange=(e)=>{
+    this.setState({[e.target.name]:e.target.value})
+  }
+
+  backToTask = (e) => {
+  e.preventDefault();
+  this.props.history.goBack();
+}  
+  updateTask = (e) => {
+        e.preventDefault();
+        this.setState({taskName: ''});
+        this.setState({taskDescription: ''});
+        this.setState({assigneeName: ''});
+        let id = this.props.match.params.taskId
+        console.log(id)
+        let task = {
+            taskName:this.state.taskName,
+            taskDescription: this.state.taskDescription,
+            assigneeName: this.state.assigneeName
+            
+        }
+
+      this.props.editTask(task,id);      
+      this.props.getSingleTask(this.props.match.params.taskId);
+      this.setState({toggleMod:!this.state.toggleMod});
+  }//<-needed?
+
+  editComment = (e, id) => {
+      e.preventDefault();
+      let comment = {
+          commentString: this.state.commentString
+      }
+      this.props.updateComment(comment,id)
+  }
+
+  removeComment = (e, id) => {
+      e.preventDefault();
+      this.props.deleteComment(id, this.props.match.params.taskId);
+      this.props.editTask(
+        {...this.state.task,
+        numberOfComments: this.state.task.numberOfComments-1},this.props.match.params.taskId
+      )
+      this.props.getSingleTask(this.props.match.params.taskId);
+      this.props.getTaskComments(this.props.match.params.taskId);
+      this.setState({task: {...this.props.singleTask, 
+                  numberOfComments: this.state.task.numberOfComments-1}});
+  }
 
   toggleMod= (e) => {
     this.setState({
         toggleMod:!this.state.toggleMod
     })
   }
-  
-  //edit modal for comments
-  toggleModal= (e,id) => {
-    console.log(id)
-    e.preventDefault();
-    this.setState({
-        commentModal:!this.state.commentModal,commentID:id
-    })
-  }
-  
 
 render() {
     return (
@@ -212,12 +197,12 @@ render() {
                     </div>
                     <div className="nav-btns">
                         <MDBBtn onClick={this.toggleMod} outline color="success">Edit Task</MDBBtn>
+                        {/* <MDBBtn onClick={this.toggle} outline color="success">Add Comment</MDBBtn> */}
                         <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn>           
                     </div>
                 </MDBCol>
             </MDBRow>
-
-            {/* Edit Task Modal */}
+        {/* Edit Task Modal */}
          <div className= {
             this.state.toggleMod=== false
                 ? 'custom-mod-hidden'
@@ -286,36 +271,19 @@ render() {
                 : null
             } 
           </div>  
-          {/*edit comment modal */}
-          <div className= {
-                this.state.commentModal=== false
-                    ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
-                
-                <form className={'create-task-form'} onSubmit={(e)=>this.editComment(e,this.state.commentID)}>
-                <span className="x" onClick={this.toggleModal}>X</span>
-                <h2>Update Comment</h2>
-                <input
-                 type="text"
-                 placeholder="update comment"
-                 name="newCommentString"
-                 value={this.state.newCommentString}
-                 onChange={this.handleChanges}
-                 placeholder="Update Comment "
-                />
-                <button className="cta-submit" type='submit'onClick={(e)=>this.editComment(e,this.state.commentID)}>submit</button>
-                    
-                    </form>
-                </div>
           
               
       </MDBContainer>
-        </MDBContainer> 
-        )
-      }
-  }
-            
-    const mapStateToProps = state => {
+        </MDBContainer>
+        
+
+        
+    )
+    }
+}
+        // differ
+   
+const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
       //state items
@@ -327,6 +295,7 @@ render() {
 };
   
 export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment,getSingleTask,testFunction })(TaskDetail));
+
 
 
 
