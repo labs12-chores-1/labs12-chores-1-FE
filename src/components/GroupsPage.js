@@ -238,6 +238,7 @@ class GroupsPage extends Component {
                       defaultValue={this.state.groupName}
                       onKeyDown={this.keyPress}
                       onClick={this.handleAddGroup}
+                      
                   />
                 </MDBModalBody>
                 <MDBModalFooter>
@@ -262,18 +263,12 @@ class GroupsPage extends Component {
                 <h2>Update Group Name</h2>
                 <input
                  type="text"
-                //  placeholder="enter new group name"
                  name="newGroupName"
                  value={this.state.newGroupName}
                  onChange={this.handleInputChanges}
-                 
+                 placeholder="Update Group Name"
                 />
-                
-                
-                    
-                    
-                    
-                    <button className="cta-submit" type='submit'onClick={this.handleUpdateGroupName}>submit</button>
+                <button className="cta-submit" type='submit'onClick={this.handleUpdateGroupName}>submit</button>
                     
                 </form>
             </div>
@@ -307,10 +302,10 @@ class GroupsPage extends Component {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
                     : 'custom-mod-display'}>
-                <form className={'create-task-form'}h6>
+                <form className={'create-task-form'}>
                 <span className="x" onClick={this.toggleMod}>X</span>
-                <h6>Are you sure you want to delete this group?</h6>
-                <h6>(This cannot be undone)</h6>
+                <h3>Delete this group?</h3>
+                <h6>(cannot be undone)</h6>
                     
                     
                     

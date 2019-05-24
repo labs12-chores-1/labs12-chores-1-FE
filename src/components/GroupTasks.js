@@ -81,7 +81,14 @@ class GroupTasks extends Component {
         });
         
     }
+<<<<<<< HEAD
     
+=======
+    handleChanges=(e)=>{
+        this.setState({[e.target.name]:e.target.value})
+    }
+        
+>>>>>>> ceda2f746e4e01884ffad190b87bd9771acfb06c
     componentDidUpdate(previousProps){
         if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
             this.setState({currentGroupTasks:this.props.currentGroupTasks});
@@ -243,7 +250,11 @@ render() {
                 <MDBCol md="12" className="mb-4">
                     {/* Link to go back to Group Profile page */}
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
+<<<<<<< HEAD
                     {/* Add New Task button */}
+=======
+                    <h4>View Your Group's Current Tasks</h4>
+>>>>>>> ceda2f746e4e01884ffad190b87bd9771acfb06c
                     <div className="nav-btns">
                         <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
                     </div>
