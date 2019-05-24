@@ -1366,14 +1366,16 @@ export const updateComment = (comment, commentId,taskId) => {
   }
 
   const endpoint = axios.put(`${backendURL}/api/comment/${commentId}`, comment, options);
+  console.log('commentId:',commentId)
 
   return dispatch => {
+    
     dispatch({type: UPDATE_COMMENT_START});
 
     endpoint.then(res => {
       dispatch({type: UPDATE_COMMENT_SUCCESS});
     }).then(()=>{
-      dispatch(getTaskComments(taskId))
+      getTaskComments(taskId)
     })
     .catch(err => {
       console.log(err);

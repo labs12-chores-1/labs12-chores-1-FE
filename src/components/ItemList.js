@@ -89,7 +89,7 @@ class ItemList extends React.Component {
     return (
       <div className="item-list-container">
         <h1>
-          {this.props.userGroups !== null ? grp[0].name : "Loading name..."}
+          {this.props.userGroups !== null ? `View Items for ${grp[0].name}` : "Loading name..."}
         </h1>
         <div className="item-list">
           {this.props.groupItems !== null ? (
@@ -97,7 +97,7 @@ class ItemList extends React.Component {
               <Item item={item} key={item.id} />
             ))
           ) : (
-            <h2>No Items on the List</h2>
+            <h4>No Items currently on the List</h4>
           )}
         </div>
 

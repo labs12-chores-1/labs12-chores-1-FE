@@ -238,6 +238,7 @@ class GroupsPage extends Component {
                       defaultValue={this.state.groupName}
                       onKeyDown={this.keyPress}
                       onClick={this.handleAddGroup}
+                      
                   />
                 </MDBModalBody>
                 <MDBModalFooter>
@@ -265,7 +266,7 @@ class GroupsPage extends Component {
                  name="newGroupName"
                  value={this.state.newGroupName}
                  onChange={this.handleInputChanges}
-                 
+                 placeholder="Update Group Name"
                 />
                 <button className="cta-submit" type='submit'onClick={this.handleUpdateGroupName}>submit</button>
                     
