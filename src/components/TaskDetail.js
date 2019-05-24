@@ -188,92 +188,91 @@ class TaskDetail extends Component {
 
 render() {
     return (
-
         <MDBContainer className="task-detail-container">
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
+                    {/* Link to go back to GroupTask page */}
                     <div onClick={this.backToTask}>
                         <MDBIcon className="card-link" icon="chevron-left" />Back to Task
                     </div>
+                    {/* Task Function Buttons */}
                     <div className="nav-btns">
-                        <MDBBtn onClick={this.toggleMod} outline color="success">Edit Task</MDBBtn>
-                        {/* <MDBBtn onClick={this.toggle} outline color="success">Add Comment</MDBBtn> */}
-                        <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn>           
+                        <MDBBtn onClick={this.toggleMod} outline color="success">Edit Task</MDBBtn>    
+                        <MDBBtn outline color="success" onClick={this.removeTask}>Delete Task</MDBBtn>
                     </div>
                 </MDBCol>
             </MDBRow>
-        {/* Edit Task Modal */}
-         <div className= {
-            this.state.toggleMod=== false
-                ? 'custom-mod-hidden'
-                : 'custom-mod-display'}>
+            {/* Edit Task Modal */}
+            <div className= {this.state.toggleMod=== false
+                            ? 'custom-mod-hidden'
+                            : 'custom-mod-display'}>
                 <span className="x" onClick={this.toggleMod}>X</span>
-            <form className={'create-task-form'}onSubmit={this.updateTask}>
-                <h3>Edit Task</h3>
-                <input 
-                    type="text"
-                    placeholder="edit task name"
-                    name="taskName"
-                    value={this.state.taskName}
-                    onChange={this.handleChanges}
-                />
-                <textarea
-                    className="text-description"
-                    type="text"
-                    placeholder="edit description"
-                    name="taskDescription"
-                    value={this.state.taskDescription}
-                    onChange={this.handleChanges}
-                />
-                <input 
-                    type="text"
-                    placeholder="edit assignee"
-                    name="assigneeName"
-                    value={this.state.assigneeName}
-                    onChange={this.handleChanges}
-                />
-                <button className="cta-submit" type='submit'>EDIT</button>
-            </form>
-      </div>                 
-      <MDBContainer className="task-card">
-          {this.state.task !== null
-          ? <TaskCardDetail task= {this.state.task} />
-          : null
-          }
-          <div>           
-            <form onSubmit={this.createComments}>
-                <input
-                  type="text"
-                  placeholder="Write Comment"
-                  name="commentString"
-                  value={this.state.commentString}
-                  onChange={this.handleChanges}
-                />
-                <button type="submit">Submit</button>
-              </form>                
-            {this.state.taskComments.length > 0
-                ? this.state.taskComments.map(comment => {
-                    return(
-                    <div key={comment.id}>
-                    <Comments 
-                        commentString= {comment.commentString}
-                        taskID = {this.props.match.params.taskId}
-                        commentedOn={comment.commentedOn}
-                        commentID={comment.id}
+                <form className={'create-task-form'}onSubmit={this.updateTask}>
+                    <h3>Edit Task</h3>
+                    <input 
+                        type="text"
+                        placeholder="edit task name"
+                        name="taskName"
+                        value={this.state.taskName}
+                        onChange={this.handleChanges}
                     />
-                      <div className="buttons">
-                        <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
-                        <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
-                      </div>
-                    </div> 
-                
-                )})
+                    <textarea
+                        className="text-description"
+                        type="text"
+                        placeholder="edit description"
+                        name="taskDescription"
+                        value={this.state.taskDescription}
+                        onChange={this.handleChanges}
+                    />
+                    <input 
+                        type="text"
+                        placeholder="edit assignee"
+                        name="assigneeName"
+                        value={this.state.assigneeName}
+                        onChange={this.handleChanges}
+                    />
+                    <button className="cta-submit" type='submit'>EDIT</button>
+                </form>
+            </div>                 
+            <MDBContainer className="task-card">
+                {this.state.task !== null
+                ? <TaskCardDetail task= {this.state.task} />
                 : null
-            } 
-          </div>  
-          
-              
-      </MDBContainer>
+                }
+                <div>           
+                  <form onSubmit={this.createComments}>
+                      <input
+                        type="text"
+                        placeholder="Write Comment"
+                        name="commentString"
+                        value={this.state.commentString}
+                        onChange={this.handleChanges}
+                      />
+                      <button type="submit">Submit</button>
+                    </form>                
+                  {this.state.taskComments.length > 0
+                      ? this.state.taskComments.map(comment => {
+                          return(
+                          <div key={comment.id}>
+                          <Comments 
+                              commentString= {comment.commentString}
+                              taskID = {this.props.match.params.taskId}
+                              commentedOn={comment.commentedOn}
+                              commentID={comment.id}
+                          />
+                            <div className="buttons">
+                              <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
+                              <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
+                            </div>
+                          </div> 
+                      
+                      )})
+                      : null
+                  } 
+                </div>  
+                
+                    
+            </MDBContainer>
         </MDBContainer>
         
 
