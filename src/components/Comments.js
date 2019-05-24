@@ -31,9 +31,10 @@ class Comments extends Component {
             <div className="comments-border">
             <div className="comments-container">
                 <div className="user-section">
+                <button className="cta-comment-close" type="button" onClick={(e) => this.props.removeComment(e, this.props.commentID)}><i class="fas fa-times"></i></button>
                     <h3 className="name">{this.state.name}</h3> 
                     <img className="usr-img" alt="userimg" src={this.state.img_url} width="94px" height="82px"/>
-                     <button className="cta-comment-close" type="button" onClick={(e) => this.props.removeComment(e, this.props.commentID)}>x</button> 
+                      
                 </div>
                    
                     <div className="comment-details">
