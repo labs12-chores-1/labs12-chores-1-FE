@@ -231,7 +231,6 @@ render() {
                         value={this.state.taskName}
                         onChange={this.handleChanges}
                     />
-<<<<<<< HEAD
                     <textarea
                         className="text-description"
                         type="text"
@@ -277,8 +276,8 @@ render() {
                               commentID={comment.id}
                           />
                             <div className="buttons">
-                              <button type="submit" onClick={(e)=>this.editComment(e,comment.id)}>Edit</button>
-                              <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
+                              <button type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}>Edit</button>
+                              <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button>                               
                             </div>
                           </div> 
                       
@@ -286,46 +285,30 @@ render() {
                       : null
                   } 
                 </div>  
-                
+                 {/* edit comment modal*/}
+                <div className= {
+                      this.state.commentModal=== false
+                          ? 'custom-mod-hidden'
+                          : 'custom-mod-display'}>
+                      
+                      <form className={'create-task-form'} onSubmit={(e)=>this.editComment(e,this.state.commentID)}>
+                      <span className="x" onClick={this.toggleCommentModal}>X</span>
+                      <h2>Update Comment</h2>
+                      <input
+                      type="text"
+                      name="newCommentString"
+                      value={this.state.newCommentString}
+                      onChange={this.handleChanges}
+                      placeholder="Update Comment "
+                      />
+                      
+                      <button className="cta-submit" type='submit'onClick={(e)=>this.editComment(e,this.state.commentID)}>submit</button>
+                          
+                          </form>
+                  </div> 
+          
                     
             </MDBContainer>
-=======
-                      <div className="buttons">
-                        <button type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}>Edit</button>
-                        <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
-                      </div>
-                    </div> 
-                
-                )})
-                : null
-            } 
-          </div>  
-
-          {/* edit comment modal*/}
-          <div className= {
-                this.state.commentModal=== false
-                    ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
-                
-                <form className={'create-task-form'} onSubmit={(e)=>this.editComment(e,this.state.commentID)}>
-                <span className="x" onClick={this.toggleCommentModal}>X</span>
-                <h2>Update Comment</h2>
-                <input
-                 type="text"
-                 name="newCommentString"
-                 value={this.state.newCommentString}
-                 onChange={this.handleChanges}
-                 placeholder="Update Comment "
-                />
-                
-                <button className="cta-submit" type='submit'onClick={(e)=>this.editComment(e,this.state.commentID)}>submit</button>
-                    
-                    </form>
-                </div> 
-          
-              
-      </MDBContainer>
->>>>>>> master
         </MDBContainer>
         
 
