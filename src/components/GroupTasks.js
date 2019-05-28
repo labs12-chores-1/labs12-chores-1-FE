@@ -73,7 +73,7 @@ class GroupTasks extends Component {
             }
         }
 
-        axios.get(`${backendURL}/api/groupmember/group/${this.props.match.params.id}`, options)
+        axios.get(`${backendURL}/api/groupMember/group/${this.props.match.params.id}`, options)
         .then(response => {
             this.setState({
                 groupMembers: response.data
@@ -311,7 +311,7 @@ render() {
                             value={this.state.searchField} 
                             placeholder="Search by Task Name"
                             // aria-label="Search" 
-                            onKeyPress={this.handleSearch}/>
+                            onChange={this.handleSearch}/>
                     </form>
 
                     <div className="dropdown">

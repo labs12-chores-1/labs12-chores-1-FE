@@ -264,7 +264,7 @@ render() {
                         onChange={this.handleChanges}
                       />
                       <button type="submit">Submit</button>
-                    </form>                
+                  </form>                
                   {this.state.taskComments.length > 0
                       ? this.state.taskComments.map(comment => {
                           return(

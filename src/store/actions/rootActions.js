@@ -592,7 +592,7 @@ export const getGroupUsers = (groupId) => {
     }
   }
 
-  const fetchGroupUsers = axios.get(`${backendURL}/api/groupmember/group/${groupId}`, options);
+  const fetchGroupUsers = axios.get(`${backendURL}/api/groupMember/group/${groupId}`, options);
 
   return dispatch => {
     dispatch({type: GET_GROUP_USERS});
@@ -610,7 +610,7 @@ export const getGroupUsers = (groupId) => {
  */
 export const getGroupHistory = groupId => {
   const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/grouphistory/total/group/${groupId}`;
+  const endpoint = `${backendURL}/api/groupHistory/total/group/${groupId}`;
   const options = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -635,7 +635,7 @@ export const getGroupHistory = groupId => {
  */
 export const getGroupHistoryList = groupId => {
   const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/grouphistory/group/${groupId}`;
+  const endpoint = `${backendURL}/api/groupHistory/group/${groupId}`;
   const options = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -677,7 +677,7 @@ export const updateGroupNotification = (id, changes) => {
     }
   }
 
-  const endpoint = axios.put(`${backendURL}/api/groupmember/update/${id}`, changes, options);
+  const endpoint = axios.put(`${backendURL}/api/groupMember/update/${id}`, changes, options);
 
   return dispatch => {
     dispatch({type: UPDATE_NOTIFICATION})
@@ -941,7 +941,7 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
   dispatch({type: SUBMIT_PAID_ITEMS_START});
 
   const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/grouphistory/`;
+  const endpoint = `${backendURL}/api/groupHistory/`;
 
   const options = {
     headers: {
@@ -1056,7 +1056,7 @@ export const checkOut = info => {
   console.log(trip, 'trip');
   // const updateItems = axiot.put(`${backendURL}/api/item/${itemId}`, changes, options);
 
-  const endpoint = axios.post(`${backendURL}/api/grouphistory`, trip, options);
+  const endpoint = axios.post(`${backendURL}/api/groupHistory`, trip, options);
 
   return dispatch => {
     dispatch({type: BEGIN_CHECK_OUT, payload: info.cartItems});
