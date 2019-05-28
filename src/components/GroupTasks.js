@@ -304,7 +304,7 @@ render() {
                             placeholder="Search by name" aria-label="Search" 
                             onChange={this.handleSearch}/>
                     </form>
-
+                        <div>Filter By:</div>
                     <div className="dropdown">
                         <span>Assigned</span>
                         <div className="dropdown-content">

@@ -82,12 +82,12 @@ class TaskCard extends Component {
         onClick={this.handleClickTaskCard}>
         <MDBCardBody className="task-card-body">
             <div className="task-card-left">
-                <div>{this.state.task.taskName}</div>
-                <div>Requested by: {this.state.task.createdBy}</div>
+                <h5 className="assigned-To">Assigned To: {this.state.task.assigneeName}</h5>
+                <div className="requested-By">Requested by: {this.state.task.createdBy}</div>
             </div>
             <div className="task-card-middle">
-                <h5>Assigned To {this.state.task.assigneeName}</h5>
-                <div>{this.state.task.taskDescription}</div>
+            <div className="task-Name">{this.state.task.taskName}</div>
+                <div className="task-Description">Details: {this.state.task.taskDescription}</div>
             </div>
             <div className="task-card-right">
                 {this.props.task.numberOfComments > 0
@@ -96,14 +96,14 @@ class TaskCard extends Component {
                 }
                 {/* <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img> */}
                 {/* <input type="checkbox" name="vehicle" value="Bike" onClick={(event)=>{event.stopPropagation()}}></input> */}
-                <div>{this.state.task.completed ===0
+                <div className="complete">Status: {this.state.task.completed ===0
                       ? "Incomplete": "Complete"}</div>
                 <div className={
                   this.state.task.recurringTime.length > 0
                   ? 'recurring-display'
                   : 'recurring-hidden'
                 }>
-                  Complete every:{this.state.task.recurringTime}
+                  Complete every: {this.state.task.recurringTime}
                 </div>
             </div>
         </MDBCardBody>
