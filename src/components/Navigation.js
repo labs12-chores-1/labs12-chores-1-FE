@@ -31,7 +31,8 @@ var lockOptions = {
     },
     languageDictionary: {
         title: 'FairShare'
-    }
+    },
+    rememberLastLogin: false
 }
 
 var lock = new Auth0Lock(

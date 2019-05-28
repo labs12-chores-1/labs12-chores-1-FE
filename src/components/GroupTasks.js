@@ -25,7 +25,8 @@ import {
     getGroupTasks,
     createGroupTask,
     editTask,
-    getGroupUsers
+    getGroupUsers,
+    getTaskComments
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 //import { bool } from 'prop-types';
@@ -52,7 +53,7 @@ class GroupTasks extends Component {
     }
     componentWillMount(){
         document.title = `FairShare - Task`;
-        this.props.getGroupTasks(this.props.match.params.id);        
+        this.props.getGroupTasks(this.props.match.params.id);
         this.setState({...this.state,
             currentGroupTasks: this.props.currentGroupTasks});
 
@@ -83,10 +84,6 @@ class GroupTasks extends Component {
         this.setState({[e.target.name]:e.target.value})
     }
         
-    componentDidMount(){
-   
-    }
-
     componentDidUpdate(previousProps){
         if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
             this.setState({currentGroupTasks:this.props.currentGroupTasks});
@@ -95,7 +92,6 @@ class GroupTasks extends Component {
 
     createTask = (e) => {
         e.preventDefault();
-
         let task = {
             taskName:this.state.taskName,
             taskDescription:this.state.taskDescription,
@@ -148,16 +144,18 @@ class GroupTasks extends Component {
                 currentGroupTasks: this.props.currentGroupTasks})
         }
         else if (this.state.groupMembers !== null){
+            console.log("here!!");
             this.state.groupMembers.forEach(userID =>{
-                if (filterArg === userID){
-                    this.setState({...this.state,
-                        currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
-                }
+                this.setState({...this.state,
+                    currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
+                    console.log("group member id match!");
+                // console.log
+                // if (filterArg === userID){
+                // }
             })
         }
     }
     toggleMod= (e) => {
-        e.preventDefault();
         this.setState({
             toggleMod:!this.state.toggleMod
         })
@@ -165,7 +163,6 @@ class GroupTasks extends Component {
     }
 
     toggleRadio= (e) => {
-        e.preventDefault();
         this.setState({
             toggleRadio:!this.state.toggleRadio
         }); console.log('toggleRadiotoggle:', this.state.toggleRadio);
@@ -207,20 +204,25 @@ class GroupTasks extends Component {
             this.setState({
                 recurringTime:'1 hour'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
         else if (recurring === '2') {
             this.setState({
                 recurringTime:'2 hours'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
         else if (recurring === '3') {
             this.setState({
                 recurringTime:'3 hours'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
+    }
+
+    handleToggleComplete = (e) => {
+      e.preventDefault();
+      this.setState({taskCompleted:!this.state.taskCompleted});  
     }
 
 render() {
@@ -230,6 +232,7 @@ render() {
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
+                    <h4>View Your Group's Current Tasks</h4>
                     <div className="nav-btns">
                         <MDBBtn className={"btn-dark-green"} onClick={this.toggleMod} style={{color:"white"}}>New Task</MDBBtn>
                     
@@ -265,6 +268,10 @@ render() {
                         value={this.state.assigneeName}
                         onChange={this.handleChanges}
                     />
+                    {/* <div>
+                        <input type="checkbox" name="Completed" value="taskCompleted" onClick={this.handleToggleComplete}/>
+                        <span>Completed?</span>
+                    </div> */}
                     <div>
                         {/* <span onClick={this.toggleRadio}>Yes</span> */}
                         <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
@@ -297,7 +304,7 @@ render() {
                             placeholder="Search by name" aria-label="Search" 
                             onChange={this.handleSearch}/>
                     </form>
-
+                        <div>Filter By:</div>
                     <div className="dropdown">
                         <span>Assigned</span>
                         <div className="dropdown-content">
@@ -315,10 +322,10 @@ render() {
                     <div className="dropdown">
                         <span>Complete</span>
                         <div className="dropdown-content">
-                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
                             <div className="dropdown-divider"></div>
-                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"completed")}>Complete</div>
-                            <div className="dropdown-item" onMouseOver={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
                         </div>
                     </div>                    
                 </div>
@@ -327,19 +334,20 @@ render() {
 
                 {this.state.currentGroupTasks !== null
                     ? this.state.currentGroupTasks.data.map(task => {
-                     
+                    // this.props.getTaskComments(task.id);
+                    let taskComments = this.props.taskComments;
                     return(
-                     <div key= {task.id}>
+                    //  <div key= {task.id}>
                         <TaskCard
                             key={task.id}
                             task={task}
+                            taskComments = {taskComments}
                             taskID={task.id}
                             taskName={task.taskName}
                             taskDescription={task.taskDescription}
                             assigneeName={task.assigneeName}
                             requestedBy={task.createdBy}
                             done={task.completed}
-                            comments={task.comments}
                             repeated={0}
                             recurring={task.recurringTime}
                             assignee={task.completedBy}
@@ -347,7 +355,7 @@ render() {
                             updateGroup={this.saveGroupName}
                             removeGroup={this.deleteGroup}
                         />
-                        </div>
+                        // </div>
                       )})
                     : null
                 }  
@@ -375,6 +383,7 @@ const mapStateToProps = state => {
         currentUser: state.currentUser,
         currentGroup: state.currentGruop,
         currentGroupTasks: state.currentGroupTasks,
+        taskComments: state.taskComments,
         // userGroups: state.userGroups,
         // userId: state.userId,
         // name: state.name,
@@ -400,6 +409,7 @@ export default connect(
         getGroupTasks,
         createGroupTask,
         editTask,
-        getGroupUsers
+        getGroupUsers,
+        getTaskComments
     }
 )(GroupTasks);

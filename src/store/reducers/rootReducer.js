@@ -72,7 +72,11 @@ import {
   UPDATE_COMMENT_FAIL,
   GET_SINGLE_TASK_START,
   GET_SINGLE_TASK_SUCCESS,
-  GET_SINGLE_TASK_FAILURE
+  GET_SINGLE_TASK_FAILURE,
+  GET_COMPLETED_START,
+  GET_COMPLETED_SUCCESS,
+  GET_COMPLETED_FAILURE
+
 } from "../actions/";
 
 const initialState = {
@@ -110,10 +114,11 @@ const initialState = {
 
 //***** FairShare***********
   currentGroupTasks: null,
-  taskComments: null,
+  taskComments: [],
   tempUserName: null,
   currentTask: null,
-  singleTask: null
+  singleTask: null,
+  deleteGroupMessage:null
 };
 
 
@@ -172,13 +177,13 @@ export const rootReducer = (state = initialState, action) => {
     case GET_COMMENTS_SUCCESS:
     return {
       ...state,
-      taskComments: action.payload,
+      taskComments: action.payload.data,
         errorMessage: null,
       };
     case GET_COMMENTS_FAILURE:
     return {
       ...state,
-      taskComments: null,
+      taskComments: [],
       errorMessage: action.payload
     };
 
@@ -219,7 +224,7 @@ export const rootReducer = (state = initialState, action) => {
   case UPDATE_COMMENT_START:
     return {...state, errorMessage:null};
   case UPDATE_COMMENT_SUCCESS:
-    return state;
+    return {...state};
   case UPDATE_COMMENT_FAIL:
     return {...state, errorMessage: action.payload}
   
@@ -561,6 +566,24 @@ export const rootReducer = (state = initialState, action) => {
       ...state,
       errorMessage:action.payload
     };
+    case GET_COMPLETED_START:
+      return {
+        ...state,
+        errorMessage:null,
+        singleTask: null
+      };
+    case GET_COMPLETED_SUCCESS:
+    return {
+      ...state,
+      singleTask: action.payload,
+    };
+    case GET_COMPLETED_FAILURE:
+    return {
+      ...state,
+      errorMessage:action.payload
+    };
+
+
   
     default:
       return state
