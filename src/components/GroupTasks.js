@@ -51,6 +51,11 @@ class GroupTasks extends Component {
             recurringTime:""
         };
     }
+    componentDidMount(){
+        this.props.getGroupTasks(this.props.match.params.id);
+        this.setState({...this.state,
+            currentGroupTasks: this.props.currentGroupTasks});
+    }
     componentWillMount(){
         document.title = `FairShare - Task`;
         this.props.getGroupTasks(this.props.match.params.id);
