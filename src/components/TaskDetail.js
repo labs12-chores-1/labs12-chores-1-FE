@@ -179,7 +179,7 @@ class TaskDetail extends Component {
       this.props.updateComment(comment,commentId,this.state.taskID)
       this.setState({commentModal:!this.state.commentModal})
       
-       window.location.reload();
+      window.location.reload();
   }
 
   setRecurringTime = (e, recurring) => {
@@ -244,7 +244,6 @@ toggleModal= (e,id) => {
 
 render() {
     return (
-
         <MDBContainer className="task-detail-container">
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
@@ -259,6 +258,7 @@ render() {
             </MDBRow>
         
         {/* Edit Task Modal */}
+
          <div className= {
             this.state.toggleMod=== false
                 ? 'custom-mod-hidden'
@@ -310,24 +310,25 @@ render() {
 
                 <button className="cta-submit" type='submit'>EDIT</button>
             </form>
-      </div> 
-      
-                      
+      </div>     
+
+      {/* COMMENTS SECTION */}
+
       <MDBContainer className="task-card">
           {this.state.task !== null
           ? <TaskCardDetail task= {this.state.task} />
           : null
           }
-          <div>           
+          <div className="comment-container">           
             <form onSubmit={this.createComments}>
-                <input
+                <textarea class="comment-border form-control z-depth-1" id="exampleFormControlTextarea345" rows="3" col="1"
                   type="text"
-                  placeholder="Write Comment"
+                  placeholder="Add a comment ..."
                   name="commentString"
                   value={this.state.commentString}
                   onChange={this.handleChanges}
                 />
-                <button type="submit">Submit</button>
+                <button class="cta-comment-submit " type="submit">Submit</button>
               </form>                
             {this.state.taskComments.length > 0
                 ? this.state.taskComments.map(comment => {
@@ -338,10 +339,12 @@ render() {
                     taskID = {this.props.match.params.taskId}
                     commentedOn={comment.commentedOn}
                     commentID={comment.id}
+                    removeComment={this.removeComment}
+                    editComment={this.toggleCommentModal}
                     />
                       <div className="buttons">
-                        <button type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}>Edit</button>
-                        <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button> 
+                        {/* <button className="cta-comment-close" type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button>  */}
+                        {/* <button className="cta-comment-edit" type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}><i class="fas fa-pen"></i></button> */}
                       </div>
                     </div> 
                 
