@@ -44,7 +44,7 @@ class TaskDetail extends Component {
         this.state= {
             taskComments:[],
             modal: false,
-            commentString:'',
+            commentString:"",
             commentedBy:1,
             groupID: this.props.match.params.groupId,
             taskID: this.props.match.params.taskId,
@@ -52,7 +52,7 @@ class TaskDetail extends Component {
             taskDescription: "",
             task: null,
             taskModal: false,
-            newCommentString:'',
+            newCommentString:"",
             commentID:null,
             commentModal:false
         };
@@ -108,7 +108,7 @@ class TaskDetail extends Component {
   createComments = (e) => {
     e.preventDefault();
     // Create new task comment
-    this.setState({commentString: ''});
+    // this.setState({commentString: ''});
     let comment = {
         commentString:this.state.commentString,
         commentedBy:this.state.commentedBy,

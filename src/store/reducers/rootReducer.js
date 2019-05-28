@@ -75,7 +75,9 @@ import {
   GET_SINGLE_TASK_FAILURE,
   GET_COMPLETED_START,
   GET_COMPLETED_SUCCESS,
-  GET_COMPLETED_FAILURE
+  GET_COMPLETED_FAILURE,
+  GET_GROUP_USER_NAMES,
+  SAVE_GROUP_USER_NAMES
 
 } from "../actions/";
 
@@ -582,6 +584,15 @@ export const rootReducer = (state = initialState, action) => {
       ...state,
       errorMessage:action.payload
     };
+    case GET_GROUP_USER_NAMES:
+      return state;
+
+    case SAVE_GROUP_USER_NAMES:
+      return {
+        ...state,
+        groupUsers: action.payload,
+        errorMessage: null
+      };
 
 
   

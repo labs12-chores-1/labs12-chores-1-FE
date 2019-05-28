@@ -105,7 +105,8 @@ class TaskCardDetail extends Component {
                 <h5>{this.props.task.taskDescription}</h5>
             </div>
             <div className="task-card-right">
-              <div>                {this.props.task.numberOfComments > 0 
+              <div> 
+                {this.props.task.numberOfComments > 0 
                 ? <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
                 : null}
                 <input type="checkbox" name="done" value="taskCompleted" checked={this.state.taskCompleted} onClick={this.handleToggleComplete}/>
