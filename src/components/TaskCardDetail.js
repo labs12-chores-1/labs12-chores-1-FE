@@ -14,7 +14,7 @@ import { withRouter } from "react-router-dom";
 import "./Styles/TaskCard.css";
 import "./Styles/Comments.css";
 
-import { getTaskComments, getCompleted, getGroupTasks } from '../store/actions/rootActions';
+import { getTaskComments, getCompleted, getGroupTasks, getUserName, getSingleTask } from '../store/actions/rootActions';
 //import { rootReducer } from "../store/reducers/rootReducer";
 
 class TaskCardDetail extends Component {
@@ -109,9 +109,20 @@ class TaskCardDetail extends Component {
               <div>                {this.props.task.numberOfComments > 0 
                 ? <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
                 : null}
+                
+                 {/* <div>{this.state.task.completed ===0
+                      ? "Incomplete": "Complete"}</div>
+                <div className={
+                  this.state.task.recurringTime.length > 0
+                  ? 'recurring-display'
+                  : 'recurring-hidden'
+                }>
+                  Complete every:{this.state.task.recurringTime}
+                </div> */}
                 <input type="checkbox" name="done" value="taskCompleted" checked={this.state.taskCompleted} onClick={this.handleToggleComplete}/>
                 <h7> Done</h7>
               </div>
+
               {/* {console.log(this.state.taskCompletedOn.toDateString())} */}
               {this.state.taskCompletedOn
                 ?<h8 className="completed-On-Detail">{`Completed On: ${this.state.taskCompletedOn}`}</h8>
@@ -136,4 +147,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps,{getTaskComments, getCompleted,getGroupTasks})(TaskCardDetail));
+export default withRouter(connect(mapStateToProps,{getTaskComments, getCompleted,getGroupTasks, getSingleTask, getUserName})(TaskCardDetail));
