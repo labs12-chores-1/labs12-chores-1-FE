@@ -26,6 +26,14 @@
 }
 
 /* COMMENTS */
+.task-card form{
+    text-align: center;
+}
+
+.comment-container{
+    /* border: solid; */
+}
+
 .cta-comment-submit{
     margin: 0 0 40px 0;
     padding: 10px 200px;
@@ -82,6 +90,8 @@
 
 .task-card .form-control{
     height: 50px;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .create-task-form{
