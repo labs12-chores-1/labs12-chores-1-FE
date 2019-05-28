@@ -179,7 +179,7 @@ class TaskDetail extends Component {
       this.props.updateComment(comment,commentId,this.state.taskID)
       this.setState({commentModal:!this.state.commentModal})
       
-      // window.location.reload();
+       window.location.reload();
   }
 
   setRecurringTime = (e, recurring) => {
