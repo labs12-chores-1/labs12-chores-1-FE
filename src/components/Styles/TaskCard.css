@@ -114,3 +114,66 @@ h8 {
    justify-content: center;
    margin-top: 5px;
 }
+
+.task-Description-Detail{
+    display:flex;
+    font-size:12px;
+   justify-content: center;
+   margin-top: 5px;
+   
+}
+.assigned-To-Detail{
+    font-size: 15px;
+}
+
+.requested-By-Detail{
+ font-size: 12px;
+}
+.task-Name-Detail{
+    display:flex;
+    font-size:21px;
+   justify-content: center; 
+}
+.complete-Detail{
+    font-size: 12px;
+}
+
+.task-card-Detail{
+    width: 100%;
+    
+    /* margin-top: 5rem; */
+}
+
+.task-card-body-Detail{
+    width:100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row; 
+}
+
+.task-card-left-Detail {
+    display:flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.task-card-middle-Detail {
+    display: flex;
+    width: 54%;
+    flex-direction: column;
+    justify-content: center;
+    
+   
+}
+
+.task-card-right-Detail {
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    /* flex-flow: row; */
+}
+.complete-On-Detail{
+    font-size: 12px;
+}
