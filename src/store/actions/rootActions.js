@@ -711,7 +711,7 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   if(process.env.NODE_ENV === 'development'){
     frontendURL = 'localhost:3000'
   } else {
-    frontendURL = 'https://goofy-sinoussi-c017bd.netlify.com/'
+    frontendURL = 'https://goofy-sinoussi-c017bd.netlify.com'
   }
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
@@ -754,7 +754,7 @@ export const getInviteInfo = inviteCode => {
  * @param inviteCode - Token to validate the invite
  * @returns {Function}
  */
-export const acceptInvite = inviteCode => {
+export const acceptInvite = (inviteCode) => {
   let token = localStorage.getItem('jwt');
   const options = {
     headers: {

@@ -231,7 +231,7 @@ render() {
                 <MDBCol md="12" className="mb-4">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
                     <div className="nav-btns">
-                        <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
+                        <MDBBtn className={"btn-dark-green"} onClick={this.toggleMod} style={{color:"white"}}>New Task</MDBBtn>
                     
                     </div>
                 </MDBCol>
