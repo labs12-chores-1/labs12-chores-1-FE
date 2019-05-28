@@ -54,7 +54,8 @@ class TaskDetail extends Component {
             taskModal: false,
             newCommentString:'',
             commentID:null,
-            commentModal:false
+            commentModal:false,
+            recurringTime:""
         };
         
     }
@@ -154,13 +155,20 @@ class TaskDetail extends Component {
         let task = {
             taskName:this.state.taskName,
             taskDescription: this.state.taskDescription,
-            assigneeName: this.state.assigneeName
+            assigneeName: this.state.assigneeName,
+            recurringTime:this.state.recurringTime,
+            groupID:this.props.match.params.id,
+            createdBy:localStorage.getItem("name"),
+            completedBy:1
             
         }
 
       this.props.editTask(task,id);      
       this.props.getSingleTask(this.props.match.params.taskId);
-      this.setState({toggleMod:!this.state.toggleMod});
+      this.setState({toggleMod:!this.state.toggleMod,
+        recurringTime:"",
+            toggleRadio:false
+      });
   }
 
   editComment = (e, commentId) => {
@@ -173,6 +181,29 @@ class TaskDetail extends Component {
       
       // window.location.reload();
   }
+
+  setRecurringTime = (e, recurring) => {
+    e.preventDefault();
+    if (recurring==='1') {
+        this.setState({
+            recurringTime:'1 hour'
+        })
+        // console.log('RECURRING TIME:', this.state.recurringTime)
+    }
+    else if (recurring === '2') {
+        this.setState({
+            recurringTime:'2 hours'
+        })
+        // console.log('RECURRING TIME:', this.state.recurringTime)
+    }
+    else if (recurring === '3') {
+        this.setState({
+            recurringTime:'3 hours'
+        })
+        // console.log('RECURRING TIME:', this.state.recurringTime)
+    }
+}
+
 
   removeComment = (e, id) => {
       e.preventDefault();
@@ -257,9 +288,31 @@ render() {
                     value={this.state.assigneeName}
                     onChange={this.handleChanges}
                 />
+
+<div>
+                        {/* <span onClick={this.toggleRadio}>Yes</span> */}
+                        <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
+                        <span>Would you like to make this task repeating?</span>
+                    </div>
+
+                    <div className= {
+                        this.state.toggleRadio=== false
+                            ? 'dropdown-hidden'
+                            : 'dropdown-display'}>
+
+                        How often should this task be completed?
+                        <div className="dropdown-options">
+                            <ul><button onClick={(event)=>this.setRecurringTime(event,"1")}>Every 1 Hour</button></ul>
+                            <ul><button onClick={(event)=>this.setRecurringTime(event,"2")}>Every 2 Hours</button></ul>
+                            <ul><button onClick={(event)=>this.setRecurringTime(event,"3")}>Every 3 Hours</button></ul>
+                        </div>
+                    </div>
+
                 <button className="cta-submit" type='submit'>EDIT</button>
             </form>
-      </div>                 
+      </div> 
+      
+                      
       <MDBContainer className="task-card">
           {this.state.task !== null
           ? <TaskCardDetail task= {this.state.task} />
