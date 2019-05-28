@@ -283,7 +283,7 @@ render() {
                     />
                       <div className="buttons">
                         {/* <button className="cta-comment-close" type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button>  */}
-                        <button className="cta-comment-edit" type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}><i class="fas fa-pen"></i></button>
+                        {/* <button className="cta-comment-edit" type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}><i class="fas fa-pen"></i></button> */}
                       </div>
                     </div> 
                 

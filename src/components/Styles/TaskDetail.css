@@ -27,7 +27,7 @@
 
 /* COMMENTS */
 .cta-comment-submit{
-    margin: 0;
+    margin: 0 0 40px 0;
     padding: 10px 200px;
     font-size: 16px;
     font-weight: 700;
@@ -62,7 +62,6 @@
     top: 0;
      z-index: 80;
      
-
   /* background: linear-gradient(
     rgba(0, 0, 0, 0.1), 
     rgba(0, 0, 0, 0.1)
@@ -79,6 +78,10 @@
     position: fixed;
     z-index: 1000;
     top:50; */
+}
+
+.task-card .form-control{
+    height: 50px;
 }
 
 .create-task-form{
