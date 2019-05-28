@@ -234,7 +234,7 @@ render() {
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
                     <h4>View Your Group's Current Tasks</h4>
                     <div className="nav-btns">
-                        <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
+                        <MDBBtn className={"btn-dark-green"} onClick={this.toggleMod} style={{color:"white"}}>New Task</MDBBtn>
                     
                     </div>
                 </MDBCol>
