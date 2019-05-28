@@ -717,7 +717,7 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   if(process.env.NODE_ENV === 'development'){
     frontendURL = 'localhost:3000'
   } else {
-    frontendURL = 'https://goofy-sinoussi-c017bd.netlify.com/'
+    frontendURL = 'https://goofy-sinoussi-c017bd.netlify.com'
   }
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
@@ -760,7 +760,7 @@ export const getInviteInfo = inviteCode => {
  * @param inviteCode - Token to validate the invite
  * @returns {Function}
  */
-export const acceptInvite = inviteCode => {
+export const acceptInvite = (inviteCode,username,email) => {
   let token = localStorage.getItem('jwt');
   const options = {
     headers: {
@@ -768,11 +768,13 @@ export const acceptInvite = inviteCode => {
     }
   };
 
-  let body = {
+  let user = {
     inviteCode: inviteCode,
+    name:username,
+    email:email
   }
 
-  const endpoint = axios.post(`${backendURL}/api/invite/join`, body, options);
+  const endpoint = axios.post(`${backendURL}/api/invite/join`, user, options);
 
   return dispatch => {
     dispatch({type: ACCEPTING_INVITE});
