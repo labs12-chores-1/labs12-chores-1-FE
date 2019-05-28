@@ -41,7 +41,7 @@ class Comments extends Component {
                     <p className="comments">{this.state.commentString}</p>
 
                     <div className="comment-cta">
-                        <button className="cta-comment-edit custom-switch" type="submit" onClick={(e)=> this.props.toggleCommentModal(e, this.props.commentID)}><i class="fas fa-pen"></i></button>
+                        <button className="cta-comment-edit custom-switch" type="submit" onClick={(e)=> this.props.editComment(e, this.props.commentID)}><i class="fas fa-pen"></i></button>
                         <button className="cta-comment-close" type="button" onClick={(e) => this.props.removeComment(e, this.props.commentID)}><i class="fas fa-times"></i></button> 
                     </div>
                 </li>

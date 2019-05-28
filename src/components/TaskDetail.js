@@ -280,6 +280,7 @@ render() {
                     commentedOn={comment.commentedOn}
                     commentID={comment.id}
                     removeComment={this.removeComment}
+                    editComment={this.toggleCommentModal}
                     />
                       <div className="buttons">
                         {/* <button className="cta-comment-close" type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button>  */}
