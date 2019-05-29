@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 //import { Link } from 'react-router-dom';
 import "./Styles/GroupTask.css";
 import TaskCard from "./TaskCard";
@@ -26,7 +26,8 @@ import {
     createGroupTask,
     editTask,
     getGroupUsers,
-    getTaskComments
+    getTaskComments,
+    getGroupUserObjs
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 //import { bool } from 'prop-types';
@@ -45,52 +46,37 @@ class GroupTasks extends Component {
             userId: null,
             currentGroupTasks: {data:[]},
             groupMembers: [],
-            groupUserNames: [],
+            groupUserObjs: this.props.groupUserObjs,
             toggleMod: false,
             toggleRadio:false,
-            recurringTime:""
+            recurringTime:"",
+            assigneeName:""
         };
         this.handleSearch = this.handleSearch.bind(this);
     }
     componentDidMount(){
-        this.props.getGroupTasks(this.props.match.params.id);
+        // this.props.getGroupUserObjs(this.props.match.params.id);
         this.setState({...this.state,
-            currentGroupTasks: this.props.currentGroupTasks});
-    }
+            currentGroupTasks: this.props.currentGroupTasks,
+            groupUserObjs: this.props.groupUserObjs});
+            console.log("this.state.groupUserObjs: ",this.state.groupUserObjs);
+        }
     componentWillMount(){
         document.title = `FairShare - Task`;
-        this.props.getGroupTasks(this.props.match.params.id);
-        this.setState({...this.state,
-            currentGroupTasks: this.props.currentGroupTasks});
-
-        //Get info of all group members
-        let backendURL;
-        if(process.env.NODE_ENV === 'development'){
-        backendURL = `http://localhost:9000`
-        } else {
-        backendURL = `https://labs12-fairshare.herokuapp.com`
-        }
-        
-        let token = localStorage.getItem('jwt');
-        let options = {
-            headers: {
-            Authorization: `Bearer ${token}`
-            }
-        }
-
-        axios.get(`${backendURL}/api/groupMember/group/${this.props.match.params.id}`, options)
-        .then(response => {
-            this.setState({
-                groupMembers: response.data
-            })
-        });
-        
+        console.log("this.props.match.params.id: ",this.props.match.params.id);      
+        this.props.getGroupTasks(this.props.match.params.id);        
+        this.props.getGroupUserObjs(this.props.match.params.id);
+        this.setState({
+            currentGroupTasks: this.props.currentGroupTasks});        
     }
     
     componentDidUpdate(previousProps){
-        if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
-            this.setState({currentGroupTasks:this.props.currentGroupTasks});
+        if(previousProps.currentGroupTasks !== this.props.currentGroupTasks || previousProps.groupUserObjs !== this.props.groupUserObjs){
+            this.setState({currentGroupTasks:this.props.currentGroupTasks,
+            groupUserObjs: this.props.groupUserObjs
+            });
         }
+
     }
     
     handleChanges=(e)=>{
@@ -138,39 +124,36 @@ class GroupTasks extends Component {
 
     handleFilter =(event, filterArg) =>{
         event.preventDefault();
-        if (filterArg === "all-completeness"){
-            this.setState({...this.state,
-                currentGroupTasks: this.props.currentGroupTasks});
-        }
-        else if (filterArg ==="completed"){
-            if (this.state.currentGroupTasks.data.length !== 0){
+        if (typeof filterArg === "string"){
+            if (filterArg === "all-completeness"){
+                this.setState({...this.state,
+                    currentGroupTasks: this.props.currentGroupTasks});
+            }
+            else if (filterArg ==="completed"){
+                if (this.state.currentGroupTasks.data.length !== 0){
+                    this.setState({...this.state,
+                        currentGroupTasks: {
+                            data: this.state.currentGroupTasks.data.filter(task=>task.completed)}});
+                }
+            }
+            else if (filterArg ==="incomplete"){
                 this.setState({...this.state,
                     currentGroupTasks: {
-                        data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
+                        data:this.state.currentGroupTasks.data.filter(task=>!task.completed)}});
+            }
+            else if (filterArg ==="all-assignee"){
+                this.setState({...this.state,
+                    currentGroupTasks: this.props.currentGroupTasks})
             }
         }
-        else if (filterArg ==="incomplete"){
+        else{
             this.setState({...this.state,
-                currentGroupTasks: {
-                    data:this.props.currentGroupTasks.data.filter(task=>!task.completed)}});
-        }
-        else if (filterArg ==="all-assignee"){
-            this.setState({...this.state,
-                currentGroupTasks: this.props.currentGroupTasks})
-        }
-        else if (this.state.groupMembers !== null){
-            console.log("here!!");
-            this.state.groupMembers.forEach(userID =>{
-                this.setState({...this.state,
-                    currentGroupTasks: this.props.currentGroupTasks.filter(task=>task.completedBy===filterArg)})
-                console.log("group member id match!");
-                // console.log
-                // if (filterArg === userID){
-                    //}
-            })
+                    currentGroupTasks: {
+                        data:this.state.currentGroupTasks.data.filter(task=>task.assigneeName===filterArg.name)
+                    }})
         }
     }
-    
+                                        
     toggleMod= (e) => {
         this.setState({
             toggleMod:!this.state.toggleMod
@@ -182,36 +165,6 @@ class GroupTasks extends Component {
         this.setState({
             toggleRadio:!this.state.toggleRadio
         }); console.log('toggleRadiotoggle:', this.state.toggleRadio);
-    }
-
-    getGroupUserNames =()=>{
-        if (this.state.groupMembers.length > 0){
-            // console.log('hello');
-            let backendURL;
-            if(process.env.NODE_ENV === 'development'){
-                backendURL = `http://localhost:9000`
-            } else {
-                backendURL = `https://labs12-fairshare.herokuapp.com`
-            }
-            
-            let token = localStorage.getItem('jwt');
-            let options = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-            //Map list of group members to list of group user names
-            this.state.groupMembers.forEach(function(groupMember){
-                console.log(this.groupMember);
-                axios.get(`${backendURL}/api/user/${groupMember.userID}/name`, options)
-                .then(response => {
-                    // console.log(response.data);
-                    this.setState({
-                        groupUserNames: [...this.state.groupUserNames, response.data]
-                    })
-                }); 
-                })
-        }   
     }
 
     setRecurringTime = (e, recurring) => {
@@ -285,6 +238,17 @@ render() {
                         value={this.state.assigneeName}
                         onChange={this.handleChanges}
                     />
+                    <div className="dropdown">
+                        <span>Assign to (optional)</span>
+                        <div className="dropdown-content">
+                            {this.state.groupUserObjs.length >= 1
+                            ? this.state.groupUserObjs.map(userObj=>(
+                                <div className="dropdown-item" onClick={()=>this.setState({assigneeName: userObj.name})}>{userObj.name}</div>
+                            ))                            
+                            : null
+                            }                           
+                        </div>
+                    </div>  
                     <div>
                         {/* <span onClick={this.toggleRadio}>Yes</span> */}
                         <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
@@ -319,20 +283,23 @@ render() {
                             // aria-label="Search" 
                             onChange={this.handleSearch}/>
                     </form>
-                        <div>Filter By:</div>
+                    {/* Dropdown filter by assignee name */}
+                    <div>Filter By:</div>
                     <div className="dropdown">
                         <span>Assigned</span>
                         <div className="dropdown-content">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
+                            {/* {console.log("this.state.groupUserObjs: ", this.state.groupUserObjs)} */}
                             <div className="dropdown-divider"></div>
-                            {this.state.groupUserNames.length >= 1
-                            ? this.state.groupUserNames.map(groupUser=>(
-                                <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,groupUser.userID)}>{groupUser.userID}</div>
+                            {this.state.groupUserObjs.length >= 1
+                            ? this.state.groupUserObjs.map(userObj=>(
+                                <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,userObj)}>{userObj.name}</div>
                             ))                            
                             : null
                             }
                         </div>
                     </div>
+                    {/* Dropdown filter by task completeness */}
                     <div className="dropdown">
                         <span>Complete</span>
                         <div className="dropdown-content">
@@ -383,13 +350,7 @@ const mapStateToProps = state => {
         currentGroup: state.currentGruop,
         currentGroupTasks: state.currentGroupTasks,
         taskComments: state.taskComments,
-        // userGroups: state.userGroups,
-        // userId: state.userId,
-        // name: state.name,
-        // email: state.email,
-        // profilePicture: state.profilePicture,
-        // groups: state.groups,
-        // errorMessage: state.errorMessage
+        groupUserObjs: state.groupUserObjs
     }
 }
 
@@ -409,6 +370,7 @@ export default connect(
         createGroupTask,
         editTask,
         getGroupUsers,
-        getTaskComments
+        getTaskComments,
+        getGroupUserObjs
     }
 )(GroupTasks);

@@ -17,7 +17,8 @@ import {
   clearError,
   clearGroupHistory,
   updateGroupNotification,
-  getCurrentGroup
+  getCurrentGroup,
+  getGroupUserObjs
 } from "../store/actions/rootActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
@@ -99,6 +100,7 @@ class GroupsProfile extends Component {
       document.title = `${group[0].name} - Group`;
     }
     this.props.getCurrentGroup(this.props.match.params.id);
+    this.props.getGroupUserObjs(this.props.match.params.id);
   }
 
   /**
@@ -518,6 +520,7 @@ export default connect(
     clearError,
     clearGroupHistory,
     updateGroupNotification,
-    getCurrentGroup
+    getCurrentGroup,
+    getGroupUserObjs
   }
 )(GroupsProfile);

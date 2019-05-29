@@ -32,7 +32,7 @@ import { deleteTask } from '../store/actions/rootActions';
 import { createTaskComments } from '../store/actions/rootActions';
 import { editTask } from '../store/actions/rootActions';
 import { updateComment } from '../store/actions/rootActions';
-import { getSingleTask,testFunction } from '../store/actions/rootActions';
+import { getSingleTask,getGroupUserObjs } from '../store/actions/rootActions';
 import { getGroupTasks } from '../store/actions/rootActions';
 
 // import { rootReducer } from "../store/reducers/rootReducer";
@@ -50,22 +50,23 @@ class TaskDetail extends Component {
             groupID: this.props.match.params.groupId,
             taskID: this.props.match.params.taskId,
             toggleMod:false,
-            taskDescription: "",
-            task: null,
+            taskDescription: null,
+            task: {},
             taskModal: false,
             newCommentString:"",
             commentID:null,
             commentModal:false,
             recurringTime:"",
+            groupUserObjs:[]
         };
         
     }
 
     componentWilMount(){
-      document.title = `FairShare - Task`;  
-      
-      // this.props.getSingleTask(this.props.match.params.taskId);
-      // this.props.getTaskComments(this.props.match.params.taskId);  
+      document.title = `FairShare - Task`;           
+      this.props.getGroupUserObjs(this.props.match.params.id);        
+      this.props.getSingleTask(this.props.match.params.taskId);
+      this.setState({task:this.props.task})
     }
     
     componentDidUpdate(previousProps){
@@ -76,6 +77,10 @@ class TaskDetail extends Component {
       }
       if(this.props.singleTask && previousProps.singleTask !== this.props.singleTask){
           this.setState({task:this.props.singleTask.data[0]});
+      }
+      if(previousProps.groupUserObjs !== this.props.groupUserObjs){
+        this.setState({groupUserObjs: this.props.groupUserObjs
+        });
       }
     }
         
@@ -271,15 +276,20 @@ render() {
                 <h3>Edit Task</h3>
                 <input 
                     type="text"
-                    placeholder="edit task name"
+                    placeholder={this.state.task
+                                ?this.state.task.taskName
+                                :"edit task name"}
                     name="taskName"
                     value={this.state.taskName}
                     onChange={this.handleChanges}
                 />
+                {console.log(this.state.task)}
                 <textarea
                     className="text-description"
                     type="text"
-                    placeholder="edit description"
+                    placeholder={this.state.task.taskDescription
+                    ?this.state.task.taskDescription
+                    :"edit description"}
                     name="taskDescription"
                     value={this.state.taskDescription}
                     onChange={this.handleChanges}
@@ -291,25 +301,35 @@ render() {
                     value={this.state.assigneeName}
                     onChange={this.handleChanges}
                 />
+                <div className="dropdown">
+                  <span>Assign to (optional)</span>
+                  <div className="dropdown-content">
+                      {this.state.groupUserObjs.length >= 1
+                      ? this.state.groupUserObjs.map(userObj=>(
+                          <div className="dropdown-item" onClick={()=>this.setState({assigneeName: userObj.name})}>{userObj.name}</div>
+                      ))                            
+                      : null
+                      }                           
+                  </div>
+              </div> 
+                <div>
+                    {/* <span onClick={this.toggleRadio}>Yes</span> */}
+                    <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
+                    <span>Would you like to make this task repeating?</span>
+                </div>
 
-<div>
-                        {/* <span onClick={this.toggleRadio}>Yes</span> */}
-                        <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
-                        <span>Would you like to make this task repeating?</span>
+                <div className= {
+                    this.state.toggleRadio=== false
+                        ? 'dropdown-hidden'
+                        : 'dropdown-display'}>
+
+                    How often should this task be completed?
+                    <div className="dropdown-options">
+                        <ul><button onClick={(event)=>this.setRecurringTime(event,"1")}>Every 1 Hour</button></ul>
+                        <ul><button onClick={(event)=>this.setRecurringTime(event,"2")}>Every 2 Hours</button></ul>
+                        <ul><button onClick={(event)=>this.setRecurringTime(event,"3")}>Every 3 Hours</button></ul>
                     </div>
-
-                    <div className= {
-                        this.state.toggleRadio=== false
-                            ? 'dropdown-hidden'
-                            : 'dropdown-display'}>
-
-                        How often should this task be completed?
-                        <div className="dropdown-options">
-                            <ul><button onClick={(event)=>this.setRecurringTime(event,"1")}>Every 1 Hour</button></ul>
-                            <ul><button onClick={(event)=>this.setRecurringTime(event,"2")}>Every 2 Hours</button></ul>
-                            <ul><button onClick={(event)=>this.setRecurringTime(event,"3")}>Every 3 Hours</button></ul>
-                        </div>
-                    </div>
+                </div>
 
                 <button className="cta-submit" type='submit'>EDIT</button>
             </form>
@@ -338,6 +358,7 @@ render() {
                     return(
                     <div>
                     <Comments 
+                    comment={comment}
                     commentString= {comment.commentString}
                     taskID = {this.props.match.params.taskId}
                     commentedOn={comment.commentedOn}
@@ -356,7 +377,7 @@ render() {
                 : null
                 }
                 <div>           
-                  <form onSubmit={this.createComments}>
+                  {/* <form onSubmit={this.createComments}>
                       <input
                         type="text"
                         placeholder="Write Comment"
@@ -365,28 +386,29 @@ render() {
                         onChange={this.handleChanges}
                       />
                       <button type="submit">Submit</button>
-                  </form>                
+                  </form>                 */}
                   {this.state.taskComments.length > 0
                       ? this.state.taskComments.map(comment => {
                           return(
                           <div key={comment.id}>
-                          <Comments 
-                              commentString= {comment.commentString}
-                              taskID = {this.props.match.params.taskId}
-                              commentedOn={comment.commentedOn}
-                              commentID={comment.id}
-                          />
-                            <div className="buttons">
-                              <button type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}>Edit</button>
-                              <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button>                               
-                            </div>
+                            <Comments 
+                                commentString= {comment.commentString}
+                                taskID = {this.props.match.params.taskId}
+                                commentedOn={comment.commentedOn}
+                                commentID={comment.id}
+                                comment = {comment}
+                            />
+                              <div className="buttons">
+                                <button type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}>Edit</button>
+                                <button type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button>                               
+                              </div>
                           </div> 
                       
                       )})
                       : null
                   } 
                 </div>  
-                 {/* edit comment modal*/}
+                {/* edit comment modal */}
                 <div className= {
                       this.state.commentModal=== false
                           ? 'custom-mod-hidden'
@@ -422,11 +444,12 @@ const mapStateToProps = state => {
       taskComments: state.taskComments,
       errorMessage: state.errorMessage,
       currentGroup:state.currentGroup,
-      singleTask: state.singleTask
+      singleTask: state.singleTask,
+      groupUserObjs: state.groupUserObjs
     };
 };
   
-export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment,getSingleTask,testFunction,getGroupTasks })(TaskDetail));
+export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment,getSingleTask,getGroupTasks,getGroupUserObjs })(TaskDetail));
 
 
 

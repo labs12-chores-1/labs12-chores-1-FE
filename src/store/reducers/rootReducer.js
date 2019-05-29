@@ -76,8 +76,8 @@ import {
   GET_COMPLETED_START,
   GET_COMPLETED_SUCCESS,
   GET_COMPLETED_FAILURE,
-  GET_GROUP_USER_NAMES,
-  SAVE_GROUP_USER_NAMES
+  GET_GROUP_USER_OBJECTS,
+  SAVE_GROUP_USER_OBJECTS
 
 } from "../actions/";
 
@@ -120,7 +120,8 @@ const initialState = {
   tempUserName: null,
   currentTask: null,
   singleTask: null,
-  deleteGroupMessage:null
+  deleteGroupMessage:null,
+  groupUserObjs: []
 };
 
 
@@ -584,13 +585,13 @@ export const rootReducer = (state = initialState, action) => {
       ...state,
       errorMessage:action.payload
     };
-    case GET_GROUP_USER_NAMES:
+    case GET_GROUP_USER_OBJECTS:
       return state;
 
-    case SAVE_GROUP_USER_NAMES:
+    case SAVE_GROUP_USER_OBJECTS:
       return {
         ...state,
-        groupUsers: action.payload,
+        groupUserObjs: action.payload.data,
         errorMessage: null
       };
 
