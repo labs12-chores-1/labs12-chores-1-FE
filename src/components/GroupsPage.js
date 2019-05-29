@@ -304,8 +304,8 @@ class GroupsPage extends Component {
                     : 'custom-mod-display'}>
                 <form className={'create-task-form'}>
                 <span className="x" onClick={this.toggleMod}>X</span>
-                <h3>Delete this group?</h3>
-                <h6>(cannot be undone)</h6>
+                <h6>Are you sure you want to delete this group?</h6>
+                <h6>(This cannot be undone)</h6>
                     
                     
                     

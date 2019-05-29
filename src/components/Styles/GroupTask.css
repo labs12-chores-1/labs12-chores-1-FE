@@ -21,6 +21,10 @@
     cursor: pointer;
 }
 
+.btn btn-default Ripple-parent btn-dark-green{
+    color: white;
+}
+
 .search-dropdown-row{
     display: flex;
     flex-flow: row; 

@@ -52,6 +52,11 @@ class GroupTasks extends Component {
         };
         this.handleSearch = this.handleSearch.bind(this);
     }
+    componentDidMount(){
+        this.props.getGroupTasks(this.props.match.params.id);
+        this.setState({...this.state,
+            currentGroupTasks: this.props.currentGroupTasks});
+    }
     componentWillMount(){
         document.title = `FairShare - Task`;
         this.props.getGroupTasks(this.props.match.params.id);
@@ -246,7 +251,8 @@ render() {
                     {/* Add New Task button */}
                     <h4>View Your Group's Current Tasks</h4>
                     <div className="nav-btns">
-                        <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
+                        <MDBBtn className={"btn-dark-green"} onClick={this.toggleMod} style={{color:"white"}}>New Task</MDBBtn>
+                    
                     </div>
                 </MDBCol>
             </MDBRow>
@@ -313,7 +319,7 @@ render() {
                             // aria-label="Search" 
                             onChange={this.handleSearch}/>
                     </form>
-
+                        <div>Filter By:</div>
                     <div className="dropdown">
                         <span>Assigned</span>
                         <div className="dropdown-content">

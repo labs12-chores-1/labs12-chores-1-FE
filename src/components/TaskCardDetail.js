@@ -14,7 +14,7 @@ import { withRouter } from "react-router-dom";
 import "./Styles/TaskCard.css";
 import "./Styles/Comments.css";
 
-import { getTaskComments, getCompleted, getGroupTasks } from '../store/actions/rootActions';
+import { getTaskComments, getCompleted, getGroupTasks, getUserName, getSingleTask } from '../store/actions/rootActions';
 //import { rootReducer } from "../store/reducers/rootReducer";
 
 class TaskCardDetail extends Component {
@@ -46,7 +46,8 @@ class TaskCardDetail extends Component {
 
    getComments = e => {
     e.preventDefault();
-    this.props.getTaskComments(this.props.match.params.id);//<----------------??
+    
+    this.props.getTaskComments(this.props.match.params.taskId);//<----------------??
   }
 
   toggle = () => {
@@ -94,27 +95,43 @@ class TaskCardDetail extends Component {
   return (
       <>
       
-      <MDBCard className="task-card" >
-        <MDBCardBody className="task-card-body">
-            <div className="task-card-left">
-                <h7>{this.props.task.taskName}</h7>
-                <h7>Requested by: {this.props.task.createdBy}</h7>
+      <MDBCard className="task-card-Detail" >
+        <MDBCardBody className="task-card-body-Detail">
+            <div className="task-card-left-Detail">
+                <h5 className="assigned-To-Detail">Assigned To: {this.props.task.assigneeName}</h5>
+                <h7 className="requested-By-Detail">Requested by: {this.props.task.createdBy}</h7>
             </div>
-            <div className="task-card-middle">
-                <h5>{this.props.task.assigneeName}</h5>
-                <h5>{this.props.task.taskDescription}</h5>
+            <div className="task-card-middle-Detail">
+                <h7 className="task-Name-Detail">{this.props.task.taskName}</h7>
+                <h5 className="task-Description-Detail">Details: {this.props.task.taskDescription}</h5>
             </div>
+<<<<<<< HEAD
             <div className="task-card-right">
               <div> 
                 {this.props.task.numberOfComments > 0 
+=======
+            <div className="task-card-right-Detail">
+              <div>                {this.props.task.numberOfComments > 0 
+>>>>>>> master
                 ? <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
                 : null}
+                
+                 {/* <div>{this.state.task.completed ===0
+                      ? "Incomplete": "Complete"}</div>
+                <div className={
+                  this.state.task.recurringTime.length > 0
+                  ? 'recurring-display'
+                  : 'recurring-hidden'
+                }>
+                  Complete every:{this.state.task.recurringTime}
+                </div> */}
                 <input type="checkbox" name="done" value="taskCompleted" checked={this.state.taskCompleted} onClick={this.handleToggleComplete}/>
-                <h7>Done</h7>
+                <h7> Done</h7>
               </div>
+
               {/* {console.log(this.state.taskCompletedOn.toDateString())} */}
               {this.state.taskCompletedOn
-                ?<h8>{`Completed On: ${this.state.taskCompletedOn}`}</h8>
+                ?<h8 className="completed-On-Detail">{`Completed On: ${this.state.taskCompletedOn}`}</h8>
                 :null}
             </div>
         </MDBCardBody>
@@ -136,4 +153,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps,{getTaskComments, getCompleted,getGroupTasks})(TaskCardDetail));
+export default withRouter(connect(mapStateToProps,{getTaskComments, getCompleted,getGroupTasks, getSingleTask, getUserName})(TaskCardDetail));
