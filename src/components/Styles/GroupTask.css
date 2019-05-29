@@ -65,12 +65,14 @@
     right: 0;
     top: 0;
      z-index: 80;
-     padding-top: 4%;
+     padding-top: 2px;
+     height: 100%;
+     width: 100%;
 }
 
-.create-task-form{
-    padding-top: 20px;
-    padding-bottom: 40px;
+.add-task-form{
+    
+    height: 70%;
     padding-left: 20px;
     padding-right: 20px;
     margin-left: auto;

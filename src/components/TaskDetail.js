@@ -264,7 +264,7 @@ render() {
             this.state.toggleMod=== false
                 ? 'custom-mod-hidden'
                 : 'custom-mod-display'}>
-            <form className={'create-task-form'}onSubmit={this.updateTask}>
+            <form className={'add-task-form'}onSubmit={this.updateTask}>
             <span className="x" onClick={this.toggleMod}>X</span>
                 <h3>Edit Task</h3>
                 <input 
