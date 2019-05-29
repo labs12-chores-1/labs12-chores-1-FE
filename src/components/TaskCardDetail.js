@@ -105,14 +105,8 @@ class TaskCardDetail extends Component {
                 <h7 className="task-Name-Detail">{this.props.task.taskName}</h7>
                 <h5 className="task-Description-Detail">Details: {this.props.task.taskDescription}</h5>
             </div>
-<<<<<<< HEAD
-            <div className="task-card-right">
-              <div> 
-                {this.props.task.numberOfComments > 0 
-=======
             <div className="task-card-right-Detail">
               <div>                {this.props.task.numberOfComments > 0 
->>>>>>> master
                 ? <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img>
                 : null}
                 
