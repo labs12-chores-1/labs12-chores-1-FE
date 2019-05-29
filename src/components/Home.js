@@ -211,7 +211,7 @@ class Home extends React.Component{
                         </MDBCardText>
                     </MDBCardBody>
                     <MDBCardFooter>
-                        <MDBBtn onClick = {this.signIn}>Sign Up</MDBBtn>
+                        <MDBBtn disabled={true}>coming soon </MDBBtn>
                     </MDBCardFooter>
                 </MDBCard>
                 
