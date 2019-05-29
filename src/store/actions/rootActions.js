@@ -1376,13 +1376,16 @@ export const updateComment = (comment, commentId,taskId) => {
 
     endpoint.then(res => {
       dispatch({type: UPDATE_COMMENT_SUCCESS});
-    }).then(()=>{
-      getTaskComments(taskId)
     })
     .catch(err => {
       console.log(err);
       dispatch({type: UPDATE_COMMENT_FAIL,payload:err})
     })
+    // .then(()=>{
+      
+    //   getTaskComments(taskId)
+    //   console.log('DISPATCHED FROM ACTIONS')
+    // })
   }
 }
 
