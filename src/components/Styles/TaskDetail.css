@@ -25,6 +25,38 @@
     cursor: pointer;
 }
 
+/* COMMENTS */
+.task-card form{
+    text-align: center;
+}
+
+.comment-container{
+    /* border: solid; */
+}
+
+.cta-comment-submit{
+    margin: 0 0 40px 0;
+    padding: 10px 200px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #388e3c;
+    border: 1px solid #388e3c;
+    color: #ffffff;
+    cursor: pointer; 
+}
+
+.cta-comment-edit {
+    border: none;
+    color: #42922d;
+}
+
+.cta-comment-close {
+    border: none;
+    color: #42922d;
+    font-weight: bold;
+}
+
 .custom-mod-hidden {
     display: none
 }
@@ -38,7 +70,6 @@
     top: 0;
      z-index: 80;
      
-
   /* background: linear-gradient(
     rgba(0, 0, 0, 0.1), 
     rgba(0, 0, 0, 0.1)
@@ -55,6 +86,12 @@
     position: fixed;
     z-index: 1000;
     top:50; */
+}
+
+.task-card .form-control{
+    height: 50px;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .create-task-form{

@@ -279,7 +279,9 @@ footer {
     }
 
     .home-content-top {
-        grid-template: none;
+        text-align: center;
+        justify-content: center;
+
     }
 }
 
