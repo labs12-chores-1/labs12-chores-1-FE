@@ -264,8 +264,8 @@ render() {
             this.state.toggleMod=== false
                 ? 'custom-mod-hidden'
                 : 'custom-mod-display'}>
-                <span className="x" onClick={this.toggleMod}>X</span>
             <form className={'create-task-form'}onSubmit={this.updateTask}>
+            <span className="x" onClick={this.toggleMod}>X</span>
                 <h3>Edit Task</h3>
                 <input 
                     type="text"
@@ -359,7 +359,7 @@ render() {
           <div className= {
                 this.state.commentModal=== false
                     ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
+                    : 'edit-comment-mod-display'}>
                 
                 <form className={'create-task-form'} onSubmit={(e)=>this.editComment(e,this.state.commentID)}>
                 <span className="x" onClick={this.toggleCommentModal}>X</span>
