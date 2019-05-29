@@ -722,7 +722,7 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
     endpoint.then(res => {
-      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite/${res.data.inviteCode}`} })
+      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite/?${res.data.inviteCode}`} })
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR, payload: err.response.data.warning})
