@@ -274,7 +274,7 @@ render() {
                     value={this.state.taskName}
                     onChange={this.handleChanges}
                 />
-                <textarea
+                <textarea cols="30" rows="10" class="no-resize"
                     className="text-description"
                     type="text"
                     placeholder="edit description"
