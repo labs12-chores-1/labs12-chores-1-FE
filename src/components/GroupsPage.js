@@ -260,7 +260,7 @@ class GroupsPage extends Component {
               <div className= {
                 this.state.modal15=== false
                     ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
+                    : 'edit-group-name-mod-display'}>
                 
                 <form className={'create-task-form'}>
                 <span className="x" onClick={this.toggle(15)}>X</span>
@@ -305,7 +305,7 @@ class GroupsPage extends Component {
               <div className= {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
+                    : 'delete-group-mod-display'}>
                 <form className={'create-task-form'}>
                 <span className="x" onClick={this.toggleMod}>X</span>
                 <h6>Are you sure you want to delete this group?</h6>

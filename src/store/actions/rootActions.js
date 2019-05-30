@@ -1178,7 +1178,7 @@ export const getSingleTask = (taskID) => {
     dispatch({type: GET_SINGLE_TASK_START})
     endpoint
     .then(res => {
-      console.log(res)
+      // console.log(res)
       dispatch({type: GET_SINGLE_TASK_SUCCESS, payload: res.data});
     }).catch(err => {
       dispatch({type: GET_SINGLE_TASK_FAILURE, payload: err})

@@ -54,16 +54,10 @@ class GroupTasks extends Component {
         };
         this.handleSearch = this.handleSearch.bind(this);
     }
-    componentDidMount(){
-        // this.props.getGroupUserObjs(this.props.match.params.id);
-        this.setState({...this.state,
-            currentGroupTasks: this.props.currentGroupTasks,
-            groupUserObjs: this.props.groupUserObjs});
-            console.log("this.state.groupUserObjs: ",this.state.groupUserObjs);
-        }
+ 
     componentWillMount(){
         document.title = `FairShare - Task`;
-        console.log("this.props.match.params.id: ",this.props.match.params.id);      
+        // console.log("this.props.match.params.id: ",this.props.match.params.id);      
         this.props.getGroupTasks(this.props.match.params.id);        
         this.props.getGroupUserObjs(this.props.match.params.id);
         this.setState({
@@ -76,7 +70,13 @@ class GroupTasks extends Component {
             groupUserObjs: this.props.groupUserObjs
             });
         }
-
+    }
+    componentDidMount(){
+        // this.props.getGroupUserObjs(this.props.match.params.id);
+        this.setState({...this.state,
+            currentGroupTasks: this.props.currentGroupTasks,
+            groupUserObjs: this.props.groupUserObjs});
+        // console.log("this.state.groupUserObjs: ",this.state.groupUserObjs);
     }
     
     handleChanges=(e)=>{
@@ -212,7 +212,7 @@ render() {
             {/* Modal for Add New Task */}
             <div className= {this.state.toggleMod=== false
                             ? 'custom-mod-hidden'
-                            : 'custom-mod-display'}>
+                            : 'create-task-mod-display'}>
                 <form className={'create-task-form'}onSubmit={this.createTask}>
                     <span className="x" onClick={this.toggleMod}>X</span>
                     <h3>New Task</h3>
@@ -231,15 +231,14 @@ render() {
                         value={this.state.taskDescription}
                         onChange={this.handleChanges}
                     />
-                    <input 
-                        type="text"
-                        placeholder="Assign to (optional)"
-                        name="assigneeName"
-                        value={this.state.assigneeName}
-                        onChange={this.handleChanges}
-                    />
                     <div className="dropdown">
-                        <span>Assign to (optional)</span>
+                        <input 
+                            type="text"
+                            placeholder="Assign to (optional)"
+                            name="assigneeName"
+                            value={this.state.assigneeName}
+                            onChange={this.handleChanges}
+                        />
                         <div className="dropdown-content">
                             {this.state.groupUserObjs.length >= 1
                             ? this.state.groupUserObjs.map(userObj=>(

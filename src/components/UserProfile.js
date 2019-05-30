@@ -23,7 +23,7 @@ import {
   MDBCol,
   MDBInput,
   MDBModal,
-  MDBModalHeader,
+  // MDBModalHeader,
   MDBModalBody,
   MDBModalFooter,
   MDBAlert
@@ -329,10 +329,10 @@ class UserProfile extends React.Component {
                                   </MDBCardText>
                                   <MDBBtn
                                       className="btn btn-dark-green"
-                                      disabled={subscriptionType === 2 ? true : false}
+                                      disabled={true}
                                       size="lg"
                                   >
-                                    {subscriptionType === 1 ? "Subscribe" : "Subscribed"}
+                                    coming soon...
                                   </MDBBtn>
                                 </MDBCardBody>
                               </MDBCard>
@@ -347,31 +347,26 @@ class UserProfile extends React.Component {
 
 
         <MDBContainer>
-          <MDBModal
-            isOpen={this.state.modal14}
-            toggle={this.toggle(14)}
-            centered
-          >
-            <MDBModalHeader toggle={this.toggle(14)}>
-              Update Profile Picture
-            </MDBModalHeader>
-            <MDBModalBody>
-              <MDBInput
+        <div className= {
+                this.state.modal14=== false
+                    ? 'custom-mod-hidden'
+                    : 'profile-pic-mod-display'}>
+                <form className={'create-task-form'} onSubmit={this.saveProfilePicture}>
+                <span className="x" onClick={this.toggle(14)}>X</span>
+                <h3>Update Profile Picture</h3>
+              <MDBInput 
                 label="Picture URL"
                 name="profilePic"
                 onChange={this.handleInput}
                 defaultValue={this.state.profilePic}
               />
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={this.toggle(14)}>
-                Close
-              </MDBBtn>
               <MDBBtn color="primary" onClick={this.saveProfilePicture}>
-                Save
+                  Save
               </MDBBtn>
-            </MDBModalFooter>
-          </MDBModal>
+                 </form>
+              
+          </div>
+
             <MDBModal isOpen={this.state.modal16} toggle={this.toggle(16)} centered>
                 <button onClick={this.handleDeleteAccount}>Remove Account</button>
                 <MDBModalBody>
