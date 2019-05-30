@@ -51,6 +51,11 @@ class GroupTasks extends Component {
             recurringTime:""
         };
     }
+    componentDidMount(){
+        this.props.getGroupTasks(this.props.match.params.id);
+        this.setState({...this.state,
+            currentGroupTasks: this.props.currentGroupTasks});
+    }
     componentWillMount(){
         document.title = `FairShare - Task`;
         this.props.getGroupTasks(this.props.match.params.id);
@@ -234,7 +239,7 @@ render() {
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
                     <h4>View Your Group's Current Tasks</h4>
                     <div className="nav-btns">
-                        <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
+                        <MDBBtn className={"btn-dark-green"} onClick={this.toggleMod} style={{color:"white"}}>New Task</MDBBtn>
                     
                     </div>
                 </MDBCol>
@@ -242,7 +247,7 @@ render() {
             <div className= {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
+                    : 'create-task-mod-display'}>
                 <form className={'create-task-form'}onSubmit={this.createTask}>
                 <span className="x" onClick={this.toggleMod}>X</span>
                 <h3>New Task</h3>

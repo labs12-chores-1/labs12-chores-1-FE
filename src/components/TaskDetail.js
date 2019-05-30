@@ -33,6 +33,7 @@ import { createTaskComments } from '../store/actions/rootActions';
 import { editTask } from '../store/actions/rootActions';
 import { updateComment } from '../store/actions/rootActions';
 import { getSingleTask,testFunction } from '../store/actions/rootActions';
+import { getGroupTasks } from '../store/actions/rootActions';
 
 // import { rootReducer } from "../store/reducers/rootReducer";
 
@@ -55,7 +56,7 @@ class TaskDetail extends Component {
             newCommentString:'',
             commentID:null,
             commentModal:false,
-            recurringTime:""
+            recurringTime:"",
         };
         
     }
@@ -143,6 +144,7 @@ class TaskDetail extends Component {
   backToTask = (e) => {
   e.preventDefault();
   this.props.history.goBack();
+  this.props.getGroupTasks(this.state.taskID);
 } 
 
   updateTask = (e) => {
@@ -178,8 +180,7 @@ class TaskDetail extends Component {
       }
       this.props.updateComment(comment,commentId,this.state.taskID)
       this.setState({commentModal:!this.state.commentModal})
-      
-      window.location.reload();
+       window.location.reload();
   }
 
   setRecurringTime = (e, recurring) => {
@@ -263,8 +264,8 @@ render() {
             this.state.toggleMod=== false
                 ? 'custom-mod-hidden'
                 : 'custom-mod-display'}>
-                <span className="x" onClick={this.toggleMod}>X</span>
-            <form className={'create-task-form'}onSubmit={this.updateTask}>
+            <form className={'add-task-form'}onSubmit={this.updateTask}>
+            <span className="x" onClick={this.toggleMod}>X</span>
                 <h3>Edit Task</h3>
                 <input 
                     type="text"
@@ -333,7 +334,7 @@ render() {
             {this.state.taskComments.length > 0
                 ? this.state.taskComments.map(comment => {
                     return(
-                    <div key={comment.id}>
+                    <div>
                     <Comments 
                     commentString= {comment.commentString}
                     taskID = {this.props.match.params.taskId}
@@ -341,12 +342,13 @@ render() {
                     commentID={comment.id}
                     removeComment={this.removeComment}
                     editComment={this.toggleCommentModal}
+                    key={comment.id}
                     />
                       <div className="buttons">
                         {/* <button className="cta-comment-close" type="button" onClick={(e) => this.removeComment(e, comment.id)}>x</button>  */}
                         {/* <button className="cta-comment-edit" type="submit" onClick={(e)=>this.toggleCommentModal(e,comment.id)}><i class="fas fa-pen"></i></button> */}
                       </div>
-                    </div> 
+                    </div>
                 
                 )})
                 : null
@@ -357,7 +359,7 @@ render() {
           <div className= {
                 this.state.commentModal=== false
                     ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
+                    : 'edit-comment-mod-display'}>
                 
                 <form className={'create-task-form'} onSubmit={(e)=>this.editComment(e,this.state.commentID)}>
                 <span className="x" onClick={this.toggleCommentModal}>X</span>
@@ -397,7 +399,7 @@ const mapStateToProps = state => {
     };
 };
   
-export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment,getSingleTask,testFunction })(TaskDetail));
+export default withRouter(connect(mapStateToProps,{ deleteComment,deleteTask,editTask,getTaskComments,createTaskComments,updateComment,getSingleTask,testFunction,getGroupTasks })(TaskDetail));
 
 
 

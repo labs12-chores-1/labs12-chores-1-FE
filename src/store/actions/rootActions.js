@@ -717,12 +717,12 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   if(process.env.NODE_ENV === 'development'){
     frontendURL = 'localhost:3000'
   } else {
-    frontendURL = 'https://goofy-sinoussi-c017bd.netlify.com/'
+    frontendURL = 'https://goofy-sinoussi-c017bd.netlify.com'
   }
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
     endpoint.then(res => {
-      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite/${res.data.inviteCode}`} })
+      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite/?${res.data.inviteCode}`} })
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR, payload: err.response.data.warning})
@@ -760,7 +760,7 @@ export const getInviteInfo = inviteCode => {
  * @param inviteCode - Token to validate the invite
  * @returns {Function}
  */
-export const acceptInvite = inviteCode => {
+export const acceptInvite = (inviteCode,username,email) => {
   let token = localStorage.getItem('jwt');
   const options = {
     headers: {
@@ -768,11 +768,13 @@ export const acceptInvite = inviteCode => {
     }
   };
 
-  let body = {
+  let user = {
     inviteCode: inviteCode,
+    name:username,
+    email:email
   }
 
-  const endpoint = axios.post(`${backendURL}/api/invite/join`, body, options);
+  const endpoint = axios.post(`${backendURL}/api/invite/join`, user, options);
 
   return dispatch => {
     dispatch({type: ACCEPTING_INVITE});
@@ -1374,13 +1376,16 @@ export const updateComment = (comment, commentId,taskId) => {
 
     endpoint.then(res => {
       dispatch({type: UPDATE_COMMENT_SUCCESS});
-    }).then(()=>{
-      getTaskComments(taskId)
     })
     .catch(err => {
       console.log(err);
       dispatch({type: UPDATE_COMMENT_FAIL,payload:err})
     })
+    // .then(()=>{
+      
+    //   getTaskComments(taskId)
+    //   console.log('DISPATCHED FROM ACTIONS')
+    // })
   }
 }
 
