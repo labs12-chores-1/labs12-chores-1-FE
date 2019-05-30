@@ -256,10 +256,17 @@ render() {
                     </div>
                 </MDBCol>
             </MDBRow>
+<<<<<<< HEAD
             {/* Modal for Add New Task */}
             <div className= {this.state.toggleMod=== false
                             ? 'custom-mod-hidden'
                             : 'custom-mod-display'}>
+=======
+            <div className= {
+                this.state.toggleMod=== false
+                    ? 'custom-mod-hidden'
+                    : 'create-task-mod-display'}>
+>>>>>>> ffb7cfdd220f911eb4cf2b62f14406a6ee2268dc
                 <form className={'create-task-form'}onSubmit={this.createTask}>
                     <span className="x" onClick={this.toggleMod}>X</span>
                     <h3>New Task</h3>
