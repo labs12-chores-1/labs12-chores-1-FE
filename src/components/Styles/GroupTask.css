@@ -21,6 +21,25 @@
     cursor: pointer;
 }
 
+.btn btn-default Ripple-parent btn-dark-green{
+    color: white;
+}
+
+/* Filter */
+.task-cards .filter{
+    margin: 0 20px;
+}
+
+.assigned{
+    margin: 0 20px;
+    bottom: 10px;
+    min-width: 160px;
+    padding: 12px 16px;
+    z-index: 1;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 10px 0px rgba(0,0,0,0);   
+}
+
 .search-dropdown-row{
     display: flex;
     flex-flow: row; 
@@ -36,24 +55,58 @@
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    margin: 10px 0 0;
+    right: 1px;
     min-width: 160px;
+    background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
     z-index: 1;
   }
   
   .dropdown:hover .dropdown-content {
-    display: block;
+    display: block; 
   }
-  .dropdown-item:hover {
+
+  .dropdown-content .dropdown-item:hover {
       cursor: pointer;
+      background-color: #00C851;
+      color: white;
   }
   .custom-mod-hidden {
     display: none
 }
 
-.custom-mod-display {
+.dropdown-content-complete {
+    display: none;
+    position: absolute;
+    margin: 10px 0 0;
+    right: 2px;
+    min-width: 160px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+
+  .comp{
+    margin: 0 20px;
+    bottom: 10px;
+    min-width: 160px;
+    padding: 12px 16px;
+    z-index: 1;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 10px 0px rgba(0,0,0,0);   
+}
+
+  .dropdown:hover .dropdown-content-complete {
+    display: block; 
+  }
+
+  .dropdown-content-complete .dropdown-item:hover {
+    cursor: pointer;
+    background-color: #00C851;
+    color: white;
+}
+
+.create-task-mod-display {
     position: fixed;
     background: rgba(27,31,35,.5);
     bottom: 0;
@@ -61,29 +114,14 @@
     right: 0;
     top: 0;
      z-index: 80;
-     
-
-  /* background: linear-gradient(
-    rgba(0, 0, 0, 0.1), 
-    rgba(0, 0, 0, 0.1)
-    ) */
-/*    
-    box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
-    border: 0;
-    background-color: white;
-    width:800px;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    z-index: 1000;
-    top:50; */
+     padding-top: 2px;
+     height: 100%;
+     width: 100%;
 }
 
-.create-task-form{
-    padding-top: 20px;
-    padding-bottom: 40px;
+.add-task-form{
+    
+    height: 70%;
     padding-left: 20px;
     padding-right: 20px;
     margin-left: auto;

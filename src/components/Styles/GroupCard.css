@@ -16,16 +16,19 @@
     margin-bottom: 40px;
     margin-top: 2%;
     width: 25%;
+    display:flex;
+    flex-wrap:wrap;
 }
 
 
 .group-card-footer {
     display: flex;
-    flex-flow: row nowrap;
+    /* flex-flow: row nowrap; */
     justify-content: space-between;
     font-family: "Montserrat", "sans-serif";
     background: #2A922D;
     color: white;
+    flex-wrap:wrap;
 }
 
 .group-card-footer-button{
@@ -36,16 +39,28 @@
     margin: 0px 10px;
     cursor: pointer;
 }
-
-@media only screen and (max-width: 767px){
-
-    .group-card{
-        margin-top: 60px;
-    }
-}
-
 .group-user-image img {
     width: 30px;
     border-radius: 30px;
     margin: 3%;
 }
+
+@media only screen and (max-width: 700px){
+
+    .group-card{
+        margin-top: 60px;
+        width: 45%;
+        height: 80%;
+        
+    }
+}
+@media only screen and (max-width: 570px){
+
+    .group-card{
+        margin-top: 60px;
+        width: 65%;
+        height: 80%;
+        
+    }
+}
+

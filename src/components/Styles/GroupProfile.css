@@ -9,17 +9,17 @@
 }
 
 .invite-mod-display {
-    display:flex;
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width:50%;
-    height: 300px;
     border:2px solid black;
+    background-color:white;
     position: fixed;
     z-index: 100;
     top:0;
-    background-color: white;
+    width: 80%;
+    left:10%;
+    text-align: center;
+    margin-top: 8%;
     
 }
 
@@ -35,11 +35,24 @@
     position: fixed;
     z-index: 100;
     top:0;
+    margin-top: 8%;
+    left:10%;
+    width:80%;
 }
 
 .group-profile-container {
     margin-top: 85px;
 }
+
+.group-profile-header .cta-task {
+   color: #ffffff;
+   text-decoration: none;
+}
+
+.group-profile-header .cta-task:hover {
+    color:#2E2E2E;
+    text-decoration: none;
+ }
 
 .group-profile-header {
     display: flex;

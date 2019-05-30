@@ -290,7 +290,9 @@ class GroupsProfile extends Component {
                      * Buttons to display List, History, Invite Members and toggle Total/Net
                      */
                   }
-                  <MDBBtn className="task-trak" outline color="dark-green"><Link to={`/groups/${this.props.match.params.id}/tasktrak`}> Task</Link></MDBBtn>
+                  <MDBBtn 
+                      className={this.state.listToggle ? "btn-dark-green" : "btn-dark-green"} >
+                  <Link className="cta-task" to={`/groups/${this.props.match.params.id}/tasktrak`}> Tasks</Link></MDBBtn>
                   
                   <MDBBtn
                       className={this.state.listToggle ? "btn-dark-green" : "btn-dark-green"}

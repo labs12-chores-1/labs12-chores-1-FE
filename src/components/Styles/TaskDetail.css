@@ -24,3 +24,104 @@
 #MDBIcon{
     cursor: pointer;
 }
+
+/* COMMENTS */
+.task-card form{
+    text-align: center;
+}
+
+.cta-comment-submit{
+    margin: 0 0 40px 0;
+    padding: 10px 200px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #388e3c;
+    border: 1px solid #388e3c;
+    color: #ffffff;
+    cursor: pointer; 
+}
+
+.cta-comment-edit {
+    border: none;
+    color: #42922d;
+}
+
+.cta-comment-close {
+    border: none;
+    color: #42922d;
+    font-weight: bold;
+}
+
+.custom-mod-hidden {
+    display: none
+}
+
+.custom-mod-display {
+    position: fixed;
+    background: rgba(27,31,35,.5);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+     z-index: 80;
+     
+  /* background: linear-gradient(
+    rgba(0, 0, 0, 0.1), 
+    rgba(0, 0, 0, 0.1)
+    ) */
+/*    
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+    border: 0;
+    background-color: white;
+    width:800px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    top:50; */
+}
+
+.edit-comment-mod-display {
+    position: fixed;
+    background: rgba(27,31,35,.5);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+     z-index: 80;
+     padding-top:10%;
+}
+
+
+.task-card .form-control{
+    height: 50px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.create-task-form{
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    /* margin-top: 10%; */
+
+    width: 448px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 2%;
+    background-color: white;
+    border-color: #444d56;
+    box-shadow: 0 0 18px rgba(0,0,0,.4);
+}
+.x{
+    align-self: flex-end;
+    cursor: pointer;
+    font-weight: bold;
+}

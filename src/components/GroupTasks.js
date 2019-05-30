@@ -25,7 +25,8 @@ import {
     getGroupTasks,
     createGroupTask,
     editTask,
-    getGroupUsers
+    getGroupUsers,
+    getTaskComments
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 //import { bool } from 'prop-types';
@@ -50,9 +51,14 @@ class GroupTasks extends Component {
             recurringTime:""
         };
     }
+    componentDidMount(){
+        this.props.getGroupTasks(this.props.match.params.id);
+        this.setState({...this.state,
+            currentGroupTasks: this.props.currentGroupTasks});
+    }
     componentWillMount(){
         document.title = `FairShare - Task`;
-        this.props.getGroupTasks(this.props.match.params.id);        
+        this.props.getGroupTasks(this.props.match.params.id);
         this.setState({...this.state,
             currentGroupTasks: this.props.currentGroupTasks});
 
@@ -83,10 +89,6 @@ class GroupTasks extends Component {
         this.setState({[e.target.name]:e.target.value})
     }
         
-    componentDidMount(){
-   
-    }
-
     componentDidUpdate(previousProps){
         if(previousProps.currentGroupTasks !== this.props.currentGroupTasks){
             this.setState({currentGroupTasks:this.props.currentGroupTasks});
@@ -106,7 +108,6 @@ class GroupTasks extends Component {
         }
 
         this.props.createGroupTask(task, this.props.match.params.id);
-        
         this.setState({
             toggleMod:!this.state.toggleMod,
             recurringTime:"",
@@ -208,19 +209,19 @@ class GroupTasks extends Component {
             this.setState({
                 recurringTime:'1 hour'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
         else if (recurring === '2') {
             this.setState({
                 recurringTime:'2 hours'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
         else if (recurring === '3') {
             this.setState({
                 recurringTime:'3 hours'
             })
-            console.log('RECURRING TIME:', this.state.recurringTime)
+            // console.log('RECURRING TIME:', this.state.recurringTime)
         }
     }
 
@@ -236,8 +237,9 @@ render() {
             <MDBRow>
                 <MDBCol md="12" className="mb-4">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
+                    <h4>View Your Group's Current Tasks</h4>
                     <div className="nav-btns">
-                        <MDBBtn outline onClick={this.toggleMod} color="success">New Task</MDBBtn>
+                        <MDBBtn className={"btn-dark-green"} onClick={this.toggleMod} style={{color:"white"}}>New Task</MDBBtn>
                     
                     </div>
                 </MDBCol>
@@ -245,7 +247,7 @@ render() {
             <div className= {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'
-                    : 'custom-mod-display'}>
+                    : 'create-task-mod-display'}>
                 <form className={'create-task-form'}onSubmit={this.createTask}>
                 <span className="x" onClick={this.toggleMod}>X</span>
                 <h3>New Task</h3>
@@ -308,11 +310,12 @@ render() {
                             onChange={this.handleSearch}/>
                     </form>
 
-                    <div className="dropdown">
+                        <div className="filter">Filter By:</div>
+                        <div className="dropdown assigned">
                         <span>Assigned</span>
-                        <div className="dropdown-content">
+                        <div className="dropdown-content dropdown-primary">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
-                            {/* {console.log('state.groupMembers', this.state.groupMembers)} */}
+                            {console.log('state.groupMembers', this.state.groupMembers)}
                             <div className="dropdown-divider"></div>
                             {this.state.groupUserNames.length >= 1
                             ? this.state.groupUserNames.map(groupUser=>(
@@ -322,9 +325,9 @@ render() {
                             }
                         </div>
                     </div>
-                    <div className="dropdown">
+                    <div className="dropdown comp">
                         <span>Complete</span>
-                        <div className="dropdown-content">
+                        <div className="dropdown-content-complete">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
                             <div className="dropdown-divider"></div>
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
@@ -337,19 +340,20 @@ render() {
 
                 {this.state.currentGroupTasks !== null
                     ? this.state.currentGroupTasks.data.map(task => {
-                     
+                    // this.props.getTaskComments(task.id);
+                    let taskComments = this.props.taskComments;
                     return(
                     //  <div key= {task.id}>
                         <TaskCard
                             key={task.id}
                             task={task}
+                            taskComments = {taskComments}
                             taskID={task.id}
                             taskName={task.taskName}
                             taskDescription={task.taskDescription}
                             assigneeName={task.assigneeName}
                             requestedBy={task.createdBy}
                             done={task.completed}
-                            comments={task.comments}
                             repeated={0}
                             recurring={task.recurringTime}
                             assignee={task.completedBy}
@@ -385,6 +389,7 @@ const mapStateToProps = state => {
         currentUser: state.currentUser,
         currentGroup: state.currentGruop,
         currentGroupTasks: state.currentGroupTasks,
+        taskComments: state.taskComments,
         // userGroups: state.userGroups,
         // userId: state.userId,
         // name: state.name,
@@ -410,6 +415,7 @@ export default connect(
         getGroupTasks,
         createGroupTask,
         editTask,
-        getGroupUsers
+        getGroupUsers,
+        getTaskComments
     }
 )(GroupTasks);
