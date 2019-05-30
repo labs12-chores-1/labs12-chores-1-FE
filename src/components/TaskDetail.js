@@ -322,7 +322,7 @@ render() {
           }
           <div className="comment-container">           
             <form onSubmit={this.createComments}>
-                <textarea class="comment-border form-control z-depth-1" id="exampleFormControlTextarea345" rows="3" col="1"
+                <textarea class="comment-border form-control z-depth-1" id="exampleFormControlTextarea345" rows="3" col="1" maxlength="50"
                   type="text"
                   placeholder="Add a comment ..."
                   name="commentString"
