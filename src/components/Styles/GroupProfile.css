@@ -44,6 +44,16 @@
     margin-top: 85px;
 }
 
+.group-profile-header .cta-task {
+   color: #ffffff;
+   text-decoration: none;
+}
+
+.group-profile-header .cta-task:hover {
+    color:#2E2E2E;
+    text-decoration: none;
+ }
+
 .group-profile-header {
     display: flex;
     justify-content: flex-end;

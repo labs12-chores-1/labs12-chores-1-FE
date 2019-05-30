@@ -309,10 +309,11 @@ render() {
                             placeholder="Search by name" aria-label="Search" 
                             onChange={this.handleSearch}/>
                     </form>
-                        <div>Filter By:</div>
-                    <div className="dropdown">
+
+                        <div className="filter">Filter By:</div>
+                        <div className="dropdown assigned">
                         <span>Assigned</span>
-                        <div className="dropdown-content">
+                        <div className="dropdown-content dropdown-primary">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
                             {console.log('state.groupMembers', this.state.groupMembers)}
                             <div className="dropdown-divider"></div>
@@ -324,9 +325,9 @@ render() {
                             }
                         </div>
                     </div>
-                    <div className="dropdown">
+                    <div className="dropdown comp">
                         <span>Complete</span>
-                        <div className="dropdown-content">
+                        <div className="dropdown-content-complete">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-completeness")}>All</div>
                             <div className="dropdown-divider"></div>
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
