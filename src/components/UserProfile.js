@@ -23,7 +23,6 @@ import {
   MDBCol,
   MDBInput,
   MDBModal,
-  MDBModalHeader,
   MDBModalBody,
   MDBModalFooter,
   MDBAlert
