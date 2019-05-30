@@ -84,6 +84,10 @@ class GroupsPage extends Component {
     }
   };
 
+  componentDidUpdate(previousProps){
+    
+  }
+
   toggle = nr => () => {
     let modalNumber = "modal" + nr;
     this.setState({

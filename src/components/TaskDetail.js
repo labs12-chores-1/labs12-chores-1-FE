@@ -64,8 +64,7 @@ class TaskDetail extends Component {
 
     componentWilMount(){
       document.title = `FairShare - Task`;           
-      this.props.getGroupUserObjs(this.props.match.params.id);        
-      this.props.getSingleTask(this.props.match.params.taskId);
+      this.props.getGroupUserObjs(this.props.match.params.groupId);    this.props.getSingleTask(this.props.match.params.taskId);
       this.setState({task:this.props.task})
     }
     
@@ -164,7 +163,7 @@ class TaskDetail extends Component {
             taskDescription: this.state.taskDescription,
             assigneeName: this.state.assigneeName,
             recurringTime:this.state.recurringTime,
-            groupID:this.props.match.params.id,
+            groupID:this.props.match.params.groupId,
             createdBy:localStorage.getItem("name"),
             completedBy:1
             
