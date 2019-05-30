@@ -284,12 +284,7 @@ render() {
                     value={this.state.taskName}
                     onChange={this.handleChanges}
                 />
-<<<<<<< HEAD
-                {/* {console.log(this.state.task)} */}
-                <textarea
-=======
                 <textarea cols="30" rows="10" class="no-resize"
->>>>>>> itel-domingo
                     className="text-description"
                     type="text"
                     placeholder={this.state.task.taskDescription

@@ -23,10 +23,7 @@ import {
   MDBCol,
   MDBInput,
   MDBModal,
-<<<<<<< HEAD
   // MDBModalHeader,
-=======
->>>>>>> itel-domingo
   MDBModalBody,
   MDBModalFooter,
   MDBAlert
