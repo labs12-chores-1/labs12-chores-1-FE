@@ -79,10 +79,14 @@ class GroupsPage extends Component {
       !this.props.userGroups &&
       this.props.errorMessage === null
     ) {
-      // console.log("In newProps.currentUser: ", this.props.currentUser);
+      console.log("In newProps.currentUser: ", this.props.currentUser);
       this.props.getUserGroups(newProps.currentUser.id);
     }
   };
+
+  componentDidUpdate(previousProps){
+    
+  }
 
   toggle = nr => () => {
     let modalNumber = "modal" + nr;

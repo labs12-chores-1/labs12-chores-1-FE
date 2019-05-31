@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 
@@ -15,11 +16,36 @@ class Comments extends Component {
             taskID:props.taskID,
             commentedOn:props.commentedOn,
             name: localStorage.getItem('name'),
-            img_url: localStorage.getItem('img_url')
-            
+            img_url: localStorage.getItem('img_url'),
+
+            comment:this.props.comment,
+            commenter:null
         }
     }
 
+    componentWillMount(){
+        let backendURL;
+        if(process.env.NODE_ENV === 'development'){
+        backendURL = `http://localhost:9000`
+        } else {
+        backendURL = `https://labs12-fairshare.herokuapp.com`
+        }
+        
+        let token = localStorage.getItem('jwt');
+        let options = {
+            headers: {
+            Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios.get(`${backendURL}/api/user/${this.state.comment.completedBy}`, options).then(response => {
+            // console.log('res', response.data.name);
+            this.setState({
+                commenter: response.data
+            })
+        })
+    
+    }
     // removeComment = (e, id) => {
     //     e.preventDefault();
     //     this.props.deleteComment(id, this.props.match.params.id);
