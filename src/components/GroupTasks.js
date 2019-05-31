@@ -109,55 +109,54 @@ class GroupTasks extends Component {
 
     handleSearch= (event) =>{      
         
-        // console.log("this.state.searchField: ", this.state.searchField)
-        console.log("this.props.currentGroupTasks.data: ", this.props.currentGroupTasks.data);
-        console.log("this.state.currentGroupTasks.data: ", this.state.currentGroupTasks.data);
-        // this.setState({[event.target.name]:event.target.value});
         if (this.props.currentGroupTasks.data.length !== 0){
-            console.log(this.props.currentGroupTasks.data.filter(task=>task.taskName.includes(event.target.value)));
             event.target.value.length === 0
-            ? //console.log("WTF!!")
-             this.setState({//[event.target.name]:event.target.value,
+            ? this.setState({
                 currentGroupTasks: {
                     data: this.props.currentGroupTasks.data}})
-            : this.setState({//[event.target.name]:event.target.value,
+            : this.setState({
                             currentGroupTasks: {
-                                data: this.props.currentGroupTasks.data.filter(task=>task.taskName.includes(event.target.value))
+                                data: this.state.currentGroupTasks.data.filter(task=>task.taskName.includes(event.target.value))
                             }})
         }
-        
     }
 
     handleFilter =(event, filterArg) =>{
         event.preventDefault();
         let filterResults = this.props.currentGroupTasks.data;
+   
         if (typeof filterArg !== "string"){
-            filterResults = filterResults.filter(task=>task.assigneeName===filterArg.name)
-        }
-        if (typeof filterArg === "string"){
-            if (filterArg === "all-completeness" || filterArg === "all-assignee"){
-                this.setState({...this.state,
-                    currentGroupTasks: this.props.currentGroupTasks});
+            if (filterArg.name !==""){
+                filterResults = filterResults.filter(task=>task.assigneeName===filterArg.name);
             }
-            else if (filterArg ==="completed"){
-                if (this.state.currentGroupTasks.data.length !== 0){
-                    this.setState({...this.state,
-                        currentGroupTasks: {
-                            data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
+            if (this.state.currentFilterCompleteness !== null){
+                if (this.state.currentFilterCompleteness){
+                    filterResults = filterResults.filter(task=>task.completed);
+                }
+                else{
+                    filterResults = filterResults.filter(task=>!task.completed);
                 }
             }
-            else if (filterArg ==="incomplete"){
-                this.setState({...this.state,
-                    currentGroupTasks: {
-                        data:this.state.currentGroupTasks.data.filter(task=>!task.completed)}});
-            }
+            this.setState({currentFilterAssignee: filterArg.name})       
         }
+        else {
+            if (filterArg === "completed"){
+                filterResults = filterResults.filter(task=>task.completed)
+                this.setState({currentFilterCompleteness: true});
+            }
+            else if (filterArg === "incomplete"){
+                filterResults = filterResults.filter(task=>task.completed === 0)
+                this.setState({currentFilterCompleteness: false});
+            }
+            else{
+                this.setState({currentFilterCompleteness: null});
+            }
+            if (this.state.currentFilterAssignee.length > 0){
+                filterResults = filterResults.filter(task=>task.assigneeName===this.state.currentFilterAssignee); 
+            }
 
-        this.setState({
-            currentFilterAssignee:filterArg.name,
-            currentGroupTasks: {
-                data:this.state.currentGroupTasks.data.filter(task=>task.assigneeName===filterArg.name)
-        }})
+        }
+        this.setState({currentGroupTasks: {data:filterResults}})
     }
                                         
     toggleMod= (e) => {
@@ -257,7 +256,7 @@ render() {
                     </div>  
                     <div>
                         {/* <span onClick={this.toggleRadio}>Yes</span> */}
-                        <input type="checkbox" name="recurring" value="recurring" onClick={this.toggleRadio}/>
+                        <input type="checkbox" name="recurring" checked={this.state.toggleRadio} value="recurring" onClick={this.toggleRadio}/>
                         <span>Would you like to make this task repeating?</span>
                     </div>
                     <div className= {
@@ -294,7 +293,7 @@ render() {
                         <div className="dropdown assigned">
                         <span>Assigned</span>
                         <div className="dropdown-content dropdown-primary">
-                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,{name:"", id:0})}>All</div>
                             <div className="dropdown-divider"></div>
                             {this.state.groupUserObjs.length >= 1
                             ? this.state.groupUserObjs.map(userObj=>(

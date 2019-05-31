@@ -150,7 +150,7 @@ class TaskDetail extends Component {
   backToTask = (e) => {
   e.preventDefault();
   this.props.history.goBack();
-  this.props.getGroupTasks(this.state.taskID);
+  this.props.getGroupTasks(this.state.groupID);
 } 
 
   updateTask = (e) => {

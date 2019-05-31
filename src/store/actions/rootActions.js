@@ -169,10 +169,12 @@ export const checkEmail = () => {
 
   return (dispatch) => {
     dispatch({type: CHECKING_EMAIL});
+    // console.log("after CHECKING_EMAIL")
     fetchUserId.then(res => {
+      console.log("fetch Id successful")
       dispatch({type: EMAIL_CHECKED, payload: res.data.profile});
       localStorage.setItem('userId', res.data.id);
-
+      // console.log("after fecthUserId")
     }).catch(err => {
       localStorage.removeItem('name');
       localStorage.removeItem('email');
