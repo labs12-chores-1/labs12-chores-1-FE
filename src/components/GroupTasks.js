@@ -163,13 +163,14 @@ class GroupTasks extends Component {
         this.setState({
             toggleMod:!this.state.toggleMod
         })
-        console.log('toggleModalState:',this.state.toggleMod);
+        // console.log('toggleModalState:',this.state.toggleMod);
     }
 
     toggleRadio= (e) => {
         this.setState({
             toggleRadio:!this.state.toggleRadio
-        }); console.log('toggleRadiotoggle:', this.state.toggleRadio);
+        }); 
+        // console.log('toggleRadiotoggle:', this.state.toggleRadio);
     }
 
     setRecurringTime = (e, recurring) => {

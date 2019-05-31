@@ -343,14 +343,14 @@ render() {
             }
             <div className="comment-container">           
               <form onSubmit={this.createComments}>
-                  <textarea className="comment-border form-control z-depth-1" id="exampleFormControlTextarea345" rows="3" col="1"
+                  <textarea class="comment-border form-control z-depth-1" id="exampleFormControlTextarea345" rows="3" col="1" maxlength="50"
                     type="text"
                     placeholder="Add a comment ..."
                     name="commentString"
                     value={this.state.commentString}
                     onChange={this.handleChanges}
                   />
-                  <button className="cta-comment-submit " type="submit">Submit</button>
+                  <button class="cta-comment-submit " type="submit">Submit</button>
                 </form>                
               {this.state.taskComments.length > 0
                   ? this.state.taskComments.map(comment => {
