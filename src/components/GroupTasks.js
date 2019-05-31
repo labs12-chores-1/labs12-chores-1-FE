@@ -50,7 +50,8 @@ class GroupTasks extends Component {
             toggleMod: false,
             toggleRadio:false,
             recurringTime:"",
-            assigneeName:""
+            assigneeName:"",
+            currentFilterAssignee: ""
         };
         this.handleSearch = this.handleSearch.bind(this);
     }
@@ -107,25 +108,34 @@ class GroupTasks extends Component {
     };
 
     handleSearch= (event) =>{      
-        console.log(event.target.value);
+        
+        // console.log("this.state.searchField: ", this.state.searchField)
+        console.log("this.props.currentGroupTasks.data: ", this.props.currentGroupTasks.data);
+        console.log("this.state.currentGroupTasks.data: ", this.state.currentGroupTasks.data);
         // this.setState({[event.target.name]:event.target.value});
-        if (this.state.currentGroupTasks.data.length !== 0){
-            this.state.searchField === ""
-            ? this.setState({[event.target.name]:event.target.value,
-                currentGroupTasks:this.props.currentGroupTasks})
-            : this.setState({[event.target.name]:event.target.value,
+        if (this.props.currentGroupTasks.data.length !== 0){
+            console.log(this.props.currentGroupTasks.data.filter(task=>task.taskName.includes(event.target.value)));
+            event.target.value.length === 0
+            ? //console.log("WTF!!")
+             this.setState({//[event.target.name]:event.target.value,
+                currentGroupTasks: {
+                    data: this.props.currentGroupTasks.data}})
+            : this.setState({//[event.target.name]:event.target.value,
                             currentGroupTasks: {
                                 data: this.props.currentGroupTasks.data.filter(task=>task.taskName.includes(event.target.value))
                             }})
         }
-        // console.log("this.state.currentGroupTasks:",this.state.currentGroupTasks);
-        // console.log("this.props.currentGroupTasks:",this.props.currentGroupTasks);
+        
     }
 
     handleFilter =(event, filterArg) =>{
         event.preventDefault();
+        let filterResults = this.props.currentGroupTasks.data;
+        if (typeof filterArg !== "string"){
+            filterResults = filterResults.filter(task=>task.assigneeName===filterArg.name)
+        }
         if (typeof filterArg === "string"){
-            if (filterArg === "all-completeness"){
+            if (filterArg === "all-completeness" || filterArg === "all-assignee"){
                 this.setState({...this.state,
                     currentGroupTasks: this.props.currentGroupTasks});
             }
@@ -133,7 +143,7 @@ class GroupTasks extends Component {
                 if (this.state.currentGroupTasks.data.length !== 0){
                     this.setState({...this.state,
                         currentGroupTasks: {
-                            data: this.state.currentGroupTasks.data.filter(task=>task.completed)}});
+                            data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
                 }
             }
             else if (filterArg ==="incomplete"){
@@ -141,17 +151,13 @@ class GroupTasks extends Component {
                     currentGroupTasks: {
                         data:this.state.currentGroupTasks.data.filter(task=>!task.completed)}});
             }
-            else if (filterArg ==="all-assignee"){
-                this.setState({...this.state,
-                    currentGroupTasks: this.props.currentGroupTasks})
-            }
         }
-        else{
-            this.setState({...this.state,
-                    currentGroupTasks: {
-                        data:this.state.currentGroupTasks.data.filter(task=>task.assigneeName===filterArg.name)
-                    }})
-        }
+
+        this.setState({
+            currentFilterAssignee:filterArg.name,
+            currentGroupTasks: {
+                data:this.state.currentGroupTasks.data.filter(task=>task.assigneeName===filterArg.name)
+        }})
     }
                                         
     toggleMod= (e) => {
@@ -277,7 +283,7 @@ render() {
                             className="form-control form-control-sm ml-3 w-75" 
                             name="searchField" 
                             type="text" 
-                            value={this.state.searchField} 
+                            // value={this.state.searchField} 
                             placeholder="Search by Task Name"
                             // aria-label="Search" 
                             onChange={this.handleSearch}/>
@@ -288,7 +294,6 @@ render() {
                         <span>Assigned</span>
                         <div className="dropdown-content dropdown-primary">
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
-                            {/* {console.log("this.state.groupUserObjs: ", this.state.groupUserObjs)} */}
                             <div className="dropdown-divider"></div>
                             {this.state.groupUserObjs.length >= 1
                             ? this.state.groupUserObjs.map(userObj=>(
