@@ -52,14 +52,6 @@ You can find the project at https://goofy-sinoussi-c017bd.netlify.com
 
 Replace text below with a description of the API
 
-Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things A little happy sunlight shining through there. Let all these little things happen. Don't fight them. Learn to use them. Even the worst thing we can do here is good.
-
-## _Payment API here_
-
-Replace text below with a description of the API
-
-This is the way you take out your flustrations. Get away from those little Christmas tree things we used to make in school. Isn't it fantastic that you can change your mind and create all these happy things? Everything's not great in life, but we can still find beauty in it.
-
 # Installation
 
 1. Install Node.js on your machine. 
