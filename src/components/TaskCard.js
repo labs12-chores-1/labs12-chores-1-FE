@@ -77,7 +77,7 @@ class TaskCard extends Component {
   render(){
 
   return (
-      
+      //RECURRING
       <MDBCard className="task-card" 
         onClick={this.handleClickTaskCard}>
         <MDBCardBody className="task-card-body">

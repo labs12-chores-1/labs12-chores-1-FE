@@ -7,7 +7,6 @@ import TaskCard from "./TaskCard";
 import {
     MDBBtn,
     MDBRow,
-    MDBCol,
     MDBIcon,
     MDBContainer
     // MDBInput
@@ -203,25 +202,27 @@ class GroupTasks extends Component {
 render() {
     return (       
         <MDBContainer className="group-task-container">
-            <MDBRow>
-                <MDBCol md="12" className="mb-4">
-                    {/* Link to go back to Group Profile page */}
+            <MDBRow className="group-task-header">
+                <div className="col-6 col-md-4 cta-back-shoptrak">
                     <a href={`/groups/${this.props.match.params.id}`} className="card-link"><MDBIcon icon="chevron-left" />Back to ShopTrak</a>
-                    {/* Add New Task button */}
+                   </div>
+                    <div className="col-6">    
                     <h4>View Your Group's Current Tasks</h4>
-                    <div className="nav-btns">
+                    {/* <div className="nav-btns">
                         <MDBBtn className={"btn-dark-green"} onClick={this.toggleMod} style={{color:"white"}}>New Task</MDBBtn>
                     
-                    </div>
-                </MDBCol>
+                    </div> */}
+                </div>
             </MDBRow>
-            {/* Modal for Add New Task */}
-            <div className= {this.state.toggleMod=== false
-                            ? 'custom-mod-hidden'
-                            : 'create-task-mod-display'}>
-                <form className={'create-task-form'}onSubmit={this.createTask}>
-                    <span className="x" onClick={this.toggleMod}>X</span>
-                    <h3>New Task</h3>
+                    {/* New Task Modal */}
+
+            <div className= {
+                this.state.toggleMod=== false
+                    ? 'custom-mod-hidden'
+                    : 'create-task-mod-display'}>
+                <form className={'create-task-form new-task-form'}onSubmit={this.createTask}>
+                <span className="x" onClick={this.toggleMod}>X</span>
+                <h3>New Task</h3>
                     <input 
                         type="text"
                         placeholder="enter task"
@@ -264,16 +265,18 @@ render() {
                             ? 'dropdown-hidden'
                             : 'dropdown-display'}>
 
-                        How often should this task be completed?
+                    <p className="dropdown-text">How often should this task be completed?</p>
+
                         <div className="dropdown-options">
-                            <ul><button onClick={(event)=>this.setRecurringTime(event,"1")}>Every 1 Hour</button></ul>
-                            <ul><button onClick={(event)=>this.setRecurringTime(event,"2")}>Every 2 Hours</button></ul>
-                            <ul><button onClick={(event)=>this.setRecurringTime(event,"3")}>Every 3 Hours</button></ul>
+                            <ul><button className="btn-outline-default" onClick={(event)=>this.setRecurringTime(event,"1")}>Every 1 Hour</button></ul>
+                            <ul><button className="btn-outline-default" onClick={(event)=>this.setRecurringTime(event,"2")}>Every 2 Hours</button></ul>
+                            <ul><button className="btn-outline-default" onClick={(event)=>this.setRecurringTime(event,"3")}>Every 3 Hours</button></ul>
                         </div>
                     </div>
                     <button className="cta-submit" type='submit'>Submit</button>
                 </form>
             </div>
+
             <MDBContainer className="task-cards">
                 <div className="search-dropdown-row">
                     {/* Search by Task Name field */}
@@ -311,7 +314,10 @@ render() {
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"completed")}>Complete</div>
                             <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"incomplete")}>Incomplete</div>
                         </div>
-                    </div>                    
+                    </div>  
+                    <div className="nav-btns cta-new-task">
+                        <MDBBtn className={"btn-dark-green"} onClick={this.toggleMod} style={{color:"white"}}>New Task</MDBBtn>
+                    </div>                  
                 </div>
                 <br></br>
                 {this.state.currentGroupTasks !== null

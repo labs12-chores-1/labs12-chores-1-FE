@@ -234,6 +234,8 @@ section {
 
 .plans .header-plan{
     font-size: 2rem;
+    margin: 0;
+    
 }
 
 
@@ -283,9 +285,12 @@ footer {
         justify-content: center;
 
     }
+    .plans .header-plan{
+        margin: 0;
+    }
 }
 
-@media only screen and (max-width: 767px){
+@media (min-width: 375px) and (max-width: 767px){
 
     .home-banner-overlay{
         margin-left: 0;
@@ -301,6 +306,11 @@ footer {
 
     .home-content{
         padding: 10px;
+    }
+
+    .home-content-top {
+        text-align: center;
+        justify-content: center;
     }
 
     .content-tiles{
@@ -331,5 +341,9 @@ footer {
     .plans .card{
         width: 100%;
         margin: 20px 0px;
+    }
+
+    .plans .header-plan{
+        margin: 0;
     }
 }

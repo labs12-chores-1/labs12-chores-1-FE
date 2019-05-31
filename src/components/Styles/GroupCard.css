@@ -13,9 +13,10 @@
 }
 
 .group-card{
+    height: 300px;
+    width: 300px;
     margin-bottom: 40px;
     margin-top: 2%;
-    width: 25%;
     display:flex;
     flex-wrap:wrap;
 }
@@ -39,26 +40,48 @@
     margin: 0px 10px;
     cursor: pointer;
 }
+
 .group-user-image img {
-    width: 30px;
     border-radius: 30px;
     margin: 3%;
 }
 
-@media only screen and (max-width: 700px){
+
+.create-button {
+    border-radius: 0.125rem;
+    height: 50px;
+    padding: 2px 18px;
+    background-color: #42922d;
+    color:white;
+    box-shadow: 0 2px 5px 0 rgba(46, 20, 20, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 900px) and (max-width: 1440px){
+
+    .group-user-image img{
+        border-radius: 30px;
+        margin: 3%;
+    }
+}
+
+@media (min-width: 767px) and (max-width: 899){
 
     .group-card{
+        height: 300px;
+        width: 300px;
         margin-top: 60px;
-        width: 45%;
         height: 80%;
         
     }
 }
-@media only screen and (max-width: 570px){
+
+
+@media (min-width: 375px) and (max-width: 766px){
 
     .group-card{
+        height: 300px;
+        width: 300px;
         margin-top: 60px;
-        width: 65%;
         height: 80%;
         
     }

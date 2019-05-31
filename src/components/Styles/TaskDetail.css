@@ -12,6 +12,7 @@
 }
 
 .task-card {
+    width: 100%;
     display:flex;
     flex-flow: column;
     align-items: center;
@@ -40,6 +41,8 @@
     border: 1px solid #388e3c;
     color: #ffffff;
     cursor: pointer; 
+    max-width: 100%;
+    min-width: 100%;
 }
 
 .cta-comment-edit {
@@ -98,8 +101,8 @@
 
 .task-card .form-control{
     height: 50px;
-    width: 80%;
     margin: 0 auto;
+    width: 100%;
 }
 
 .create-task-form{
@@ -124,4 +127,9 @@
     align-self: flex-end;
     cursor: pointer;
     font-weight: bold;
+}
+
+.dropdown-options{
+    display: flex;
+    margin-top: 10px;
 }

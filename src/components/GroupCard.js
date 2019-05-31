@@ -7,7 +7,6 @@ import {
   MDBCardFooter,
   MDBIcon,
   MDBCardTitle,
-  MDBBtn
 } from "mdbreact";
 import { withRouter } from "react-router-dom";
 import "./Styles/GroupCard.css";
@@ -29,13 +28,13 @@ class  GroupCard extends React.Component {
         </MDBCardHeader>
         <MDBCardBody>
           <MDBCardTitle />
-          <div className={'group-user-image'}>
+          <div className ={'group-user-image'}>
             {this.props.group.members !== undefined
-                ? this.props.group.members.map(usr => <img  key={usr.name} src={usr.profilePicture} alt='user profile' />)
+                ? this.props.group.members.map(usr => <img key={usr.name} src={usr.profilePicture} alt='user profile' />)
               : null}
           </div>
           <MDBNavLink key={this.props.key} to={`/groups/${this.props.group.id}`}>
-            <MDBBtn color="success">Enter</MDBBtn>
+            <button className="create-button" >Enter</button>
           </MDBNavLink>
         </MDBCardBody>
         {

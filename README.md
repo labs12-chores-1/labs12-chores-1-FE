@@ -1,12 +1,12 @@
-# FariShare 
+# FairShare 
 
 ## Contributors
 
 |                                       [Adalberto May](https://github.com/RockmanExe)                                        |                                       [Estevan Rodriguez](https://github.com/Esterod215)                                        |                                       [Itel Domingo](https://github.com/ItelSunday)                                        |                                       [Tsai Huang](https://github.com/tsaihuangsd)                                        |                                       [Joseph Golden](https://github.com/JGolden25)                                        |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-|                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/ItelSunday)                       |                      [<img src="https://avatars2.githubusercontent.com/u/33883496?s=460&v=4" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://avatars2.githubusercontent.com/u/35469493?s=460&v=4" width = "200" />](https://github.com/)                       |
+|                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/ItelSunday)                       |                      [<img src="https://avatars2.githubusercontent.com/u/33883496?s=460&v=4" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://avatars2.githubusercontent.com/u/35469493?s=460&v=4" width = "200" />](https://github.com/)                       |
 |                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/RockmanExe)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Esterod215)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/ItelSunday)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/tsaihuangsd)           |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/JGolden25)             |
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/adalberto-may-387103113/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/estevan-rodriguez-63075617b/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/iteldomingo/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tsai-huang-18718b183/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/adalberto-may-387103113/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/estevan-rodriguez-63075617b/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/iteldomingo/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tsai-huang-18718b183/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/joseph-chretien-123bab90/) |
 
 <br>
 <br>
@@ -48,17 +48,9 @@ You can find the project at https://goofy-sinoussi-c017bd.netlify.com
 
 # APIs
 
-## 2️⃣ _Authentication API here_
+## _Authentication API here_
 
-🚫Replace text below with a description of the API
-
-Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things A little happy sunlight shining through there. Let all these little things happen. Don't fight them. Learn to use them. Even the worst thing we can do here is good.
-
-## 2️⃣ _Payment API here_
-
-🚫Replace text below with a description of the API
-
-This is the way you take out your flustrations. Get away from those little Christmas tree things we used to make in school. Isn't it fantastic that you can change your mind and create all these happy things? Everything's not great in life, but we can still find beauty in it.
+Replace text below with a description of the API
 
 # Installation
 
