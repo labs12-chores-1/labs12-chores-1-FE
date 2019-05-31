@@ -40,6 +40,8 @@
     border: 1px solid #388e3c;
     color: #ffffff;
     cursor: pointer; 
+    max-width: 100%;
+    min-width: 100%;
 }
 
 .cta-comment-edit {
@@ -98,8 +100,9 @@
 
 .task-card .form-control{
     height: 50px;
-    width: 80%;
     margin: 0 auto;
+    max-width: 100%;
+    min-width: 100%;
 }
 
 .create-task-form{
