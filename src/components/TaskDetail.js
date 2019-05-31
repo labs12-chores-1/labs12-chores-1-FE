@@ -272,8 +272,8 @@ render() {
             this.state.toggleMod=== false
                 ? 'custom-mod-hidden'
                 : 'custom-mod-display'}>
-            <form className={'add-task-form'}onSubmit={this.updateTask}>
-                <span className="x" onClick={this.toggleMod}>X</span>
+            <form className={'create-task-form new-task-form'}onSubmit={this.updateTask}>
+            <span className="x" onClick={this.toggleMod}>X</span>
                 <h3>Edit Task</h3>
                 <input 
                     type="text"
@@ -284,7 +284,7 @@ render() {
                     value={this.state.taskName}
                     onChange={this.handleChanges}
                 />
-                <textarea cols="30" rows="10" class="no-resize"
+                <textarea 
                     className="text-description"
                     type="text"
                     placeholder={this.state.task.taskDescription
@@ -322,11 +322,11 @@ render() {
                         ? 'dropdown-hidden'
                         : 'dropdown-display'}>
 
-                    How often should this task be completed?
+                <p className="dropdown-text">How often should this task be completed?</p>
                     <div className="dropdown-options">
-                        <ul><button onClick={(event)=>this.setRecurringTime(event,"1")}>Every 1 Hour</button></ul>
-                        <ul><button onClick={(event)=>this.setRecurringTime(event,"2")}>Every 2 Hours</button></ul>
-                        <ul><button onClick={(event)=>this.setRecurringTime(event,"3")}>Every 3 Hours</button></ul>
+                        <ul><button className="btn-outline-default" onClick={(event)=>this.setRecurringTime(event,"1")}>Every 1 Hour</button></ul>
+                        <ul><button className="btn-outline-default" onClick={(event)=>this.setRecurringTime(event,"2")}>Every 2 Hours</button></ul>
+                        <ul><button className="btn-outline-default" onClick={(event)=>this.setRecurringTime(event,"3")}>Every 3 Hours</button></ul>
                     </div>
                 </div>
 
