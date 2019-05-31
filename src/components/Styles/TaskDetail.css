@@ -12,6 +12,7 @@
 }
 
 .task-card {
+    width: 100%;
     display:flex;
     flex-flow: column;
     align-items: center;
@@ -101,8 +102,7 @@
 .task-card .form-control{
     height: 50px;
     margin: 0 auto;
-    max-width: 100%;
-    min-width: 100%;
+    width: 100%;
 }
 
 .create-task-form{
@@ -127,4 +127,9 @@
     align-self: flex-end;
     cursor: pointer;
     font-weight: bold;
+}
+
+.dropdown-options{
+    display: flex;
+    margin-top: 10px;
 }

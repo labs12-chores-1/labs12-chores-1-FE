@@ -245,6 +245,8 @@ render() {
                     </div> */}
                 </div>
             </MDBRow>
+                    {/* New Task Modal */}
+                    
             <div className= {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'

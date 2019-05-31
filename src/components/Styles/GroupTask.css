@@ -21,7 +21,7 @@
     display:flex;
     flex-flow: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
 }
 
 #MDBBtn{
@@ -235,24 +235,8 @@
     .group-task-container{
         width: 100%
     }
-
-    .task-cards .search-dropdown-row{
-        display: inherit;
-        flex-flow: inherit; 
-        justify-content: none; 
-    }
-     .task-cards .form-inline{
-        display: inherit;
-        flex-flow: inherit; 
-        justify-content: center; 
-     }
-     .task-cards .filter{
-        margin: 20px 20px;
-        text-align: center;
-    }
-    .cta-new-task{
-        text-align: center;
-        margin-bottom: 0;
+    .task-cards{
+        max-width: 100% ;
     }
 }
 

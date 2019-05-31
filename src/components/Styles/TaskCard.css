@@ -138,7 +138,7 @@ h8 {
 }
 
 .task-card-Detail{
-    width: 100%;
+    max-width: 100%;
     
     /* margin-top: 5rem; */
 }
