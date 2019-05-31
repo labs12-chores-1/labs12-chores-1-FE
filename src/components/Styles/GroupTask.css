@@ -55,7 +55,7 @@
   .dropdown-content {
     display: none;
     position: absolute;
-    margin: 0 0 0;
+    margin: 10px 0 0;
     right: 1px;
     min-width: 160px;
     background-color: #f9f9f9;

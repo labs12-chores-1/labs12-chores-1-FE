@@ -44,21 +44,21 @@ class GroupTasks extends Component {
             searchField: "",
             groupId: null,
             userId: null,
-            currentGroupTasks: this.props.currentGroupTasks,
+            currentGroupTasks: {data:[]},
             groupMembers: [],
             groupUserObjs: this.props.groupUserObjs,
             toggleMod: false,
             toggleRadio:false,
             recurringTime:"",
             assigneeName:"",
-            currentFilterAssignee: "",
-            currentFilterCompleteness: null
+            currentFilterAssignee: ""
         };
         this.handleSearch = this.handleSearch.bind(this);
     }
  
     componentWillMount(){
         document.title = `FairShare - Task`;
+        // console.log("this.props.match.params.id: ",this.props.match.params.id);      
         this.props.getGroupTasks(this.props.match.params.id);        
         this.props.getGroupUserObjs(this.props.match.params.id);
         this.setState({
@@ -73,9 +73,11 @@ class GroupTasks extends Component {
         }
     }
     componentDidMount(){
+        // this.props.getGroupUserObjs(this.props.match.params.id);
         this.setState({...this.state,
             currentGroupTasks: this.props.currentGroupTasks,
             groupUserObjs: this.props.groupUserObjs});
+        // console.log("this.state.groupUserObjs: ",this.state.groupUserObjs);
     }
     
     handleChanges=(e)=>{
@@ -107,56 +109,55 @@ class GroupTasks extends Component {
 
     handleSearch= (event) =>{      
         
+        // console.log("this.state.searchField: ", this.state.searchField)
+        console.log("this.props.currentGroupTasks.data: ", this.props.currentGroupTasks.data);
+        console.log("this.state.currentGroupTasks.data: ", this.state.currentGroupTasks.data);
+        // this.setState({[event.target.name]:event.target.value});
         if (this.props.currentGroupTasks.data.length !== 0){
-            // console.log(this.props.currentGroupTasks.data.filter(task=>task.taskName.includes(event.target.value)));
+            console.log(this.props.currentGroupTasks.data.filter(task=>task.taskName.includes(event.target.value)));
             event.target.value.length === 0
-            ? this.setState({
+            ? //console.log("WTF!!")
+             this.setState({//[event.target.name]:event.target.value,
                 currentGroupTasks: {
                     data: this.props.currentGroupTasks.data}})
-            : this.setState({
+            : this.setState({//[event.target.name]:event.target.value,
                             currentGroupTasks: {
                                 data: this.props.currentGroupTasks.data.filter(task=>task.taskName.includes(event.target.value))
                             }})
         }
+        
     }
 
     handleFilter =(event, filterArg) =>{
         event.preventDefault();
         let filterResults = this.props.currentGroupTasks.data;
-   
         if (typeof filterArg !== "string"){
-            if (filterArg.name !==""){
-                filterResults = filterResults.filter(task=>task.assigneeName===filterArg.name);
-            }
-            if (this.state.currentFilterCompleteness !== null){
-                if (this.state.currentFilterCompleteness){
-                    filterResults = filterResults.filter(task=>task.completed);
-                }
-                else{
-                    filterResults = filterResults.filter(task=>!task.completed);
-                }
-            }
-            this.setState({currentFilterAssignee: filterArg.name})       
+            filterResults = filterResults.filter(task=>task.assigneeName===filterArg.name)
         }
-        else {
-            if (filterArg === "completed"){
-                filterResults = filterResults.filter(task=>task.completed)
-                this.setState({currentFilterCompleteness: true});
+        if (typeof filterArg === "string"){
+            if (filterArg === "all-completeness" || filterArg === "all-assignee"){
+                this.setState({...this.state,
+                    currentGroupTasks: this.props.currentGroupTasks});
             }
-            else if (filterArg === "incomplete"){
-                filterResults = filterResults.filter(task=>task.completed === 0)
-                this.setState({currentFilterCompleteness: false});
+            else if (filterArg ==="completed"){
+                if (this.state.currentGroupTasks.data.length !== 0){
+                    this.setState({...this.state,
+                        currentGroupTasks: {
+                            data: this.props.currentGroupTasks.data.filter(task=>task.completed)}});
+                }
             }
-            else{
-                this.setState({currentFilterCompleteness: null});
+            else if (filterArg ==="incomplete"){
+                this.setState({...this.state,
+                    currentGroupTasks: {
+                        data:this.state.currentGroupTasks.data.filter(task=>!task.completed)}});
             }
-            if (this.state.currentFilterAssignee.length > 0){
-                filterResults = filterResults.filter(task=>task.assigneeName===this.state.currentFilterAssignee); 
-            }
-
         }
-        this.setState({currentGroupTasks: {data:filterResults}})
 
+        this.setState({
+            currentFilterAssignee:filterArg.name,
+            currentGroupTasks: {
+                data:this.state.currentGroupTasks.data.filter(task=>task.assigneeName===filterArg.name)
+        }})
     }
                                         
     toggleMod= (e) => {
@@ -293,7 +294,7 @@ render() {
                         <div className="dropdown assigned">
                         <span>Assigned</span>
                         <div className="dropdown-content dropdown-primary">
-                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,{name:"", id:0})}>All</div>
+                            <div className="dropdown-item" onClick={(event)=>this.handleFilter(event,"all-assignee")}>All</div>
                             <div className="dropdown-divider"></div>
                             {this.state.groupUserObjs.length >= 1
                             ? this.state.groupUserObjs.map(userObj=>(
@@ -313,7 +314,6 @@ render() {
                         </div>
                     </div>                    
                 </div>
-                {/* {console.log(this.state.currentGroupTasks.data)} */}
                 <br></br>
                 {this.state.currentGroupTasks !== null
                     ? this.state.currentGroupTasks.data.map(task => {

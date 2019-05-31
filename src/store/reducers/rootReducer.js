@@ -115,7 +115,7 @@ const initialState = {
   groupMembers: null,
 
 //***** FairShare***********
-  currentGroupTasks: {data:[]},
+  currentGroupTasks: null,
   taskComments: [],
   tempUserName: null,
   currentTask: null,
