@@ -18,7 +18,8 @@ import {
   clearGroupHistory,
   updateGroupNotification,
   getCurrentGroup,
-  getGroupUserObjs
+  getGroupUserObjs,
+  getGroupTasks
 } from "../store/actions/rootActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
@@ -136,7 +137,7 @@ class GroupsProfile extends Component {
       const group = this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id));
       document.title = `${group[0].name} - Group`;
     }
-
+    this.props.getGroupTasks(this.props.match.params.id);
   }
 
   /**
@@ -523,6 +524,7 @@ export default connect(
     clearGroupHistory,
     updateGroupNotification,
     getCurrentGroup,
-    getGroupUserObjs
+    getGroupUserObjs,
+    getGroupTasks
   }
 )(GroupsProfile);
