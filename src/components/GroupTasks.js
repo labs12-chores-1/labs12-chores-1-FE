@@ -44,7 +44,7 @@ class GroupTasks extends Component {
             searchField: "",
             groupId: null,
             userId: null,
-            currentGroupTasks: {data:[]},
+            currentGroupTasks: this.props.currentGroupTasks,
             groupMembers: [],
             groupUserObjs: this.props.groupUserObjs,
             toggleMod: false,
