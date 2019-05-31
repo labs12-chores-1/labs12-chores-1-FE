@@ -36,7 +36,6 @@ export const REMOVE_GROUP_MEMBER_START = "REMOVE_GROUP_MEMBER_START";
 export const REMOVE_GROUP_MEMBER_SUCCESS = "REMOVE_GROUP_MEMBER_SUCCESS";
 export const REMOVE_GROUP_MEMBER_FAIL = "REMOVE_GROUP_MEMBER_FAIL";
 
-
 // GROUP PROFILE
 export const GET_GROUP_USERS = 'GET_GROUP_USERS';
 export const SAVE_GROUP_USERS = 'SAVE_GROUP_USERS';
@@ -49,6 +48,8 @@ export const CLEAR_GROUP_HISTORY = 'CLEAR_GROUP_HISTORY';
 export const DELETE_GROUP_START = 'DELETE_GROUP_START';
 export const DELETE_GROUP_SUCCESS = 'DELETE_GROUP_SUCCESS';
 export const DELETE_GROUP_FAILURE = 'DELETE_GROUP_FAILURE';
+export const GET_GROUP_USER_OBJECTS = 'GET_GROUP_USER_OBJECTS';
+export const SAVE_GROUP_USER_OBJECTS = 'SAVE_GROUP_USER_OBJECTS';
 
 // GROUP INVITE
 export const GEN_GROUP_INVITE = 'GEN_GROUP_INVITE';
@@ -168,10 +169,12 @@ export const checkEmail = () => {
 
   return (dispatch) => {
     dispatch({type: CHECKING_EMAIL});
+    // console.log("after CHECKING_EMAIL")
     fetchUserId.then(res => {
+      console.log("fetch Id successful")
       dispatch({type: EMAIL_CHECKED, payload: res.data.profile});
       localStorage.setItem('userId', res.data.id);
-
+      // console.log("after fecthUserId")
     }).catch(err => {
       localStorage.removeItem('name');
       localStorage.removeItem('email');
@@ -598,6 +601,30 @@ export const getGroupUsers = (groupId) => {
 
     fetchGroupUsers.then(res => {
       dispatch({type: SAVE_GROUP_USERS, payload: res.data})
+    })
+  }
+}
+
+/**
+ * Return the list of group members' names
+ * @param groupId - ID of the group to return member's from
+ * @returns {Function}
+ */
+export const getGroupUserObjs = (groupId) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const fetchGroupUsers = axios.get(`${backendURL}/api/groupmember/group/${groupId}/name`, options);
+
+  return dispatch => {
+    dispatch({type: GET_GROUP_USER_OBJECTS});
+
+    fetchGroupUsers.then(res => {
+      dispatch({type: SAVE_GROUP_USER_OBJECTS, payload: res.data})
     })
   }
 }
@@ -1153,7 +1180,7 @@ export const getSingleTask = (taskID) => {
     dispatch({type: GET_SINGLE_TASK_START})
     endpoint
     .then(res => {
-      console.log(res)
+      // console.log(res)
       dispatch({type: GET_SINGLE_TASK_SUCCESS, payload: res.data});
     }).catch(err => {
       dispatch({type: GET_SINGLE_TASK_FAILURE, payload: err})
@@ -1376,16 +1403,13 @@ export const updateComment = (comment, commentId,taskId) => {
 
     endpoint.then(res => {
       dispatch({type: UPDATE_COMMENT_SUCCESS});
+    }).then(()=>{
+      getTaskComments(taskId)
     })
     .catch(err => {
       console.log(err);
       dispatch({type: UPDATE_COMMENT_FAIL,payload:err})
     })
-    // .then(()=>{
-      
-    //   getTaskComments(taskId)
-    //   console.log('DISPATCHED FROM ACTIONS')
-    // })
   }
 }
 

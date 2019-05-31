@@ -75,7 +75,9 @@ import {
   GET_SINGLE_TASK_FAILURE,
   GET_COMPLETED_START,
   GET_COMPLETED_SUCCESS,
-  GET_COMPLETED_FAILURE
+  GET_COMPLETED_FAILURE,
+  GET_GROUP_USER_OBJECTS,
+  SAVE_GROUP_USER_OBJECTS
 
 } from "../actions/";
 
@@ -113,12 +115,13 @@ const initialState = {
   groupMembers: null,
 
 //***** FairShare***********
-  currentGroupTasks: null,
+  currentGroupTasks: {data:[]},
   taskComments: [],
   tempUserName: null,
   currentTask: null,
   singleTask: null,
-  deleteGroupMessage:null
+  deleteGroupMessage:null,
+  groupUserObjs: []
 };
 
 
@@ -582,6 +585,15 @@ export const rootReducer = (state = initialState, action) => {
       ...state,
       errorMessage:action.payload
     };
+    case GET_GROUP_USER_OBJECTS:
+      return state;
+
+    case SAVE_GROUP_USER_OBJECTS:
+      return {
+        ...state,
+        groupUserObjs: action.payload.data,
+        errorMessage: null
+      };
 
 
   

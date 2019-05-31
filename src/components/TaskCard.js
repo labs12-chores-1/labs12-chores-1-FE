@@ -96,7 +96,7 @@ class TaskCard extends Component {
                 }
                 {/* <img onClick ={this.getComments} src={commentImg} alt='' height="30" width="30"></img> */}
                 {/* <input type="checkbox" name="vehicle" value="Bike" onClick={(event)=>{event.stopPropagation()}}></input> */}
-                <div className="complete">Status: {this.state.task.completed ===0
+                <div className="complete">Status: {this.state.task.completed !==1 || this.state.task.completed === false
                       ? "Incomplete": "Complete"}</div>
                 <div className={
                   this.state.task.recurringTime.length > 0
