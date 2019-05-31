@@ -7,7 +7,6 @@ import TaskCard from "./TaskCard";
 import {
     MDBBtn,
     MDBRow,
-    MDBCol,
     MDBIcon,
     MDBContainer
     // MDBInput
@@ -246,7 +245,7 @@ render() {
                 </div>
             </MDBRow>
                     {/* New Task Modal */}
-                    
+
             <div className= {
                 this.state.toggleMod=== false
                     ? 'custom-mod-hidden'

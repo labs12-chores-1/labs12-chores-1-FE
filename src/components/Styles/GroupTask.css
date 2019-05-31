@@ -238,5 +238,14 @@
     .task-cards{
         max-width: 100% ;
     }
+
+    .search-dropdown-row{
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 300px;
+        align-items: center;
+    }
+    
 }
 
