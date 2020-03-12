@@ -5,7 +5,7 @@ let callbackURL;
 if(process.env.NODE_ENV === 'development'){
     callbackURL = `http://localhost:3000/callback`
 } else if (process.NODE_ENV === 'production' || process.NODE_ENV !== 'development'){
-    callbackURL = `https://goofy-sinoussi-c017bd.netlify.com/callback`
+    callbackURL = `https://fairshare.netlify.com/callback`
 }
 
 class Auth {

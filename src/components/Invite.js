@@ -12,7 +12,7 @@ let frontendURL;
 if(process.env.NODE_ENV === 'development'){
     frontendURL = 'http://localhost:3000';
 } else {
-    frontendURL = `https://goofy-sinoussi-c017bd.netlify.com`
+    frontendURL = `https://fairshare.netlify.com`
 }
 
 var lockOptions = {

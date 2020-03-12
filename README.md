@@ -14,14 +14,14 @@
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
 ![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](https://goofy-sinoussi-c017bd.netlify.com)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](https://fairshare.netlify.com)
 ![version](https://img.shields.io/badge/Version-2.0.0-red.svg)
 
 ## Overview
 
 FairShare keeps track of everyone’s contributions. Now, you’ll add more than just shop tracking, but full shared-living tracking. New features allow you to create a task list and then keep track of who did what and who is assigned what. 
 
-You can find the project at https://goofy-sinoussi-c017bd.netlify.com
+You can find the project at https://fairshare.netlify.com
 
 ### Key Features
 
