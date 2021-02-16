@@ -1,4 +1,4 @@
-import React from "react";
+import {React, Component} from "react";
 import {
   MDBCard,
   MDBCardBody,
@@ -11,7 +11,7 @@ import {
 import { withRouter } from "react-router-dom";
 import "./Styles/GroupCard.css";
 
-class  GroupCard extends React.Component {
+class  GroupCard extends Component {
   constructor(props){
     super(props)
     this.state = {

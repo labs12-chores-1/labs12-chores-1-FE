@@ -88,6 +88,7 @@ class ItemList extends React.Component {
         : this.props.userGroups;
     return (
       <div className="item-list-container">
+        {console.log("grp: ", grp)}
         <h1>
           {this.props.userGroups !== null ? `View Items for ${grp[0].name}` : 'View Items for Avengers'} 
           {/* Loading... */}

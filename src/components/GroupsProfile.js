@@ -20,7 +20,7 @@ import {
   getCurrentGroup,
   getGroupUserObjs
 } from "../store/actions/rootActions";
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+// import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
 import "./Styles/Scrollbar.css";
 import "./Styles/GroupProfile.css";
@@ -398,14 +398,30 @@ class GroupsProfile extends Component {
               <MDBBtn color="secondary" onClick={this.toggleInviteMod}>
                 Close
               </MDBBtn>
-              <CopyToClipboard text={this.props.invites !== null
+
+              <form onSubmit={() => 
+                              {let copyText = document.getElementById("invite_link");
+                              copyText.select();
+                              copyText.setSelectionRange(0, 99999);
+                              document.execCommand("copy");
+                              this.setState({copied: true})}}>
+                <input type="text" 
+                      value={this.props.invites !== null
+                            ? this.props.invites[this.props.match.params.id]
+                            : ""} 
+                      id="invite_link"/>
+                <input type="submit" text="Copy to clipboard" />
+              </form>
+
+
+              {/* <CopyToClipboard text={this.props.invites !== null
                   ? this.props.invites[this.props.match.params.id]
                   : ""}
                   onCopy={() => this.setState({copied: true})}>
                 <MDBBtn className="btn-dark-green">
                   Copy to clipboard
                 </MDBBtn>
-              </CopyToClipboard>
+              </CopyToClipboard> */}
 
             </MDBModalFooter>
           </div>

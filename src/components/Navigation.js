@@ -1,6 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
-// import {Link, withRouter} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
 import Auth0Lock from 'auth0-lock';
 

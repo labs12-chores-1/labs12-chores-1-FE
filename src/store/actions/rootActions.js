@@ -158,6 +158,7 @@ if(process.env.NODE_ENV === 'development'){
  * @returns {Function}
  */
 export const checkEmail = () => {
+  console.log("In checkEmail")
   let token = localStorage.getItem('jwt');
   // console.log('token', token);
   let options = {
